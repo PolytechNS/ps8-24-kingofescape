@@ -1493,6 +1493,7 @@
       // @ts-ignore
       attachEvent("onunload", unloadHandler);
     } else if (typeof addEventListener === "function") {
+
       var terminationEvent = "onpagehide" in globalThisShim ? "pagehide" : "unload";
       addEventListener(terminationEvent, unloadHandler, false);
     }

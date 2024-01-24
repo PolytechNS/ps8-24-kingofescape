@@ -1,4 +1,4 @@
-import {Coordinate} from "./coordinate";
+import {Coordinate} from "../../front/coordinate";
 
 class Graph {
     /**
