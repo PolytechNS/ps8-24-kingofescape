@@ -1,7 +1,43 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
+const {placeWall, init, moveCharacter} = require("../logic/main_game").game;
+
 function manageRequest(request, response) {
-    response.statusCode = 200;
-    response.end(`Thanks for calling ${request.url}`);
+    let filePath = request.url.split("/").filter(function(elem) {
+        return elem !== "..";
+    });
+
+    if (filePath[2] !== "status") {
+        let body = '';
+
+        request.on('data', function (data) {
+            body += data;
+
+            // Too much POST data, kill the connection!
+            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+            if (body.length > 1e6)
+                request.connection.destroy();
+        });
+
+        let json;
+        request.on('end', function () {
+            json = JSON.parse(body);
+            if (filePath[2] === "wall") {
+                placeWall(json, response);
+            }
+            else if (filePath[2] === "start") {
+                init();
+                response.statusCode = 200;
+                response.end(`Ok`);
+            }
+            else if(filePath[2] === "move") {
+                moveCharacter(json, response);
+            }
+        });
+    }
+    else {
+        response.statusCode = 200;
+        response.end(`Ok`);
+    }
 }
 
 /* This method is a helper in case you stumble upon CORS problems. It shouldn't be used as-is:
