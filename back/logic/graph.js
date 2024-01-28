@@ -1,4 +1,4 @@
-import {Coordinate} from "../../front/coordinate";
+const Coordinate = require("./coordinate").Coordinate;
 
 class Graph {
     /**
@@ -35,25 +35,47 @@ class Graph {
         return false;
     }
 
-    addWall(wall) {
-        let tuple1 = wall.coordinate1.toNumber();
-        let tuple4 = wall.coordinate4.toNumber();
-        let tuple2 = Coordinate.toNumberXY(wall.coordinate4.x, wall.coordinate1.y);
-        let tuple3 = Coordinate.toNumberXY(wall.coordinate1.x, wall.coordinate4.y);
+
+
+    verifyPossibilityToPlace(tuple1, tuple2, tuple3, tuple4, isVertical) {
         let boolVerify1 = this.verifyEdge(tuple1, tuple2);
         let boolVerify2 = this.verifyEdge(tuple3, tuple4);
         let boolVerify3 = this.verifyEdge(tuple1, tuple3);
         let boolVerify4 = this.verifyEdge(tuple2, tuple4);
 
-        if (wall.isVertical && boolVerify1 && boolVerify2 && !(boolVerify3 && boolVerify4)) {
-            this.deleteEdge(tuple1, tuple2);
-            this.deleteEdge(tuple3, tuple4);
+        if (isVertical && boolVerify1 && boolVerify2 && !(!boolVerify3 && !boolVerify4)) {
             return true;
         }
-        else if (!wall.isVertical && boolVerify3 && boolVerify4 && !(boolVerify1 && boolVerify2)) {
-            this.deleteEdge(tuple1, tuple3);
-            this.deleteEdge(tuple2, tuple4);
+        else if (!isVertical && boolVerify3 && boolVerify4 && !(!boolVerify1 && !boolVerify2)) {
             return true;
+        }
+
+        return false;
+    }
+
+    addWall(wall, coordinatePlayer1, coordinatePlayer2) {
+        let tuple1 = wall.coordinate1.toNumber();
+        let tuple4 = wall.coordinate4.toNumber();
+        let tuple2 = Coordinate.toNumberXY(wall.coordinate1.x, wall.coordinate4.y);
+        let tuple3 = Coordinate.toNumberXY(wall.coordinate4.x, wall.coordinate1.y);
+
+        if (this.verifyPossibilityToPlace(tuple1, tuple2, tuple3, tuple4, wall.isVertical)) {
+            let mapTest = new Map(this.graph);
+
+            if (wall.isVertical) {
+                mapTest.get(tuple1).delete(tuple2);
+                mapTest.get(tuple3).delete(tuple4);
+            }
+            else {
+                mapTest.get(tuple1).delete(tuple3);
+                mapTest.get(tuple2).delete(tuple4);
+            }
+
+            if (verifyPossibilityWay(mapTest, coordinatePlayer1, true) &&
+                verifyPossibilityWay(mapTest, coordinatePlayer2, false)) {
+                this.graph = mapTest;
+                return true;
+            }
         }
 
         return false;
@@ -85,7 +107,7 @@ class Graph {
  * Initialize the graph
  * @returns {Graph} graph class initialized
  */
-export function initGraph() {
+function initGraph() {
     let graph = new Graph();
     let matrice = []
 
@@ -131,3 +153,41 @@ function addOrientationEdgeGraph(graph, matrice, startI, startJ, endI, endJ, gap
         }
     }
 }
+
+/**
+ * Verify if one way is possible for a player
+ * @param map map class
+ * @param vertex
+ * @param isFirstPlayer boolean to know if it's the first player
+ * @returns {boolean} true if one way is possible, false otherwise
+ */
+function verifyPossibilityWay(map, vertex, isFirstPlayer) {
+    let visited = new Map();
+
+    for (let [key] of map) {
+        visited.set(key, false);
+    }
+
+    let queue = [];
+    queue.push(vertex.toNumber());
+    visited.set(vertex.toNumber(), true);
+
+    console.log(map);
+    while (queue.length !== 0) {
+        let s = queue.pop();
+
+        if ((isFirstPlayer && s / 10 === 8) || (!isFirstPlayer && s / 10 === 0))
+            return true;
+
+        for (let value of map.get( s)) {
+            if (!visited.get(value)) {
+                visited.set(value, true);
+                queue.push(value);
+            }
+        }
+    }
+
+    return false;
+}
+
+exports.Graph = {Graph, initGraph};
