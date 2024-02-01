@@ -1,19 +1,19 @@
-class GameManagerLocal {
-    constructor(abc) {
-        console.log(abc);
-        /*this.graphe = initGraph();
-        this.player1 = new Character(new Coordinate(0, 4));
-        this.player2 = new Character(new Coordinate(8, 4));
-        this.turn = 0;*/
-        /*this.gameState1 = new GameState(player1);
-        this.gameState2 = new GameState(player2);*/
+import Coordinate from "./coordinate.js";
+import {Character, verifyMoves} from "./character.js";
+import {initGraph} from "./graph.js";
+import {GameState} from "./gameState.js";
+
+class GameManager {
+    constructor() {
+        this.graphe = initGraph();
+        let player1 = new Character(new Coordinate(0, 4));
+        let player2 = new Character(new Coordinate(8, 4));
+        this.gameState1 = new GameState(player1);
+        this.gameState2 = new GameState(player2);
         //this.visibilityMatrix = new VisibilityMatrix(this.gameState1.character.coordinate, this.gameState2.character.coordinate);
     }
 
-    /*placeWall(s) {
-        let coordinate1Get = new Coordinate(s.wall.coordinate1.x, s.wall.coordinate1.y);
-        let coordinate2Get = new Coordinate(s.wall.coordinate2.x, s.wall.coordinate2.y);
-        let wall = new Wall(coordinate1Get, coordinate2Get, s.wall.isVertical);
+    placeWall(wall) {
         let coordinatePlayer1 = this.gameState1.character.coordinate;
         let coordinatePlayer2 = this.gameState2.character.coordinate;
         let isAdded = this.graphe.addWall(wall, coordinatePlayer1, coordinatePlayer2);
@@ -22,29 +22,29 @@ class GameManagerLocal {
             let isPlayerOne = this.isPlayerOne();
             this.gameState1.addWall(wall, isPlayerOne);
             this.gameState2.addWall(wall, !isPlayerOne);
-            this.visibilityMatrix.updateMatrixWall(wall, isPlayerOne);
+            //this.visibilityMatrix.updateMatrixWall(wall, isPlayerOne);
             this.update(isPlayerOne);
             return true;
         }
         return false;
-    }*/
+    }
 
     moveCharacters(newCoordinate) {
-        /*let boolPlayerOne = this.isPlayerOne();
+        let boolPlayerOne = this.isPlayerOne();
         let gameStateActual =  boolPlayerOne? this.gameState1 : this.gameState2;
-        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;*/
+        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
 
         if (verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
             //this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
             gameStateActual.character.move(newCoordinate);
-            //this.update(boolPlayerOne);
+            this.update(boolPlayerOne);
             return true;
         }
 
         return false;
     }
 
-    /*update(isPlayerOne) {
+    update(isPlayerOne) {
         let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
         gameStateActual.turn++;
     }
@@ -64,7 +64,7 @@ class GameManagerLocal {
         }
 
         return undefined;
-    }*/
+    }
 
     isPlayerOne() {
         return this.gameState1.turn === this.gameState2.turn;
@@ -78,3 +78,5 @@ class GameManagerLocal {
             || (gameState1.turn >= 100 && gameState2.turn >= 100);
     }
 }
+
+export {GameManager};

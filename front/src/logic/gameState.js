@@ -1,26 +1,17 @@
-class gameState {
+class GameState {
     constructor(character) {
-        this.wallsPlayer1 = [];
-        this.wallsPlayer2 = [];
         this.character = character;
-        this.otherCharacter = null;
+        this.wallsPlayer = [];
         this.turn = 0;
     }
 
-    addVisibileCharacter(character) {
-        this.otherCharacter = character;
+    addWall(wall) {
+        this.wallsPlayer.push(wall);
     }
 
-    removeVisibleCharacter() {
-        this.otherCharacter = null;
-    }
-
-    addWall(wall, isPlayerOne) {
-        if (isPlayerOne)
-            this.wallsPlayer1.push(wall);
-        else
-            this.wallsPlayer2.push(wall);
+    getRestantWall() {
+        return 10 - this.wallsPlayer.length;
     }
 }
 
-exports.GameState = gameState;
+export {GameState};

@@ -1,4 +1,4 @@
-class Coordinate {
+export default class Coordinate {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -12,5 +12,3 @@ class Coordinate {
         return x * 10 + y;
     }
 }
-
-exports.Coordinate = Coordinate;
