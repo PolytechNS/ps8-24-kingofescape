@@ -1,5 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
-const {placeWall, init, moveCharacter} = require("../logic/main_game").game;
+const {placeWall, init, moveCharacter} = require("../logic/ManagerSocketGame").game;
+const jwt = require('jsonwebtoken');
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -8,7 +9,6 @@ function manageRequest(request, response) {
 
     if (filePath[2] !== "status") {
         let body = '';
-
         request.on('data', function (data) {
             body += data;
 
@@ -20,17 +20,12 @@ function manageRequest(request, response) {
 
         let json;
         request.on('end', function () {
-            json = JSON.parse(body);
-            if (filePath[2] === "wall") {
-                placeWall(json, response);
-            }
-            else if (filePath[2] === "start") {
-                init();
+            if (filePath[2] === 'login') {
+                json = JSON.parse(body);
+                const token = jwt.sign(json, 'secretKey');
+                response.setHeader('Access-Control-Allow-Origin', '*');
                 response.statusCode = 200;
-                response.end(`Ok`);
-            }
-            else if(filePath[2] === "move") {
-                moveCharacter(json, response);
+                response.end(token);
             }
         });
     }

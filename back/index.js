@@ -3,7 +3,9 @@ const http = require('http')
 // Let's import our logic.
 const fileQuery = require('./queryManagers/front.js')
 const apiQuery = require('./queryManagers/api.js')
-const { Server } = require("socket.io");
+const {initSocket} = require("./logic/ManagerSocketGame").game;
+const {Server} = require("socket.io");
+
 const server = http.createServer(function (request, response) {
     // First, let's check the URL to see if it's a REST request or a file request.
     // We will remove all cases of "../" in the url for security purposes.
@@ -12,11 +14,21 @@ const server = http.createServer(function (request, response) {
     });
 
     try {
+        if (request.method === "OPTIONS") {
+            response.setHeader('Access-Control-Allow-Origin', '*');
+            response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+            // Request headers you wish to allow.
+            response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+            // Set to true if you need the website to include cookies in the requests sent to the API.
+            response.setHeader('Access-Control-Allow-Credentials', true);
+            response.statusCode = 200;
+        }
         // If the URL starts by /api, then it's a REST request (you can change that if you want).
-        if (filePath[1] === "api") {
+        else if (filePath[1] === "api") {
             apiQuery.manage(request, response);
             // If it doesn't start by /api, then it's a request for a file.
-        } else {
+        }
+        else {
             fileQuery.manage(request, response);
         }
     } catch(error) {
@@ -27,24 +39,31 @@ const server = http.createServer(function (request, response) {
 // For the server to be listening to request, it needs a port, which is set thanks to the listen function.
 }).listen(8000);
 
+const io = new Server(server, {
+    cors: {
+        origin: "*", methods: ["GET", "POST", "PUT", "PATCH"], allowedHeaders: "*", credentials: true
+    }
+});
+
+// initSocket(io);
 
 
-const io = new Server(server);
-
+/*
 io.on('connection', (socket) => {
     console.log('A user connected');
 
     socket.on('disconnect', () => {
+        count--;
         console.log('User disconnected');
+        console.log("count");
     });
+    console.log(count);
 
-    // Gérez ici vos événements personnalisés (par exemple, 'newWall')
+    /* // Gérez ici vos événements personnalisés (par exemple, 'newWall')
     socket.on('newWall', (wall) => {
         console.log('Wall received:', wall);
 
         // Envoyez une réponse au client
         socket.emit('wallReceived', { status: 'Success' });
     });
-});
-
-
+});*/
