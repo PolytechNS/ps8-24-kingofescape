@@ -1,0 +1,56 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 20% 60% 20%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#jeu {
+    display: grid;
+    grid-template-columns: 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr;
+    grid-template-rows: 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    height: 100%;
+    width: 100%;
+}
+
+#jeu > div {
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.player1 {
+    background-color: #ff0000;
+    border-radius: 100%;
+    height: 60%;
+    width: 60%;
+    align-self: center;
+}
+
+.player2 {
+    background-color: #0000ff;
+    border-radius: 100%;
+    height: 60%;
+    width: 60%;
+    align-self: center;
+}
+
+.wallPlayer1 {
+    background-color: #ff0000;
+}
+
+.wallPlayer2 {
+    background-color: #0000ff;
+}
