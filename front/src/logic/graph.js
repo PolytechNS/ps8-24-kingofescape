@@ -1,4 +1,4 @@
-const Coordinate = require("./coordinate").Coordinate;
+import Coordinate from "./coordinate.js";
 
 class Graph {
     /**
@@ -64,11 +64,15 @@ class Graph {
 
             if (wall.isVertical) {
                 mapTest.get(tuple1).delete(tuple2);
+                mapTest.get(tuple2).delete(tuple1);
                 mapTest.get(tuple3).delete(tuple4);
+                mapTest.get(tuple4).delete(tuple3);
             }
             else {
                 mapTest.get(tuple1).delete(tuple3);
+                mapTest.get(tuple3).delete(tuple1);
                 mapTest.get(tuple2).delete(tuple4);
+                mapTest.get(tuple4).delete(tuple2);
             }
 
             if (verifyPossibilityWay(mapTest, coordinatePlayer1, true) &&
@@ -172,11 +176,10 @@ function verifyPossibilityWay(map, vertex, isFirstPlayer) {
     queue.push(vertex.toNumber());
     visited.set(vertex.toNumber(), true);
 
-    console.log(map);
     while (queue.length !== 0) {
         let s = queue.pop();
 
-        if ((isFirstPlayer && s / 10 === 8) || (!isFirstPlayer && s / 10 === 0))
+        if ((isFirstPlayer && Math.floor(s / 10) === 8) || (!isFirstPlayer && Math.floor(s / 10) === 0))
             return true;
 
         for (let value of map.get( s)) {
@@ -190,4 +193,4 @@ function verifyPossibilityWay(map, vertex, isFirstPlayer) {
     return false;
 }
 
-exports.Graph = {Graph, initGraph};
+export {initGraph, verifyPossibilityWay, Graph};
