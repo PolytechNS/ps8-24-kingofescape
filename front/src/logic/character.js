@@ -1,38 +1,46 @@
-const coordinate = require('./coordinate.js');
+function Character(coordinate) {
+    this.coordinate = coordinate;
 
-class Character {
-
-    constructor(coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    move(coordinate) {
+    this.move = function(coordinate) {
         this.coordinate = coordinate;
     }
 }
 
-function verifyMoves(newCoordinate, oldCoordinate, graphe, secondPlayerCoordinate) {
-    let moveHorizontal = newCoordinate.x - oldCoordinate.x;
-    let moveVertical = newCoordinate.y - oldCoordinate.y;
+function isInFront(oldCoordinate, secondPlayerCoordinate, newCoordinate) {
+    let moveVerticalOldCoordinate = secondPlayerCoordinate.x - oldCoordinate.x;
+    let moveHorizontalOldCoordinate = secondPlayerCoordinate.y - oldCoordinate.y;
 
-    if ((moveVertical !== 0 && moveHorizontal !== 0) || (moveVertical === 0 && moveHorizontal === 0)) {
+    if (!((moveVerticalOldCoordinate !== 0 && moveHorizontalOldCoordinate === 0)
+        || (moveHorizontalOldCoordinate !== 0 && moveVerticalOldCoordinate === 0)))
         return false;
-    }
 
-    let gapMoveCharacterX = newCoordinate.x - secondPlayerCoordinate.x;
-    let gapMoveCharacterY = newCoordinate.y - secondPlayerCoordinate.y;
-    let calculGapToDo = 1;
+    let moveVertical = newCoordinate.x - oldCoordinate.x;
+    let moveHorizontal = newCoordinate.y - oldCoordinate.y;
 
-    if (Math.abs(gapMoveCharacterX) === 1 && Math.abs(gapMoveCharacterY) === 0 ||
-        Math.abs(gapMoveCharacterX) === 0 && Math.abs(gapMoveCharacterY) === 1) {
-        calculGapToDo = 2;
-    }
 
-    if ((moveVertical === 0 && (moveHorizontal === calculGapToDo || moveHorizontal === -calculGapToDo))
-        || (moveHorizontal === 0 && (moveVertical === calculGapToDo || moveVertical === -calculGapToDo)))
+    return (Math.abs(moveVerticalOldCoordinate) === 1 || Math.abs(moveHorizontalOldCoordinate) === 1)
+        && ((moveVertical > 0 && moveVerticalOldCoordinate > 0) || (moveVertical < 0 && moveVerticalOldCoordinate < 0)
+        || (moveHorizontal > 0 && moveHorizontalOldCoordinate > 0) || (moveHorizontal < 0 && moveHorizontalOldCoordinate < 0));
+}
+
+
+function verifyMoves(newCoordinate, oldCoordinate, graphe, secondPlayerCoordinate) {
+    let moveVertical = newCoordinate.x - oldCoordinate.x;
+    let moveHorizontal = newCoordinate.y - oldCoordinate.y;
+
+    if (!((moveVertical !== 0 && moveHorizontal === 0) || (moveHorizontal !== 0 && moveVertical === 0)))
+        return false;
+
+    let inFront = isInFront(oldCoordinate, secondPlayerCoordinate, newCoordinate);
+    let absMoveVertical = Math.abs(moveVertical);
+    let absMoveHorizontal = Math.abs(moveHorizontal);
+
+    if ((absMoveHorizontal === 1 || absMoveVertical  === 1 ) && !inFront)
         return graphe.verifyEdge(oldCoordinate.toNumber(), newCoordinate.toNumber());
+    else if ((absMoveHorizontal === 2 || absMoveVertical === 2) && inFront)
+        return graphe.verifyEdge(secondPlayerCoordinate.toNumber(), newCoordinate.toNumber());
 
     return false;
 }
 
-exports.Character = {Character, verifyMoves};
+export {Character, verifyMoves}
