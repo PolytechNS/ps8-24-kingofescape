@@ -1,19 +1,16 @@
-const {GameState} = require("./gameState");
-const {Character, verifyMoves} = require("./character");
-const {Graph, initGraph} = require("./graph.js");
-const {Coordinate} = require("./coordinate");
-const {Wall} = require("./wall");
-const {VisibilityMatrix} = require("./visibilityMatrix");
-
-class GameManager {
-    constructor() {
-        this.graphe = Graph.initGraph();
-        this.gameState1 = new GameState(new Character.Character(new Coordinate(0, 4)));
-        this.gameState2 = new GameState(new Character.Character(new Coordinate(8, 4)));
-        this.visibilityMatrix = new VisibilityMatrix(this.gameState1.character.coordinate, this.gameState2.character.coordinate);
+class GameManagerLocal {
+    constructor(abc) {
+        console.log(abc);
+        /*this.graphe = initGraph();
+        this.player1 = new Character(new Coordinate(0, 4));
+        this.player2 = new Character(new Coordinate(8, 4));
+        this.turn = 0;*/
+        /*this.gameState1 = new GameState(player1);
+        this.gameState2 = new GameState(player2);*/
+        //this.visibilityMatrix = new VisibilityMatrix(this.gameState1.character.coordinate, this.gameState2.character.coordinate);
     }
 
-    placeWall(s) {
+    /*placeWall(s) {
         let coordinate1Get = new Coordinate(s.wall.coordinate1.x, s.wall.coordinate1.y);
         let coordinate2Get = new Coordinate(s.wall.coordinate2.x, s.wall.coordinate2.y);
         let wall = new Wall(coordinate1Get, coordinate2Get, s.wall.isVertical);
@@ -30,26 +27,24 @@ class GameManager {
             return true;
         }
         return false;
-    }
+    }*/
 
-    moveCharacters(s) {
-        let newCoordinate = new Coordinate(s.Coordinate.x, s.Coordinate.y);
-        console.log(newCoordinate);
-        let boolPlayerOne = this.isPlayerOne();
+    moveCharacters(newCoordinate) {
+        /*let boolPlayerOne = this.isPlayerOne();
         let gameStateActual =  boolPlayerOne? this.gameState1 : this.gameState2;
-        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
+        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;*/
 
-        if (Character.verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
-            this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
+        if (verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
+            //this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
             gameStateActual.character.move(newCoordinate);
-            this.update(boolPlayerOne);
+            //this.update(boolPlayerOne);
             return true;
         }
 
         return false;
     }
 
-    update(isPlayerOne) {
+    /*update(isPlayerOne) {
         let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
         gameStateActual.turn++;
     }
@@ -69,8 +64,7 @@ class GameManager {
         }
 
         return undefined;
-
-    }
+    }*/
 
     isPlayerOne() {
         return this.gameState1.turn === this.gameState2.turn;
@@ -84,5 +78,3 @@ class GameManager {
             || (gameState1.turn >= 100 && gameState2.turn >= 100);
     }
 }
-
-exports.GameManager = GameManager;
