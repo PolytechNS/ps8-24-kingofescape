@@ -57,7 +57,6 @@ function createTable() {
     }
 
     printPlayer(true);
-    printPlayer(false);
 }
 
 function printPlayer(isPlayerOne) {
@@ -70,7 +69,21 @@ function printPlayer(isPlayerOne) {
 
 function removePlayer(isPlayerOne) {
     let div = document.getElementsByClassName(isPlayerOne ? 'player1': 'player2')[0];
-    div.parentNode.removeChild(div);
+
+    if (div !== undefined)
+        div.parentNode.removeChild(div);
+}
+
+function endGame() {
+    if (gameManager.isEndGame()) {
+        window.alert("Partie terminée !\nLe joueur " + (gameManager.isPlayerOne() ? "1" : "2") + " a gagné");
+        let s = window.location.href;
+        let url = s.split("?")[0];
+        let index = url.lastIndexOf("/");
+        let newUrl = url.substring(0, index - 7);
+        newUrl += "index.html";
+        window.location.href = newUrl;
+    }
 }
 
 function move(idDiv) {
@@ -79,11 +92,15 @@ function move(idDiv) {
     let y = Number.parseInt(split[2]);
     let newCoordinate = new Coordinate(x, y);
     let isMove = gameManager.moveCharacters(newCoordinate);
-    let isPlayerOne = !gameManager.isPlayerOne();
+    let isPlayerOne = gameManager.isPlayerOne();
 
     if (isMove) {
         removePlayer(isPlayerOne);
         printPlayer(isPlayerOne);
+        endGame();
+    }
+    else if (gameManager.actionRealise !== undefined) {
+        window.alert("Mouvement réalisé");
     }
     else {
         window.alert("Impossible de se déplacer ici");
@@ -109,6 +126,23 @@ function printWall(wall, isPlayerOne) {
     div3.className = isPlayerOne ? 'wallPlayer1': 'wallPlayer2';
 }
 
+function beginTurn() {
+    let isPlayerOne = gameManager.isPlayerOne();
+    printPlayer(isPlayerOne);
+
+    if (gameManager.getOtherPlayer() !== undefined) {
+        printPlayer(!isPlayerOne);
+    }
+}
+
+export function endTurn() {
+    let isPlayerOne = gameManager.isPlayerOne();
+    removePlayer(true);
+    removePlayer(false);
+    gameManager.update(isPlayerOne);
+    beginTurn();
+}
+
 
 function placeWall(idDiv) {
     let split = idDiv.split(' ');
@@ -117,8 +151,13 @@ function placeWall(idDiv) {
     let y = Number.parseInt(split[2]);
     let wall = new Wall(new Coordinate(x, y), new Coordinate(x + 1, y + 1), letter === 'V');
     let isPlayerOne = gameManager.isPlayerOne();
+
     if (gameManager.placeWall(wall)) {
         printWall(wall, isPlayerOne);
+        endGame();
+    }
+    else if (gameManager.actionRealise !== undefined) {
+        window.alert("Placement réalisé");
     }
     else {
         window.alert("Impossible de poser un mur");

@@ -2,6 +2,7 @@ import Coordinate from "./coordinate.js";
 import {Character, verifyMoves} from "./character.js";
 import {initGraph} from "./graph.js";
 import {GameState} from "./gameState.js";
+import {VisibilityMatrix} from "./visibilityMatrix.js";
 
 class GameManager {
     constructor() {
@@ -10,35 +11,42 @@ class GameManager {
         let player2 = new Character(new Coordinate(8, 4));
         this.gameState1 = new GameState(player1);
         this.gameState2 = new GameState(player2);
-        //this.visibilityMatrix = new VisibilityMatrix(this.gameState1.character.coordinate, this.gameState2.character.coordinate);
+        this.actionRealise = undefined;
+        this.visibilityMatrix = new VisibilityMatrix(player1.coordinate, player2.coordinate);
     }
 
     placeWall(wall) {
-        let coordinatePlayer1 = this.gameState1.character.coordinate;
-        let coordinatePlayer2 = this.gameState2.character.coordinate;
-        let isAdded = this.graphe.addWall(wall, coordinatePlayer1, coordinatePlayer2);
+        let isPlayerOne = this.isPlayerOne();
+        let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
 
-        if (isAdded) {
-            let isPlayerOne = this.isPlayerOne();
-            this.gameState1.addWall(wall, isPlayerOne);
-            this.gameState2.addWall(wall, !isPlayerOne);
-            //this.visibilityMatrix.updateMatrixWall(wall, isPlayerOne);
-            this.update(isPlayerOne);
-            return true;
+        if (this.actionRealise === undefined && gameStateActual.getRestantWall() > 0) {
+            let coordinatePlayer1 = this.gameState1.character.coordinate;
+            let coordinatePlayer2 = this.gameState2.character.coordinate;
+            let isAdded = this.graphe.addWall(wall, coordinatePlayer1, coordinatePlayer2);
+
+            if (isAdded) {
+                gameStateActual.addWall(wall, isPlayerOne);
+                this.actionRealise = wall;
+                this.visibilityMatrix.updateMatrixWall(wall, isPlayerOne);
+                return true;
+            }
         }
+
         return false;
     }
 
     moveCharacters(newCoordinate) {
-        let boolPlayerOne = this.isPlayerOne();
-        let gameStateActual =  boolPlayerOne? this.gameState1 : this.gameState2;
-        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
+        if (this.actionRealise === undefined) {
+            let boolPlayerOne = this.isPlayerOne();
+            let gameStateActual = boolPlayerOne ? this.gameState1 : this.gameState2;
+            let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
 
-        if (verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
-            //this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
-            gameStateActual.character.move(newCoordinate);
-            this.update(boolPlayerOne);
-            return true;
+            if (verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
+                this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
+                gameStateActual.character.move(newCoordinate);
+                this.actionRealise = newCoordinate;
+                return true;
+            }
         }
 
         return false;
@@ -46,6 +54,7 @@ class GameManager {
 
     update(isPlayerOne) {
         let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
+        this.actionRealise = undefined;
         gameStateActual.turn++;
     }
 
@@ -55,8 +64,10 @@ class GameManager {
         let coordinatePlayerActual = gameStateActual.character.coordinate;
         let coordinatePlayerOther = gameStateOther.character.coordinate;
 
-        if (coordinatePlayerActual.x === coordinatePlayerOther.x + 1 || coordinatePlayerActual.x === coordinatePlayerOther.x - 1
-        || coordinatePlayerActual.y === coordinatePlayerOther.y + 1 || coordinatePlayerActual.y === coordinatePlayerOther.y - 1) {
+        if ((coordinatePlayerActual.y === coordinatePlayerOther.y &&
+            (coordinatePlayerActual.x === coordinatePlayerOther.x + 1 || coordinatePlayerActual.x === coordinatePlayerOther.x - 1))
+        || (coordinatePlayerActual.x === coordinatePlayerOther.x &&
+                (coordinatePlayerActual.y === coordinatePlayerOther.y + 1 || coordinatePlayerActual.y === coordinatePlayerOther.y - 1))){
             return gameStateOther.character;
         }
         else if (this.visibilityMatrix.canSeeSquare(coordinatePlayerOther, this.isPlayerOne())) {
@@ -73,6 +84,7 @@ class GameManager {
     isEndGame() {
         let gameState1 = this.gameState1;
         let gameState2 = this.gameState2;
+
         return gameState1.character.coordinate.x === 8
             || gameState2.character.coordinate.x === 0
             || (gameState1.turn >= 100 && gameState2.turn >= 100);
