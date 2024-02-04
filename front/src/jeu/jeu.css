@@ -10,6 +10,10 @@ body {
     height: 100%;
     width: 100%;
     background-color: #FFF2E3;
+    background-image: url('background.jpg'); /* Add your image URL here */
+    background-size: cover; /* Cover the entire body */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image in the body */
 }
 
 #content {
@@ -57,7 +61,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-
 }
 
 #saveGame {
@@ -141,3 +144,4 @@ header {
 .wallPlayer2 {
     background-color: #0000ff;
 }
+
