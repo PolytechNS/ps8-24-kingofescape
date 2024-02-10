@@ -9,7 +9,7 @@ function login() {
         method: 'get'
     }).then( async (response) => {
         let res = await response.text();
-        localStorage.setItem('token', res);
+        document.cookie = "token=" + res + "; SameSite=None; Secure";
     });
 }
 
@@ -27,6 +27,6 @@ function signIn() {
         body: JSON.stringify(data),
     }).then( async (response) => {
         let res = await response.text();
-        localStorage.setItem('token', res);
+        document.cookie = "token=" + res + "; SameSite=None; Secure";
     });
 }

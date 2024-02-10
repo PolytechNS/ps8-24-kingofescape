@@ -22,7 +22,7 @@ async function signin(json, response) {
         } else {
             await users.collection("Users").insertOne({username:username, password : token});
             response.statusCode = 200;
-            response.end('User created: '+token);
+            response.end(token);
         }
     } catch (error) {
         console.log(error);
@@ -50,7 +50,7 @@ async function login(json, response) {
 
         if (user && user.password === token) {
             response.statusCode = 200;
-            response.end('User login');
+            response.end(token);
         } else {
             response.statusCode = 404;
             response.end('Password does not corespond to the username');
