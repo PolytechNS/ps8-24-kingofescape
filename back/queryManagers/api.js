@@ -27,20 +27,12 @@ function manageRequest(request, response) {
                     json = JSON.parse(body);
                     console.log(json);
                     signin(json, response);
-                    /*const token = jwt.sign(json, 'secretKey');
-                    response.setHeader('Access-Control-Allow-Origin', '*');
-                    response.statusCode = 200;
-                    response.end(token);*/
                 }
     
             }
             if (request.method === 'GET') {
                 if (filePath[2] === 'login') {
                     json = {username: filePath[3], password: filePath[4]};
-                    /*const token = jwt.sign(json, 'secretKey');
-                    response.setHeader('Access-Control-Allow-Origin', '*');
-                    response.statusCode = 200;
-                    response.end(token);*/
                     login(json, response);
                 }
             }
