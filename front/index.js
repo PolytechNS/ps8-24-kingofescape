@@ -1,3 +1,4 @@
+const sqlite3 = require('sqlite3').verbose();
 function login() {
     let url = 'http://localhost:8000/api/login';
     let data = {username: 'exemple' , mdp: 'exemple'};

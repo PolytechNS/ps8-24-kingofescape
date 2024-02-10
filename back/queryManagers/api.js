@@ -1,5 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
 const {placeWall, init, moveCharacter} = require("../logic/ManagerSocketGame").game;
+const {signin, login} = require("../login.js").log;
 const jwt = require('jsonwebtoken');
 
 function manageRequest(request, response) {
@@ -20,14 +21,31 @@ function manageRequest(request, response) {
 
         let json;
         request.on('end', function () {
-            if (filePath[2] === 'login') {
-                json = JSON.parse(body);
-                const token = jwt.sign(json, 'secretKey');
-                response.setHeader('Access-Control-Allow-Origin', '*');
-                response.statusCode = 200;
-                response.end(token);
+            if(request.method === 'POST') {
+                if (filePath[2] === 'signin') {
+                    console.log(body);
+                    json = JSON.parse(body);
+                    console.log(json);
+                    signin(json, response);
+                    /*const token = jwt.sign(json, 'secretKey');
+                    response.setHeader('Access-Control-Allow-Origin', '*');
+                    response.statusCode = 200;
+                    response.end(token);*/
+                }
+    
+            }
+            if (request.method === 'GET') {
+                if (filePath[2] === 'login') {
+                    json = {username: filePath[3], password: filePath[4]};
+                    /*const token = jwt.sign(json, 'secretKey');
+                    response.setHeader('Access-Control-Allow-Origin', '*');
+                    response.statusCode = 200;
+                    response.end(token);*/
+                    login(json, response);
+                }
             }
         });
+        
     }
     else {
         response.statusCode = 200;

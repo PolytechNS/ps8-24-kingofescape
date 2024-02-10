@@ -5,10 +5,10 @@ const fileQuery = require('./queryManagers/front.js')
 const apiQuery = require('./queryManagers/api.js')
 const {initSocket} = require("./logic/ManagerSocketGame").game;
 const {Server} = require("socket.io");
-const {run} = require("./exemple_DB.js");
+//const {run} = require("./exemple_DB.js");
 
 
-run().catch(console.dir);
+//run().catch(console.dir);
 const server = http.createServer(function (request, response) {
 
     // First, let's check the URL to see if it's a REST request or a file request.
