@@ -10,6 +10,8 @@ function login() {
     }).then( async (response) => {
         let res = await response.text();
         document.cookie = "token=" + res + "; SameSite=None; Secure";
+        newUrl = "http://localhost:8000/src/mode/mode.html";
+        window.location.href = newUrl;
     });
 }
 
@@ -28,5 +30,7 @@ function signIn() {
     }).then( async (response) => {
         let res = await response.text();
         document.cookie = "token=" + res + "; SameSite=None; Secure";
+        newUrl = "http://localhost:8000/src/mode/mode.html";
+        window.location.href = newUrl;
     });
 }
