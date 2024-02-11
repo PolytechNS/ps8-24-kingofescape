@@ -28,3 +28,11 @@ Note that this command should be run again every time you install / delete a pac
 
 Run `npm start`. That's it, unless you need other scripts to run before or while the server is launched,
 but then you (probably?) know what you are doing.
+
+## Start The project
+
+To start and build the project, navigate to the root folder of the project and run `docker-compose up --build -d`. This command will build the code and automatically execute `npm start` by running the script.
+
+## Choosing the play mode
+
+To choose the play mode, users need to visit the following URL: `http://localhost:8000/src/mode/mode.html`. From this page, players can log in or sign up and choose between the local mode or playing against an AI.
