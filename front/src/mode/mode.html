@@ -27,9 +27,21 @@
         <p>Choose a game mode</p>
     </div>
     <div id="mode">
-        <button onclick="changePage()" id="buttonMode1">Continue</button>
-        <button onclick="changeLocal()" id="buttonMode1">Local</button>
-        <button onclick="changeIA()" id="buttonMode2">IA</button>
-        <button onclick="changePage()" id="buttonMode3">Multiplayer</button>
+        <div class="modechoice">
+            <div id="continue"></div>
+            <button onclick="changePage()" id="buttonContinue">Continue</button>
+        </div>
+        <div class="modechoice">
+            <div id="local"></div>
+            <button onclick="changeLocal()" id="buttonLocal">Local</button>
+        </div>
+        <div class="modechoice">
+            <div id="IA"></div>
+            <button onclick="changePage()" id="buttonIA">IA</button>
+        </div>
+        <div class="modechoice">
+            <div id="multiplayer"></div>
+            <button onclick="changePage()" id="buttonMulti">Multiplayer</button>
+        </div>
 </body>
 </html>

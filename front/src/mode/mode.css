@@ -86,3 +86,106 @@ header {
     width: 100%;
     background-color: #FFF2E3;
 }
+
+#texte {
+    display: grid;
+    justify-content: center;
+    font-size: 40px;
+    color: #CD9B75;
+    text-decoration: underline;
+}
+
+#mode{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.modechoice {
+    grid-column: auto;
+    display: grid;
+    grid-template-rows: 80% 20%;
+    background-image: url('mode.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin : 10px;
+    padding: 20px;
+    width: 300px;
+    height: 300px;
+    justify-content: left;
+}
+
+#continue {
+    grid-row: 1/2;
+    background-image: url('continue.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 130px;
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+#buttonContinue {
+    grid-row: 2/3;
+    margin-bottom: 35px;
+    background-color: #FFF2E3 ;
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+#local {
+    grid-row: 1/2;
+    background-image: url('local.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 110px;
+    height: 110px;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+#buttonLocal {
+    grid-row: 2/3;
+    margin-bottom: 35px;
+    background-color: #FFF2E3 ;
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+#IA {
+    grid-row: 1/2;
+    background-image: url('IA.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 120px;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+#buttonIA {
+    grid-row: 2/3;
+    margin-bottom: 35px;
+    background-color: #FFF2E3 ;
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+#multiplayer {
+    grid-row: 1/2;
+    background-image: url('multi.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 130px;
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+#buttonMulti {
+    grid-row: 2/3;
+    margin-bottom: 35px;
+    background-color: #FFF2E3 ;
+    margin-left: 30px;
+    margin-right: 20px;
+}
