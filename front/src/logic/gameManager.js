@@ -1,7 +1,7 @@
-import Coordinate from "./coordinate.js";
 import {Character, verifyMoves} from "./character.js";
 import {initGraph} from "./graph.js";
-import {GameState} from "./gameState.js";
+import {Coordinate} from "./coordinate.js";
+import {GameState}  from "./gameState.js";
 import {VisibilityMatrix} from "./visibilityMatrix.js";
 
 class GameManager {
@@ -37,11 +37,10 @@ class GameManager {
 
     moveCharacters(newCoordinate) {
         if (this.actionRealise === undefined) {
-            let boolPlayerOne = this.isPlayerOne();
-            let gameStateActual = boolPlayerOne ? this.gameState1 : this.gameState2;
-            let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
+            if (this.verifyMoves(newCoordinate)) {
+                let boolPlayerOne = this.isPlayerOne();
+                let gameStateActual = boolPlayerOne ? this.gameState1 : this.gameState2;
 
-            if (verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)) {
                 this.visibilityMatrix.updateMoveCharacter(gameStateActual.character.coordinate, newCoordinate, boolPlayerOne);
                 gameStateActual.character.move(newCoordinate);
                 this.actionRealise = newCoordinate;
@@ -52,21 +51,29 @@ class GameManager {
         return false;
     }
 
+    verifyMoves(newCoordinate) {
+        let boolPlayerOne = this.isPlayerOne();
+        let gameStateActual = boolPlayerOne ? this.gameState1 : this.gameState2;
+        let otherGameState = boolPlayerOne ? this.gameState2 : this.gameState1;
+
+        return verifyMoves(newCoordinate, gameStateActual.character.coordinate, this.graphe, otherGameState.character.coordinate)
+    }
+
     update(isPlayerOne) {
         let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
         this.actionRealise = undefined;
         gameStateActual.turn++;
     }
 
-    getOtherPlayer() {
-        let gameStateActual = this.isPlayerOne() ? this.gameState1 : this.gameState2;
-        let gameStateOther = this.isPlayerOne() ? this.gameState2 : this.gameState1;
+    getOtherPlayer(isPlayerOne) {
+        let gameStateActual = isPlayerOne ? this.gameState1 : this.gameState2;
+        let gameStateOther = isPlayerOne ? this.gameState2 : this.gameState1;
         let coordinatePlayerActual = gameStateActual.character.coordinate;
         let coordinatePlayerOther = gameStateOther.character.coordinate;
 
         if ((coordinatePlayerActual.y === coordinatePlayerOther.y &&
-            (coordinatePlayerActual.x === coordinatePlayerOther.x + 1 || coordinatePlayerActual.x === coordinatePlayerOther.x - 1))
-        || (coordinatePlayerActual.x === coordinatePlayerOther.x &&
+                (coordinatePlayerActual.x === coordinatePlayerOther.x + 1 || coordinatePlayerActual.x === coordinatePlayerOther.x - 1))
+            || (coordinatePlayerActual.x === coordinatePlayerOther.x &&
                 (coordinatePlayerActual.y === coordinatePlayerOther.y + 1 || coordinatePlayerActual.y === coordinatePlayerOther.y - 1))){
             return gameStateOther.character;
         }
@@ -85,6 +92,7 @@ class GameManager {
         let gameState1 = this.gameState1;
         let gameState2 = this.gameState2;
 
+        console.log("endGame", gameState1.character.coordinate.x, gameState2.character.coordinate.x);
         return gameState1.character.coordinate.x === 8
             || gameState2.character.coordinate.x === 0
             || (gameState1.turn >= 100 && gameState2.turn >= 100);

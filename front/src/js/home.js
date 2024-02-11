@@ -19,6 +19,6 @@ function changePage() {
     let url = s.split("?")[0];
     let index = url.lastIndexOf("/");
     let newUrl = url.substring(0, index + 1);
-    newUrl += "../jeu/jeu.html";
+    newUrl += "../jeu_local/jeu_local.html";
     window.location.href = newUrl;
 }
