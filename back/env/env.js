@@ -5,7 +5,7 @@ const {
     PORT
 } = process.env
 
-module.exports = {
+export default {
     dbUser : DB_USER,
     dbPassword : DB_PASSWORD,
     adress : ADRESS,

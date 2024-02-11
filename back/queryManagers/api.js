@@ -1,7 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
-const {placeWall, init, moveCharacter} = require("../logic/ManagerSocketGame").game;
-const {signin, login} = require("../login.js").log;
-const jwt = require('jsonwebtoken');
+import {signin, login} from "../login.js";
+//const jwt = require('jsonwebtoken');
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -61,4 +60,4 @@ function addCors(response) {
     response.setHeader('Access-Control-Allow-Credentials', true);
 }
 
-exports.manage = manageRequest;
+export {manageRequest as manage};

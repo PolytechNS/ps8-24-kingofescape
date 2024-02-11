@@ -1,14 +1,15 @@
 // The http module contains methods to handle http queries.
-const http = require('http')
+import * as http from 'http';
 // Let's import our logic.
-const fileQuery = require('./queryManagers/front.js')
-const apiQuery = require('./queryManagers/api.js')
-const {initSocket} = require("./logic/ManagerSocketGame").game;
-const {Server} = require("socket.io");
+import * as fileQuery from './queryManagers/front.js'
+import * as apiQuery from './queryManagers/api.js'
+import {Server} from "socket.io";
+import {initSocket} from "./logic/ManagerSocketGame.js";
+// Let's import our logic.
+//const {initSocket} = require("./logic/ManagerSocketGame").game;
+//import Server from "socket.io";
 //const {run} = require("./exemple_DB.js");
 
-
-//run().catch(console.dir);
 const server = http.createServer(function (request, response) {
 
     // First, let's check the URL to see if it's a REST request or a file request.
@@ -50,7 +51,7 @@ const io = new Server(server, {
     }
 });
 
-// initSocket(io);
+initSocket(io);
 
 
 /*

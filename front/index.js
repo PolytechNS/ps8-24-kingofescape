@@ -1,4 +1,3 @@
-const sqlite3 = require('sqlite3').verbose();
 function login() {
     let url = 'http://localhost:8000/api/login';
     let data = {username: 'exemple' , mdp: 'exemple'};
@@ -20,6 +19,6 @@ function changePage() {
     let url = s.split("?")[0];
     let index = url.lastIndexOf("/");
     let newUrl = url.substring(0, index + 1);
-    newUrl += "src/jeu/jeu.html";
+    newUrl += "src/jeu_local/jeu_local.html";
     window.location.href = newUrl;
 }

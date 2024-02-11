@@ -1,4 +1,4 @@
-export default class Coordinate {
+class Coordinate {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -11,4 +11,10 @@ export default class Coordinate {
     static toNumberXY(x, y) {
         return x * 10 + y;
     }
+
+    static toNumberCoordinate(pos) {
+        return new Coordinate(Math.floor(pos / 10), pos % 10);
+    }
 }
+
+export {Coordinate};

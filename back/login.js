@@ -1,6 +1,6 @@
-const { MongoClient } = require("mongodb");
-const {urlAdressDb} = require("./env/env.js");
-const jwt = require('jsonwebtoken');
+import { MongoClient } from "mongodb";
+import urlAdressDb from "./env/env.js";
+import jwt from 'jsonwebtoken';
 
 
 async function signin(json, response) {
@@ -64,4 +64,4 @@ async function login(json, response) {
 
 }
 
-exports.log = {signin, login};
+export {signin, login};

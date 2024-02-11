@@ -15,10 +15,10 @@ function login() {
 }
 
 function changePage() {
-    let s = window.location.href;
+    /*let s = window.location.href;
     let url = s.split("?")[0];
     let index = url.lastIndexOf("/");
     let newUrl = url.substring(0, index + 1);
-    newUrl += "../jeu/jeu.html";
-    window.location.href = newUrl;
+    newUrl += "../jeu_local/jeu_local.html";*/
+    window.location.href = 'http://localhost:8000/src/mode/mode.html';
 }
