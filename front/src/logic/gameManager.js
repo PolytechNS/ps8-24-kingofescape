@@ -5,15 +5,25 @@ import {GameState}  from "./gameState.js";
 import {VisibilityMatrix} from "./visibilityMatrix.js";
 
 class GameManager {
-    constructor() {
-        this.graphe = initGraph();
-        let player1 = new Character(new Coordinate(0, 4));
-        let player2 = new Character(new Coordinate(8, 4));
-        this.gameState1 = new GameState(player1);
-        this.gameState2 = new GameState(player2);
-        this.actionRealise = undefined;
-        this.visibilityMatrix = new VisibilityMatrix(player1.coordinate, player2.coordinate);
+    constructor(gameState1, gameState2, graph, visibilityMatrix) {
+        if (gameState1 === undefined || gameState2 === undefined || graph === undefined || visibilityMatrix === undefined) {
+            this.graphe = initGraph();
+            let newPlayer1 = new Character(new Coordinate(0, 4));
+            let newPlayer2 = new Character(new Coordinate(8, 4));
+            this.gameState1 = new GameState(newPlayer1);
+            this.gameState2 = new GameState(newPlayer2);
+            this.actionRealise = undefined;
+            this.visibilityMatrix = new VisibilityMatrix(newPlayer1.coordinate, newPlayer2.coordinate);
+        }
+        else {
+            this.gameState1 = gameState1;
+            this.gameState2 = gameState2;
+            this.graphe = graph;
+            this.actionRealise = undefined;
+            this.visibilityMatrix = visibilityMatrix;
+        }
     }
+
 
     placeWall(wall) {
         let isPlayerOne = this.isPlayerOne();

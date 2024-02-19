@@ -4,6 +4,7 @@
 import {GameManagerIA} from "./gameManagerIA.js";
 import {Coordinate} from "../../front/src/logic/coordinate.js";
 import {Wall} from "../../front/src/logic/wall.js";
+import {save, load} from "../save/save.js";
 let game;
 
 /*function verifyToken(socket) {
@@ -25,7 +26,6 @@ function initSocket(io) {
 
         socket.on('setup', (socket) => {
             game = new GameManagerIA(2);
-            console.log(game);
             /*if (verifyToken(socket)) {
                 console.log("ok");
             }
@@ -33,6 +33,12 @@ function initSocket(io) {
                 console.log("ko");
                 socket.disconnect();
             }*/
+        });
+
+        socket.on('save', () => {
+            // A terminer
+            //let json = save('temp', game.gameManager);
+            //load('temp', json);
         });
 
         socket.on('move', (json) => {

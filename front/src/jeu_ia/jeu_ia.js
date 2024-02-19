@@ -65,7 +65,7 @@ function placeWall(idDiv) {
 }
 
 
-
+// A modifier quand on choisira le numéro du joueur
 createTable(new Coordinate(0, 4), true, move, placeWall);
 
 export {endTurn};
