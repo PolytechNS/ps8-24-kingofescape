@@ -4,12 +4,9 @@ html {
 }
 
 body {
-    display: grid;
-    grid-template-rows: 10% 90%;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    background-image: url('../../../Fond_Intro.jpg'); 
+    background-size: cover;
+    background-position: center;
 }
 
 #catchphrases {

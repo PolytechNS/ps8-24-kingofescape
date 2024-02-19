@@ -7,7 +7,7 @@ body, html {
 }
 
 .homepage {
-    background-image: url('img.png');
+    background-image: url('../picture/img.png');
     height: 100vh;
     width: 100vw;
     background-position: center;

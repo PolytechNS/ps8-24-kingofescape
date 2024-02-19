@@ -25,14 +25,14 @@ body {
     height: 100%;
     width: 100%;
     background-color: #FFF2E3;
-    background-image: url('mur.jpg');
+    background-image: url('../picture/mur.jpg');
     background-size: contain;
     background-repeat: repeat;
     
 }
 
 .flag {
-    background-image: url('banniere.png');
+    background-image: url('../picture/banniere.png');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -47,7 +47,7 @@ body {
 
 #buttonSucess {
     grid-column: 2/3;
-    background-image: url('coupe.png');
+    background-image: url('../picture/coupe.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 50px;
@@ -57,7 +57,7 @@ body {
 
 #buttonFriends {
     grid-column: 1/2;
-    background-image: url('Ajout_ami.png');
+    background-image: url('../picture/Ajout_ami.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 50px;
@@ -104,7 +104,7 @@ header {
     grid-column: auto;
     display: grid;
     grid-template-rows: 80% 20%;
-    background-image: url('mode.png');
+    background-image: url('../picture/mode.png');
     background-size: contain;
     background-repeat: no-repeat;
     margin : 10px;
@@ -116,7 +116,7 @@ header {
 
 #continue {
     grid-row: 1/2;
-    background-image: url('continue.png');
+    background-image: url('../picture/continue.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 130px;
@@ -135,7 +135,7 @@ header {
 
 #local {
     grid-row: 1/2;
-    background-image: url('local.png');
+    background-image: url('../picture/local.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 110px;
@@ -154,7 +154,7 @@ header {
 
 #IA {
     grid-row: 1/2;
-    background-image: url('IA.png');
+    background-image: url('../picture/IA.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 120px;
@@ -173,7 +173,7 @@ header {
 
 #multiplayer {
     grid-row: 1/2;
-    background-image: url('multi.png');
+    background-image: url('../picture/multi.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 130px;
