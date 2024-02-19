@@ -138,11 +138,11 @@ header {
 }
 
 .wallPlayer1 {
-    background-image: url('gris.jpg');
+    background-image: url('../picture/gris.jpg');
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 .wallPlayer2 {
-    background-image: url('beige.jpg');
+    background-image: url('../picture/beige.jpg');
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
 }
