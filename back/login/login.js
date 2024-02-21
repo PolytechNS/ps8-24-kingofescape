@@ -1,6 +1,6 @@
-import { MongoClient } from "mongodb";
-import urlAdressDb from "./env/env.js";
-import jwt from 'jsonwebtoken';
+const { MongoClient } = require("mongodb");
+const { urlAdressDb } = require("../env/env.js");
+const jwt = require('jsonwebtoken');
 
 
 async function signin(json, response) {
@@ -18,7 +18,6 @@ async function signin(json, response) {
         if (user) {
             response.statusCode = 404;
             response.end('User already exists');
-            return;
         } else {
             await users.collection("Users").insertOne({username:username, password : token});
             response.statusCode = 200;
@@ -54,7 +53,6 @@ async function login(json, response) {
         } else {
             response.statusCode = 404;
             response.end('Password does not corespond to the username');
-            return;
         }
     } catch (error) {
         console.log(error);
@@ -64,4 +62,4 @@ async function login(json, response) {
 
 }
 
-export {signin, login};
+exports.login = {signin, login};
