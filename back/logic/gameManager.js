@@ -35,9 +35,9 @@ class GameManager {
         let isPlayer1 = playerNumber === 1;
 
         if (action.action === "wall")
-            return this.#playWall(action.value, isPlayer1);
+            this.#playWall(action.value, isPlayer1);
         else if (action.action === "move")
-            return this.#playMove(action.value, isPlayer1);
+            this.#playMove(action.value, isPlayer1);
     }
 
     /**
@@ -113,7 +113,7 @@ class GameManager {
     getPlayerSee(playerNumber) {
         let isPlayer1 = playerNumber === 1;
         let coordinatePlayer1 = isPlayer1 ? this.gameStatePlayer1.positionPlayer : undefined;
-        let coordinatePlayer2 = isPlayer1 ? this.gameStatePlayer2.positionPlayer : undefined;
+        let coordinatePlayer2 = isPlayer1 ?  undefined : this.gameStatePlayer2.positionPlayer;
 
         if (coordinatePlayer1 === undefined && this.visibilityMatrix.canSeeOtherPlayer(this.gameStatePlayer1.positionPlayer, this.gameStatePlayer2.positionPlayer, isPlayer1))
             coordinatePlayer1 = this.gameStatePlayer1.positionPlayer;
