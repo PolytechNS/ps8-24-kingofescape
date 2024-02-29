@@ -118,4 +118,42 @@ describe('visibilityMatrix', () => {
             }
         }
     })
+
+    it ('the player 1 see the line 4 to 8, the player 2 see the line 0 to 4', () => {
+        let visibilityMatrix = new VisibilityMatrix("11", "99");
+
+        for (let i = 4; i >= 1; i--) {
+            for (let j = 1; j <= 9; j++) {
+                assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + String(i), true), true);
+                assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + String(i), false), false);
+            }
+        }
+
+        for (let i = 9; i > 5; i--) {
+            for (let j = 1; j <= 9; j++) {
+                assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + String(i), false), true);
+                assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + String(i), true), false);
+            }
+        }
+
+        for (let j = 1; j <= 9; j++) {
+            assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + "5", true), true);
+            assert.strictEqual(visibilityMatrix.canSeeSquare(String(j) + "5", false), true);
+        }
+    });
+
+    it ('the player 1 "48" see the near player 2"', () => {
+        let visibilityMatrix = new VisibilityMatrix("11", "99");
+        let tab = ["49", "47", "58", "38"];
+
+        for (let i = 0; i < tab.length; i++) {
+            assert.strictEqual(visibilityMatrix.canSeeOtherPlayer("48", tab[i], true), true);
+        }
+    });
+
+    it ('the player 1 "11" see the player 2 "23" but the player 2 don\'t see the player 1', () => {
+        let visibilityMatrix = new VisibilityMatrix("11", "23");
+        assert.strictEqual(visibilityMatrix.canSeeOtherPlayer("11","23", true), true);
+        assert.strictEqual(visibilityMatrix.canSeeOtherPlayer("11","23", false), false);
+    });
 });
