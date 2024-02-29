@@ -1,6 +1,6 @@
 const Graph = require('./graph.js').graph;
 const VisibilityMatrix = require('./visibilityMatrix.js').visibilityMatrix;
-const GameStatePlayer = require('./gameStatePlayer.js').gameStatePlayer;
+const GameStatePlayer = require('./gameStatePlayer.js').GameState;
 
 /**
  * Class representing the game includes the two players, the graph of the game and the visibilityMatrix.
@@ -103,6 +103,25 @@ class GameManager {
         }
 
         return possibleMoves;
+    }
+
+    /**
+     * Get the position of the players that the player can see.
+     * @param playerNumber - The number of the player.
+     * @returns {string[]} - The position of the players that the player can see.
+     */
+    getPlayerSee(playerNumber) {
+        let isPlayer1 = playerNumber === 1;
+        let coordinatePlayer1 = isPlayer1 ? this.gameStatePlayer1.positionPlayer : undefined;
+        let coordinatePlayer2 = isPlayer1 ? this.gameStatePlayer2.positionPlayer : undefined;
+
+        if (coordinatePlayer1 === undefined && this.visibilityMatrix.canSeeOtherPlayer(this.gameStatePlayer1.positionPlayer, this.gameStatePlayer2.positionPlayer, isPlayer1))
+            coordinatePlayer1 = this.gameStatePlayer1.positionPlayer;
+
+        if (coordinatePlayer2 === undefined && this.visibilityMatrix.canSeeOtherPlayer(this.gameStatePlayer1.positionPlayer, this.gameStatePlayer2.positionPlayer, isPlayer1))
+            coordinatePlayer2 = this.gameStatePlayer2.positionPlayer;
+
+        return [coordinatePlayer1, coordinatePlayer2];
     }
 }
 

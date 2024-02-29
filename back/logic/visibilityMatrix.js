@@ -93,6 +93,36 @@ class VisibilityMatrix {
         for (let i = 4; i < 12; i++)
             this.#writeValueInMatrix(x + xArray[i], y + yArray[i], multiply);
     }
+
+    /**
+     * Check if a player can see a square.
+     * @param coordinate - The coordinate to check.
+     * @param isPlayerOne - true if it's player one, false if it's player two.
+     * @returns {boolean} - True if the player can see the square, else false.
+     */
+    canSeeSquare(coordinate, isPlayerOne) {
+        let x = 9 - Number.parseInt(coordinate[1]);
+        let y = Number.parseInt(coordinate[0]) - 1;
+        return (isPlayerOne && this.matrix[x][y] >= 0) || (!isPlayerOne && this.matrix[x][y] <= 0);
+    }
+
+    /**
+     * Check if a player can see the other player.
+     * @param coordinatePlayer1 - The coordinate of the first player.
+     * @param coordinatePlayer2 - The coordinate of the second player.
+     * @param isPlayerOne - true if it's player one, false if it's player two.
+     * @returns {boolean} - True if the player can see the other player, else false.
+     */
+    canSeeOtherPlayer(coordinatePlayer1, coordinatePlayer2, isPlayerOne) {
+        let coordinateToSee = isPlayerOne ? coordinatePlayer2 : coordinatePlayer1;
+        let coordinate = Number.parseInt(isPlayerOne ? coordinatePlayer1 : coordinatePlayer2);
+
+        if (String(coordinate + 1) === coordinateToSee || String(coordinate - 1) === coordinateToSee ||
+            String(coordinate + 10) === coordinateToSee || String(coordinate - 10) === coordinateToSee)
+            return true;
+
+        return this.canSeeSquare(coordinateToSee, isPlayerOne);
+    }
 }
 
 exports.visibilityMatrix = VisibilityMatrix;
