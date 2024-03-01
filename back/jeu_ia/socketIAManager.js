@@ -1,5 +1,5 @@
 const GameIA = require('./gameIA.js').gameIA;
-
+const jwt = require('jsonwebtoken');
 /**
  * Sent the move of IA to the player
  * @param move - The move that the IA has done
@@ -49,6 +49,21 @@ function endGame(game, socket, move, aiPlay) {
     }
 }
 
+function gestionToken(token, socket) {
+    if (token === undefined) {
+        socket.emit('endGame', "Vous n'êtes pas connecter");
+        socket.disconnect();
+    }
+
+    try {
+        jwt.verify(token, "ps8-koe", {algorithm: 'HS256', noTimestamp: true});
+    }
+    catch (e) {
+        socket.emit('endGame', "Vous n'êtes pas connecter");
+        socket.disconnect();
+    }
+}
+
 /**
  * Gestion de la socket pour le jeu IA
  * @param io - The socket io
@@ -67,7 +82,7 @@ function gestionSocketGameIA(io) {
             let coordinatePlayer2 = aiPlay === 2 ? "69" : data.coordinatePlayer;
 
             game = new GameIA(coordinatePlayer1, coordinatePlayer2);
-
+            gestionToken(data.token, socket);
             if (aiPlay === 1) {
                 setTimeout(() => {
                     let move = game.playIA();

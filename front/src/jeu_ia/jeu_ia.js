@@ -51,8 +51,8 @@ function endTurn() {
 
 socket.on('connect', () => {
     console.log('Connecté au serveur.');
-
-    socket.emit('setup',{AIplays: aiPlay, coordinatePlayer: coordinatePlayer});
+    let token = document.cookie.split('=')[1];
+    socket.emit('setup',{AIplays: aiPlay, coordinatePlayer: coordinatePlayer, token: token});
     createTable(coordinatePlayer, aiPlay === 2, move, wall);
 
     socket.on('updateBoard', (gameState) => {
@@ -81,6 +81,11 @@ socket.on('connect', () => {
 
     socket.on('endGame', (result) => {
         window.alert(result);
+    });
+
+    socket.on('errorSetup', (result) => {
+        window.alert(result);
+        window.location.href = window.location.origin + '/src/mode/mode.html';
     });
 });
 

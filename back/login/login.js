@@ -44,9 +44,6 @@ async function login(json, response) {
 
         const user = await users.collection("Users").findOne({username : username});
 
-        console.log(user.password);
-        console.log(token);
-
         if (user && user.password === token) {
             response.statusCode = 200;
             response.end(token);
