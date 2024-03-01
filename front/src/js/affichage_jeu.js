@@ -1,6 +1,6 @@
 /**
  * Fonction qui crée le plateau de jeu
- * @param coordinate - The coordinate of the player 1
+ * @param coordinate - The coordinate of the player
  * @param isPlayerOne - true if the player is player one, false if it's player two.
  * @param move - The function move
  * @param placeWall - The function wall
@@ -90,4 +90,25 @@ function removePlayer(isPlayerOne) {
         div.parentNode.removeChild(div);
 }
 
-export {createTable, printPlayer, removePlayer, printWall};
+/**
+ * Fonction qui demande la coordonnée du joueur
+ * @param numberJoueur - The number of the player
+ * @param coordinateX - The coordinate X of the player to must have
+ * @returns {string} - The coordinate of the player
+ */
+function getCoordinate(numberJoueur, coordinateX) {
+    let coordinatePlayer;
+
+    while(1) {
+        coordinatePlayer = window.prompt(`Entrez la coordonnée du joueur${numberJoueur} entre 1${coordinateX} et 9${coordinateX}`);
+
+        if (coordinatePlayer == null || coordinatePlayer.length !== 2 || coordinatePlayer[1] !== coordinateX)
+            window.alert("Coordonnée invalide");
+        else
+            break;
+    }
+
+    return coordinatePlayer;
+}
+
+export {createTable, printPlayer, removePlayer, printWall, getCoordinate};

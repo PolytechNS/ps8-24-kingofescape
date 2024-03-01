@@ -1,23 +1,8 @@
-import {createTable, printPlayer, printWall, removePlayer} from "../js/affichage_jeu.js";
+import {createTable, printPlayer, printWall, removePlayer, getCoordinate} from "../js/affichage_jeu.js";
 import {GameLocal} from "../logic_front/gameLocal.js";
 
 let game;
 setup();
-
-function getCoordinate(numberJoueur, coordinateX) {
-    let coordinatePlayer;
-
-    while(1) {
-        coordinatePlayer = window.prompt(`Entrez la coordonnée du joueur${numberJoueur} entre 1${coordinateX} et 9${coordinateX}`);
-
-        if (coordinatePlayer == null || coordinatePlayer.length !== 2 || coordinatePlayer[1] !== coordinateX)
-            window.alert("Coordonnée invalide");
-        else
-            break;
-    }
-
-    return coordinatePlayer;
-}
 
 function setup() {
     let coordinatePlayer1 = getCoordinate(1, '1');
@@ -84,4 +69,4 @@ function endTurn() {
     beginTurn();
 }
 
-export {endTurn}
+export {endTurn, getCoordinate}
