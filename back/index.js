@@ -1,10 +1,9 @@
 // The http module contains methods to handle http queries.
 const http = require('http');
-// Let's import our logic.
 const fileQuery = require('./queryManagers/front.js');
 const apiQuery = require('./queryManagers/api.js');
 const { Server } = require("socket.io");
-
+const gestionSocketIA = require('./jeu_ia/socketIAManager.js').gameIA;
 
 const server = http.createServer(function (request, response) {
 
@@ -42,3 +41,5 @@ const io = new Server(server, {
         origin: "*", methods: ["GET", "POST", "PUT", "PATCH"], allowedHeaders: "*", credentials: true
     }
 });
+
+gestionSocketIA(io);
