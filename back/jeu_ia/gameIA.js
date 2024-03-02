@@ -1,6 +1,9 @@
 const GameManager = require("../logic/gameManager.js").gameManager;
 const Arbitre = require("../logic/arbitre.js").arbitre;
-const computeMove = require("../ai/ai.js").ia;
+const setup = require("../ai/kingofescape.js").setup;
+const nextMove = require("../ai/kingofescape.js").nextMove;
+const correction = require("../ai/kingofescape.js").correction;
+const updateBoard = require("../ai/kingofescape.js").updateBoard;
 
 /**
  * Class GameIA for the game IA
@@ -13,11 +16,52 @@ class GameIA {
      * @param AIPlay - The number of the player who is the IA
      */
     constructor(position1, position2, AIPlay) {
-        this.game = new GameManager(position1, position2)
+        let positionIA = setup(AIPlay);
+
+        if (AIPlay === 1)
+            this.game = new GameManager(positionIA, position2)
+        else
+            this.game = new GameManager(position1, positionIA);
+
         this.arbitre = new Arbitre();
         this.AIPlay = AIPlay;
         this.currentPlayer = 1;
         this.actionRealise = undefined;
+    }
+
+    #generateGameState() {
+        let board = [];
+
+        for (let i = 9; i >= 1; i--) {
+            let row = [];
+            for (let j = 1; j <= 9; j++) {
+                if (this.game.visibilityMatrix.canSeeSquare(String(j) + String(i), this.currentPlayer === 1))
+                    row.push(0);
+                else
+                    row.push(-1);
+            }
+            board.push(row);
+        }
+
+        let positionPlayers = this.game.getPlayerSee(this.currentPlayer);
+
+        if (this.AIPlay === 1) {
+            board[9 - Number.parseInt(positionPlayers[0][1])][Number.parseInt(positionPlayers[0][0]) - 1] = 1;
+
+            if (positionPlayers[1] !== undefined)
+                board[9 - Number.parseInt(positionPlayers[1][1])][Number.parseInt(positionPlayers[1][0]) - 1] = 2;
+        }
+        else {
+            board[9 - Number.parseInt(positionPlayers[1][1])][Number.parseInt(positionPlayers[1][0]) - 1] = 1;
+
+            if (positionPlayers[0] !== undefined)
+                board[9 - Number.parseInt(positionPlayers[0][1])][Number.parseInt(positionPlayers[0][0]) - 1] = 2;
+        }
+
+        let opponentWalls = (this.AIPlay === 1)? this.game.gameStatePlayer2.walls : this.game.gameStatePlayer1.walls;
+        let ownWalls = (this.AIPlay === 1)? this.game.gameStatePlayer1.walls : this.game.gameStatePlayer2.walls;
+
+        return {opponentWalls: opponentWalls, ownWalls: ownWalls, board: board};
     }
 
     /**
@@ -25,18 +69,20 @@ class GameIA {
      * @returns {*|string} - The action that the IA has done
      */
     playIA() {
-        let position = this.currentPlayer === 1 ? this.game.gameStatePlayer1.positionPlayer : this.game.gameStatePlayer2.positionPlayer;
-        let move = computeMove(Number.parseInt(position));
+        let game = this.#generateGameState();
+        let move = nextMove(game);
 
         try {
-            move = {action: "move", value: move};
             this.game.playAction(move, this.currentPlayer);
         } catch (e) {
             console.log(move);
             move = {action: "idle"}
+            correction(move);
             console.log(e);
         }
 
+        game = this.#generateGameState();
+        updateBoard(game);
         this.update();
         return move;
     }
