@@ -81,7 +81,7 @@ function gestionSocketGameIA(io) {
             let coordinatePlayer1 = aiPlay === 1 ? "31" : data.coordinatePlayer;
             let coordinatePlayer2 = aiPlay === 2 ? "69" : data.coordinatePlayer;
 
-            game = new GameIA(coordinatePlayer1, coordinatePlayer2);
+            game = new GameIA(coordinatePlayer1, coordinatePlayer2, aiPlay);
             gestionToken(data.token, socket);
             if (aiPlay === 1) {
                 setTimeout(() => {
