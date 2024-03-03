@@ -1,3 +1,5 @@
+// Default variable
+
 let graph;
 let position;
 let positionOtherIA;
@@ -6,13 +8,23 @@ let turn = 0;
 let lastMove;
 let numberOwnWalls = 0;
 
+
+/**
+ * Graph for the IA
+ */
 class GraphIA {
+    /**
+     * Default Constructor of the class GraphIA
+     */
     constructor() {
         this.graph = new Map();
         this.wall = new Map();
         this.#initGraph();
     }
 
+    /**
+     * Initialize the graph.
+     */
     #initGraph() {
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
@@ -36,12 +48,20 @@ class GraphIA {
         }
     }
 
+    /**
+     * Verify if it's possible to place a wall.
+     * @param wall - The wall to place ['yx', 0 || 1].
+     * @returns {boolean} - True if it's possible to place the wall, else false.
+     */
+
     verifyPossibilityToPlaceWall(wall) {
+        // Get the 4 coordinate of wall
         let coordinate1 = wall[0];
         let coordinate2 = String(Number.parseInt(coordinate1) + 10);
         let coordinate3 = String(Number.parseInt(coordinate1) - 1);
         let coordinate4 = String(Number.parseInt(coordinate1) + 9);
 
+        // Verify if edge available to place wall
         let edgeAvailable12 = this.verifyEdge(coordinate1, coordinate2);
         let edgeAvailable13 = this.verifyEdge(coordinate1, coordinate3);
         let edgeAvailable24 = this.verifyEdge(coordinate2, coordinate4);
@@ -54,13 +74,19 @@ class GraphIA {
         return false;
     }
 
+    /**
+     * Add a wall to the graph.
+     * @param wall - The wall to place ['yx', 0 || 1].
+     */
     addWall(wall) {
+        // Get the 4 coordinate of wall
         let numberPosition1 = Number.parseInt(wall[0]);
         let position1 = wall[0];
         let position2 = String(numberPosition1 + 10);
         let position3 = String(numberPosition1 - 1);
         let position4 = String(numberPosition1 + 9);
 
+        // Depending on orientation, delete the 2 edge in horizontal or vertical
         if (wall[1] === 1) {
             this.deleteEdgeMap(this.graph, position1, position2);
             this.deleteEdgeMap(this.graph, position3, position4);
@@ -73,17 +99,27 @@ class GraphIA {
         this.wall.set(position1, wall[1]);
     }
 
+    /**
+     * Get all the wall.
+     * @returns {string[][]} get all Wall with value ['yx', 0 || 1].
+     */
     getAllWall() {
         return [...this.wall].filter(wall => wall[1] === -1);
     }
 
+    /**
+     * Remove wall in the graph for simulate move in graph
+     * @param wall - The wall to remove ['yx', 0 || 1].
+     */
     removeWall(wall) {
+        // Get the 4 coordinate of wall
         let numberPosition1 = Number.parseInt(wall[0]);
         let position1 = wall[0];
         let position2 = String(numberPosition1 + 10);
         let position3 = String(numberPosition1 - 1);
         let position4 = String(numberPosition1 + 9);
 
+        // In order of orientation, add the 2 edge in horizontal or vertical
         if (wall[1] === 1) {
             this.addEdgeMap(this.graph, position1, position2);
             this.addEdgeMap(this.graph, position3, position4);
@@ -96,6 +132,12 @@ class GraphIA {
         this.wall.set(position1, -1);
     }
 
+    /**
+     * Verify if exist an edge for move a player
+     * @param coordinate1 - the coordinate one of edge
+     * @param coordinate2 - the coordinate two of edge
+     * @returns {boolean} - True if it exists an edge
+     */
     verifyEdge(coordinate1, coordinate2) {
         if (this.graph.has(coordinate1))
             return this.graph.get(coordinate1).has(coordinate2);
@@ -103,17 +145,35 @@ class GraphIA {
         return false;
     }
 
+    /**
+     * Add an edge in the graph
+     * @param map - the graph
+     * @param vertex - the vertex to add in node
+     * @param node - the node to add in vertex
+     */
     addEdgeMap(map, vertex, node) {
         map.get(vertex).add(node);
         map.get(node).add(vertex);
     }
 
+    /**
+     * Delete an edge in the graph
+     * @param map - the graph
+     * @param vertex - the vertex to remove in node
+     * @param node - the node to remove in vertex
+     */
     deleteEdgeMap(map, vertex, node) {
         map.get(vertex).delete(node);
         map.get(node).delete(vertex);
     }
 }
 
+/**
+ * Get the shortest Path between two position
+ * @param position - The position of the player
+ * @param positionXToGoal - The position X of the goal
+ * @returns {string[]} - The shortest path between the two position
+ */
 function shortestPath(position, positionXToGoal) {
     let distances = new Map();
     let previous = new Map();
@@ -182,6 +242,11 @@ function shortestPath(position, positionXToGoal) {
     return path;
 }
 
+/**
+ * Evaluate the game state for score minimax
+ * @param gameState - The game state
+ * @returns {number} - The score of the game state depending on the position of the player
+ */
 function evaluate(gameState) {
     let distance = shortestPath(gameState.position, (AIPlay === 1) ? "99" : "11");
     let distanceOtherIA = shortestPath(gameState.positionOtherIA, (AIPlay === 2) ? "99" : "11");
@@ -191,6 +256,11 @@ function evaluate(gameState) {
     return distanceOtherIA.length - distance.length;
 }
 
+/**
+ * Get all the moves for the IA
+ * @param position - The position of the player
+ * @returns {*[]} - All the moves possible for the IA
+ */
 function getAllMoves(position) {
     let walls = graph.getAllWall();
     let moves = [];
@@ -225,6 +295,14 @@ function getAllMoves(position) {
     return moves;
 }
 
+/**
+ * Initialisation of Minimax algorithm for the IA
+ * @param gameState - The game state containing the positions of players
+ * @param alpha - The alpha value for the alpha-beta pruning
+ * @param beta - The beta value for the alpha-beta pruning
+ * @param depth - The depth of the minimax algorithm
+ * @returns {*} - The best move for the IA depending on the depth
+ */
 function minimaxBegin(gameState, alpha, beta, depth) {
     let maxEval = -Infinity;
     let bestMove;
@@ -265,20 +343,33 @@ function minimaxBegin(gameState, alpha, beta, depth) {
     return bestMove;
 }
 
+
+/**
+ * Minimax algorithm for the IA
+ * @param gameState - The game state containing the positions of players
+ * @param alpha - The alpha value for the alpha-beta pruning
+ * @param beta - The beta value for the alpha-beta pruning
+ * @param depth - The depth of the minimax algorithm
+ * @param isMaximing - if is the maximing player
+ * @returns {number} - The score of the game state depending on the position of the player
+ */
 function minimax(gameState, alpha, beta, depth, isMaximing) {
     if (depth === 0)
-        return evaluate(gameState, positionOtherIA);
+        return evaluate(gameState);
 
     if (isMaximing) {
         let maxEval = -Infinity;
         let moves = getAllMoves(gameState.position);
+
         for (let value of moves) {
             if (value.wall !== undefined) {
                 graph.addWall(value.wall);
                 let eval = minimax(gameState, alpha, beta, depth - 1, false);
+
                 maxEval = Math.max(maxEval, eval);
                 alpha = Math.max(alpha, eval);
                 graph.removeWall(value.wall);
+
                 if (beta <= alpha)
                     break;
             }
@@ -294,9 +385,11 @@ function minimax(gameState, alpha, beta, depth, isMaximing) {
             if (value.wall !== undefined) {
                 graph.addWall(value.wall);
                 let eval = minimax(gameState, alpha, beta, depth - 1, true);
+
                 minEval = Math.min(minEval, eval);
                 beta = Math.min(beta, eval);
                 graph.removeWall(value.wall);
+
                 if (beta <= alpha)
                     break;
             }
@@ -306,6 +399,10 @@ function minimax(gameState, alpha, beta, depth, isMaximing) {
     }
 }
 
+/**
+ * Function to send the 3 first move in the IA depending on AIPlay
+ * @returns {{action: string, value: (string|number)[]}} - An action and a value
+ */
 function firstsMoves() {
     if (AIPlay === 1) {
         if (turn === 1) {
@@ -331,6 +428,11 @@ function firstsMoves() {
     }
 }
 
+/**
+ * Heuristique for the IA
+ * @param gameState - The game state containing the positions of players
+ * @returns {{action: string, value: ([string,number]|string)}}
+ */
 function heuristique(gameState) {
     if (turn < 3 && positionOtherIA === undefined) {
         turn++;
@@ -351,9 +453,14 @@ function heuristique(gameState) {
     }
 }
 
+/**
+ * Get the position of the players in the board
+ * @param board - the board containing the position of the players
+ */
 function getPlayers(board) {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
+
             if (board[i][j] === 1)
                 position = String((j + 1) * 10 + (9 - i));
             else if (board[i][j] === 2)
@@ -362,6 +469,11 @@ function getPlayers(board) {
     }
 }
 
+/**
+ * Fonction to setup the game of IA
+ * @param AiPlay - the number of when the AI should play
+ * @returns {string} - The position to start AI depending on the AIPlay
+ */
 function setup(AiPlay) {
     graph = new GraphIA();
     positionOtherIA = undefined;
@@ -376,19 +488,35 @@ function setup(AiPlay) {
     return position;
 }
 
+/**
+ * Function to send the move of IA
+ * @param gameState - The game state containing the positions of players
+ * @returns {{action: string, value: ([string,number]|string)}} - The move of the IA
+ */
 function nextMove(gameState) {
     position = undefined;
+
+    // Get the time
     let time = performance.now();
     getPlayers(gameState.board);
+
+    // Add wall in the graph
     for (let wall of gameState.opponentWalls)
         graph.addWall(wall);
 
+    // Get the move in heuristique
     let move = heuristique(gameState);
+
+    // Print the time of the move
     console.log(performance.now() - time);
+
     lastMove = move;
     return move;
 }
 
+/**
+ * Function if the move is not legal
+ */
 function correction(rightMove) {
     if (lastMove.action === "wall") {
         graph.addWall(lastMove.value);
@@ -397,6 +525,11 @@ function correction(rightMove) {
     return true;
 }
 
+/**
+ * After the move of the IA, update the board
+ * @param gameState - The game state containing the new positions of players
+ * @returns {boolean} - True
+ */
 function updateBoard(gameState) {
     positionOtherIA = undefined;
     numberOwnWalls = gameState.ownWalls.length;
@@ -406,8 +539,6 @@ function updateBoard(gameState) {
         graph.addWall(wall);
     return true;
 }
-
-//setup(1);
 
 exports.setup = setup;
 exports.nextMove = nextMove;

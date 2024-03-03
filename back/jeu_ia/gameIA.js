@@ -29,9 +29,14 @@ class GameIA {
         this.actionRealise = undefined;
     }
 
+    /**
+     * Generate the game state for the IA
+     * @returns {{ownWalls: [], opponentWalls: [], board: *[]}} - The wall of the IA, the wall of the opponent and the board containing the visibililty and players
+     */
     #generateGameState() {
         let board = [];
 
+        // Generate the board without player
         for (let i = 9; i >= 1; i--) {
             let row = [];
             for (let j = 1; j <= 9; j++) {
@@ -43,6 +48,7 @@ class GameIA {
             board.push(row);
         }
 
+        // Add player in the board
         let positionPlayers = this.game.getPlayerSee(this.currentPlayer);
 
         if (this.AIPlay === 1) {
@@ -58,6 +64,7 @@ class GameIA {
                 board[9 - Number.parseInt(positionPlayers[0][1])][Number.parseInt(positionPlayers[0][0]) - 1] = 2;
         }
 
+        // Get the wall of the IA and the opponent
         let opponentWalls = (this.AIPlay === 1)? this.game.gameStatePlayer2.walls : this.game.gameStatePlayer1.walls;
         let ownWalls = (this.AIPlay === 1)? this.game.gameStatePlayer1.walls : this.game.gameStatePlayer2.walls;
 
