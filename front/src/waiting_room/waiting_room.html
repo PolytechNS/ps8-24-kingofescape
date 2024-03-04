@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiting for Player</title>
+    <link rel="stylesheet" href="waiting_room.css">
+</head>
+<body>
+<header>
+    <div id="parameter">
+        <button onclick="changePage()" id="buttonParameter"></button>
+    </div>
+    <div id="notification">
+        <button onclick="changePage()" id="buttonNotification"></button>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage()" id="buttonLogin">LOGIN</button>
+    </div>
+</header>
+<div id="content">
+    <!-- Text container placed above the waiting picture in the HTML structure -->
+    <div id="textContainer">
+        <p id="textWaiting">Waiting for another player...</p>
+        <div class="dots">•••</div>
+    </div>
+
+    <div id="waitingPicture" style="background-image: url('castle_war.png');"></div>
+    <button onclick="changePage()" id="buttonHome">Home</button>
+</div>
+
+<script src="../js/waiting_room.js"></script>
+</body>
+</html>
