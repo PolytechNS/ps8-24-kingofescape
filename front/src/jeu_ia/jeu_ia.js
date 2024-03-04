@@ -1,71 +1,92 @@
-import {createTable, printPlayer, printWall, removePlayer} from "../js/affichage_jeu.js";
-import {Coordinate} from "../logic/coordinate.js";
-import {Wall} from "../logic/wall.js";
+import {createTable, printPlayer, printWall, getCoordinate, removePlayer} from "../js/affichage_jeu.js";
 
-const socket = io.connect('/api/game');
-let player2Affiche = false;
+let aiPlay = getIAPlay();
+let coordinatePlayer = getCoordinate(3 - aiPlay, (aiPlay === 1)? '9' : '1');
+const socket = io.connect('http://localhost:8000/api/game');
 
-socket.on('connect', () => {
-    console.log('Connecté au serveur.');
-    socket.emit('setup');
+/**
+ * Get the number of the player that the AI will play
+ * @returns {number} - The number of the player that the AI will play
+ */
+function getIAPlay() {
+    let aiPlay;
 
-    socket.on('updateBoardInTurn', (object) => {
-        if (object.move !== undefined) {
-            removePlayer(true);
-            printPlayer(object.move, true);
-        }
-        else {
-            printWall(object.wall, true)
-        }
+    while (true) {
+        aiPlay = window.prompt('L\'IA joue en numéro 1 ou 2 ?');
 
-    });
-
-    socket.on('updateBoard', (data) => {
-        if (player2Affiche)
-            removePlayer(false);
-
-        if (data.ia !== undefined) {
-            printPlayer(data.ia, false);
-            player2Affiche = true;
-        }
+        if (aiPlay === '1' || aiPlay === '2')
+            break;
         else
-            player2Affiche = false;
+            window.alert('Veuillez entrer 1 ou 2');
+    }
 
-        window.alert('C\'est à vous de jouer');
-    });
-
-    socket.on('endGame', () => {
-        window.alert('Partie terminée');
-    });
-});
-
-function move(idDiv) {
-    let split = idDiv.split(' ');
-    let x = Number.parseInt(split[1]);
-    let y = Number.parseInt(split[2]);
-    let newCoordinate = new Coordinate(x, y);
-    socket.emit('move', newCoordinate, (res) => {
-        console.log(res);
-    });
-
+    return Number.parseInt(aiPlay);
 }
 
+/**
+ * Fonction qui affiche le joueur sur le plateau
+ * @param divMoveId - The id of the div where the player will be placed
+ */
+function move(divMoveId) {
+    let position = divMoveId.split(' ')[1];
+    socket.emit('move', {action: "move", value: position});
+}
+
+/**
+ * Fonction qui affiche le mur sur le plateau
+ * @param divMoveId - The id of the div where the wall will be placed
+ */
+function wall(divMoveId) {
+    let split = divMoveId.split(' ');
+    let wall = [split[1], (split[0] === 'V')? 1: 0];
+    socket.emit('move', {action: "wall", value: wall});
+}
+
+/**
+ * Fonction qui supprime le joueur sur le plateau
+ */
 function endTurn() {
     socket.emit('endTurn');
 }
 
-function placeWall(idDiv) {
-    let split = idDiv.split(' ');
-    let letter = split[0];
-    let x = Number.parseInt(split[1]);
-    let y = Number.parseInt(split[2]);
-    let wall = new Wall(new Coordinate(x, y), new Coordinate(x + 1, y + 1), letter === 'V');
-    console.log(wall);
-    socket.emit('placeWall', wall);
-}
+socket.on('connect', () => {
+    console.log('Connecté au serveur.');
+    let token = document.cookie.split('=')[1];
+    socket.emit('setup',{AIplays: aiPlay, coordinatePlayer: coordinatePlayer, token: token});
+    createTable(coordinatePlayer, aiPlay === 2, move, wall);
 
+    socket.on('updateBoard', (gameState) => {
+        window.alert('C\'est à vous de jouer');
 
-// A modifier quand on choisira le numéro du joueur
-createTable(new Coordinate(0, 4), true, move, placeWall);
+        removePlayer(true);
+        removePlayer(false);
+        if (gameState.player1 !== undefined)
+            printPlayer(gameState.player1, true);
+        if (gameState.player2 !== undefined)
+            printPlayer(gameState.player2, false);
+        if (gameState.wall !== undefined)
+            printWall(gameState.wall, aiPlay === 1);
+    });
+
+    socket.on('resultAction', (result) => {
+        if (result.action === "error")
+            window.alert(result.value);
+        else if (result.action === "move") {
+            removePlayer(aiPlay === 2);
+            printPlayer(result.value, aiPlay === 2);
+        }
+        else
+            printWall(result.value, aiPlay === 2);
+    });
+
+    socket.on('endGame', (result) => {
+        window.alert(result);
+    });
+
+    socket.on('errorSetup', (result) => {
+        window.alert(result);
+        window.location.href = window.location.origin + '/src/mode/mode.html';
+    });
+});
 
 export {endTurn};
