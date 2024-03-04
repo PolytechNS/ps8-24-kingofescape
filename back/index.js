@@ -1,14 +1,9 @@
 // The http module contains methods to handle http queries.
-import * as http from 'http';
-// Let's import our logic.
-import * as fileQuery from './queryManagers/front.js'
-import * as apiQuery from './queryManagers/api.js'
-import {Server} from "socket.io";
-import {initSocket} from "./logic/ManagerSocketGame.js";
-// Let's import our logic.
-//const {initSocket} = require("./logic/ManagerSocketGame").game;
-//import Server from "socket.io";
-//const {run} = require("./exemple_DB.js");
+const http = require('http');
+const fileQuery = require('./queryManagers/front.js');
+const apiQuery = require('./queryManagers/api.js');
+const { Server } = require("socket.io");
+const gestionSocketIA = require('./jeu_ia/socketIAManager.js').gameIA;
 
 const server = http.createServer(function (request, response) {
 
@@ -21,12 +16,8 @@ const server = http.createServer(function (request, response) {
 
     try {
         if (request.method === "OPTIONS") {
-            response.setHeader('Access-Control-Allow-Origin', '*');
-            response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-            // Request headers you wish to allow.
-            response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-            // Set to true if you need the website to include cookies in the requests sent to the API.
-            response.setHeader('Access-Control-Allow-Credentials', true);
+            apiQuery.addCors(response);
+            response.end("Cors add");
             response.statusCode = 200;
         }
         // If the URL starts by /api, then it's a REST request (you can change that if you want).
@@ -51,25 +42,4 @@ const io = new Server(server, {
     }
 });
 
-initSocket(io);
-
-
-/*
-io.on('connection', (socket) => {
-    console.log('A user connected');
-
-    socket.on('disconnect', () => {
-        count--;
-        console.log('User disconnected');
-        console.log("count");
-    });
-    console.log(count);
-
-    /* // Gérez ici vos événements personnalisés (par exemple, 'newWall')
-    socket.on('newWall', (wall) => {
-        console.log('Wall received:', wall);
-
-        // Envoyez une réponse au client
-        socket.emit('wallReceived', { status: 'Success' });
-    });
-});*/
+gestionSocketIA(io);

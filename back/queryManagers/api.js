@@ -1,6 +1,5 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
-import {signin, login} from "../login.js";
-//const jwt = require('jsonwebtoken');
+const { signin, login } = require("../login/login.js").login;
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -27,7 +26,7 @@ function manageRequest(request, response) {
                     console.log(json);
                     signin(json, response);
                 }
-    
+
             }
             if (request.method === 'GET') {
                 if (filePath[2] === 'login') {
@@ -36,7 +35,7 @@ function manageRequest(request, response) {
                 }
             }
         });
-        
+
     }
     else {
         response.statusCode = 200;
@@ -60,4 +59,5 @@ function addCors(response) {
     response.setHeader('Access-Control-Allow-Credentials', true);
 }
 
-export {manageRequest as manage};
+exports.manage = manageRequest;
+exports.addCors = addCors;

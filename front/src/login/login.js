@@ -1,25 +1,23 @@
 function login() {
-
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var data = {username:username, password:password};
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let data = {username:username, password:password};
     let url = 'http://localhost:8000/api/login/'+ username +'/' + password;
 
     fetch(url, {
         method: 'get'
     }).then( async (response) => {
         let res = await response.text();
-        document.cookie = "token=" + res + "; SameSite=None; Secure";
-        newUrl = "http://localhost:8000/src/mode/mode.html";
-        window.location.href = newUrl;
+        document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
+        window.location.href = window.location.origin + '/src/mode/mode.html';
     });
 }
 
 function signIn() {
     let url = 'http://localhost:8000/api/signin';
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var data = {username:username, password:password};
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let data = {username:username, password:password};
 
     fetch(url, {
         method: 'post',
@@ -29,8 +27,7 @@ function signIn() {
         body: JSON.stringify(data),
     }).then( async (response) => {
         let res = await response.text();
-        document.cookie = "token=" + res + "; SameSite=None; Secure";
-        newUrl = "http://localhost:8000/src/mode/mode.html";
-        window.location.href = newUrl;
+        document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
+        window.location.href = window.location.origin + '/src/mode/mode.html';
     });
 }
