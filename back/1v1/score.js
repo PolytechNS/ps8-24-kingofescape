@@ -19,6 +19,22 @@ async function getScores(json, response) {
     }
 }
 
+async function getScoresAllUsers(json, response) {
+    const client = new MongoClient(urlAdressDb);
+    client.connect();
+    const users = client.db('sample_mflix');
+
+    try {
+        const scores = await users.collection("Scores").find().sort({ score: -1 }).toArray();
+        response.statusCode = 200;
+        response.end(JSON.stringify(scores));
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error getting scores');
+    }
+}
+
 async function addScore(json, response) {
     const client = new MongoClient(urlAdressDb);
     client.connect();
@@ -39,3 +55,4 @@ async function addScore(json, response) {
 
 exports.addScore = addScore;
 exports.getScores = getScores;
+exports.getScoresAllUsers = getScoresAllUsers;
