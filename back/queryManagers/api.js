@@ -1,6 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
 const { signin, login } = require("../login/login.js").login;
-const { addScore, getScores, getScoresAllUsers } = require("../1v1/score.js");
+const { addScore, getScores, getScoresAllUsers, setScore} = require("../1v1/score.js");
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -44,6 +44,12 @@ function manageRequest(request, response) {
                 }
                 if(filePath[2] === 'getScoresAllUsers') {
                     getScoresAllUsers(json, response);
+                }
+            }
+            if (request.method === 'PUT') {
+                if (filePath[2] === 'setScore') {
+                    json = {username: filePath[3],score: filePath[4]}
+                    setScore(json, response);
                 }
             }
         });
