@@ -2,51 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>header</title>
-    <script src="../js/mode.js"></script>
-    <script src="../changePage.js"></script>
+    <title>King of Escape</title>
     <link rel="stylesheet" href="mode.css">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <header>
-        <div id="friends">
-            <button onclick="changePage()" id="buttonFriends"/>
-        </div>
-        <div id="sucess">
-            <button onclick="changePage()" id="buttonSucess"/>
-        </div>
-        <div id="banner">
-            <div class="flag" id="flag1"></div>
-            <p id="title"> KING OF ESCAPE</p>
-            <div class="flag" id="flag2"></div>
-        </div>
-        <div id="login">
-            <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
-        </div>
-    </header>
-    <div id="texte">
-        <p>Choose a game mode</p>
+<header>
+    <div id="friends">
+        <button onclick="changePage()" id="buttonFriends"></button>
     </div>
-    <div id="mode">
-        <div class="modechoice">
-            <div id="continue"></div>
-            <button onclick="changePage()" id="buttonContinue">Continue</button>
-        </div>
-        <div class="modechoice">
-            <div id="local"></div>
-            <button onclick="changePage('jeu_local/jeu.html')" id="buttonLocal">Local</button>
-        </div>
-        <div class="modechoice">
-            <div id="IA"></div>
-            <button onclick="changePage('jeu_ia/jeu_ia.html')" id="buttonIA">IA</button>
-        </div>
-        <div class="modechoice">
-            <div id="multiplayer"></div>
-            <button onclick="changePage()" id="buttonMulti">Multiplayer</button>
-        </div>
+    <div id="success">
+        <button onclick="changePage()" id="buttonSuccess"></button>
     </div>
-    <script>
-        console.log(document.cookie);
-    </script>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+    </div>
+</header>
+<div id="texte">
+    <p>Choose a game mode</p>
+</div>
+<div id="mode">
+    <div class="modechoice">
+        <div id="continue"></div>
+        <button onclick="changePage()" id="buttonContinue">Continue</button>
+    </div>
+    <div class="modechoice">
+        <div id="local"></div>
+        <button onclick="changePage('jeu_local/jeu.html')" id="buttonLocal">Local</button>
+    </div>
+    <div class="modechoice">
+        <div id="IA"></div>
+        <button onclick="changePage('jeu_ia/jeu_ia.html')" id="buttonIA">IA</button>
+    </div>
+    <div class="modechoice">
+        <div id="multiplayer"></div>
+        <button id="buttonMulti" onclick="initiateMultiplayerMatchmaking()">Multiplayer</button>
+    </div>
+</div>
+
+<div id="waitingScreen" style="display: none;">
+    <h2>Waiting for another player...</h2>
+</div>
+
+<!-- Ajoutez un div pour afficher les logs -->
+<div id="logs"></div>
+
+<script src="../js/mode.js"></script>
+<script src="../changePage.js"></script>
+<script>
+    var socket;
+    function initiateMultiplayerMatchmaking(){
+        console.log('Button clicked, attempting to find a match...');
+        if (socket && socket.connected) {
+            socket.emit('findMatch');
+            console.log('Emitted findMatch event');
+        } else {
+            console.error('Socket is not initialized or connected.');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM fully loaded and parsed');
+        socket = io('http://localhost:8000');
+
+        socket.on('waitingForMatch', () => {
+            console.log('Received waitingForMatch event');
+            document.getElementById('waitingScreen').style.display = 'block';
+            document.getElementById('logs').innerHTML += '<p>Received waitingForMatch event</p>';
+        });
+
+        socket.on('matchFound', (room) => {
+            console.log(`Received matchFound event, joined room: ${room}`);
+            document.getElementById('logs').innerHTML += `<p>Match found, joined room: ${room}</p>`;
+            document.getElementById('waitingScreen').style.display = 'none';
+        });
+
+        socket.on('startGame', (room) => {
+            console.log(`Starting game in room: ${room}`);
+            changePage('jeu_1v1/jeu_1v1.html'); // Assuming changePage is a valid function
+        });
+
+
+    });
+
+
+    console.log(document.cookie);
+</script>
 </body>
 </html>

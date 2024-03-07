@@ -4,6 +4,7 @@ const fileQuery = require('./queryManagers/front.js');
 const apiQuery = require('./queryManagers/api.js');
 const { Server } = require("socket.io");
 const gestionSocketIA = require('./jeu_ia/socketIAManager.js').gameIA;
+const room = require("./waiting_room/roomManager.js").room
 
 const server = http.createServer(function (request, response) {
 
@@ -43,3 +44,4 @@ const io = new Server(server, {
 });
 
 gestionSocketIA(io);
+room(io);
