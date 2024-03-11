@@ -46,12 +46,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOM fully loaded and parsed');
-        socket = io('http://localhost:8000');
+        const socketId = localStorage.getItem('socketId');
+        socket = io('http://localhost:8000', { query: { id: socketId } });
 
         socket.on('connect', () => {
-            console.log('Socket connected');
-            initiateMultiplayerMatchmaking(); // Déplacer l'appel à l'intérieur du gestionnaire d'événements connect
+            console.log('Socket connected with id:', socket.id);
+            localStorage.setItem('socketId', socket.id);
+            initiateMultiplayerMatchmaking();
         });
 
         socket.on('disconnect', () => {
@@ -60,7 +61,6 @@
 
         socket.on('waitingForMatch', () => {
             console.log('Received waitingForMatch event');
-            // document.getElementById('waitingScreen').style.display = 'block';
             document.getElementById('logs').innerHTML += '<p>Received waitingForMatch event</p>';
         });
 
@@ -75,7 +75,6 @@
             changePage('jeu_1v1/jeu_1v1.html');
         });
     });
-
     console.log(document.cookie);
 </script>
 <script src="waiting_room.js"></script>

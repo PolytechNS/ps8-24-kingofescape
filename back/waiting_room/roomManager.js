@@ -9,7 +9,13 @@ let waitingPlayers = [];
 
 function room(io) {
     io.on("connection", (socket) => {
-        console.log(`Player connected: ${socket.id}`);
+        const oldId = socket.handshake.query.id;
+        if (oldId) {
+            console.log(`Player reconnected: ${oldId}`);
+            // Ajouter une logique pour gérer la reconnexion si nécessaire
+        } else {
+            console.log(`New player connected: ${socket.id}`);
+        }
 
         socket.on('findMatch', () => {
             console.log(`Player ${socket.id} searching for a match...`);
@@ -29,14 +35,14 @@ function room(io) {
         });
 
         socket.on('disconnect', () => {
-            // Remove the player from waitingPlayers if they disconnect
             waitingPlayers = waitingPlayers.filter(player => player.id !== socket.id);
             console.log(`Player ${socket.id} disconnected.`);
         });
     });
 }
-/*
-server.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-});*/
+
+// server.listen(PORT, () => {
+//     console.log(`Server listening on port ${PORT}`);
+// });
+
 exports.room = room;
