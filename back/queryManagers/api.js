@@ -1,5 +1,8 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
 const { signin, login } = require("../login/login.js").login;
+const getUsers = require("../friendShipManager.js").users;
+const {sendFriendRequest}=require("../friendShipManager").sendR;
+
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -26,12 +29,20 @@ function manageRequest(request, response) {
                     console.log(json);
                     signin(json, response);
                 }
+                if (filePath[2] === 'sendFriendRequest') {
+                   sendFriendRequest(request,response);
+                }
+
 
             }
+
             if (request.method === 'GET') {
                 if (filePath[2] === 'login') {
                     json = {username: filePath[3], password: filePath[4]};
                     login(json, response);
+                }
+                if(filePath[2] ==='users'){
+                    getUsers(response);
                 }
             }
         });
