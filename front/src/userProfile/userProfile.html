@@ -16,7 +16,7 @@
 <script>
     document.getElementById("addFriend").addEventListener("click", function() {
         const recipientUsername = document.getElementById("username").value;
-        const  token = localStorage.getItem('token');
+        let token=document.cookie.split('=')[1];
 
         fetch('http://localhost:8000/api/sendFriendRequest', {
             method: 'POST',
@@ -24,7 +24,7 @@
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ recipient: recipientUsername }),
+            body: JSON.stringify({ recipient: recipientUsername, token: token }),
         })
             .then(response => response.json())
             .then(data => {

@@ -30,7 +30,9 @@ function manageRequest(request, response) {
                     signin(json, response);
                 }
                 if (filePath[2] === 'sendFriendRequest') {
-                   sendFriendRequest(request,response);
+                    json=JSON.parse(body);
+                   sendFriendRequest(json,response);
+
                 }
 
 
