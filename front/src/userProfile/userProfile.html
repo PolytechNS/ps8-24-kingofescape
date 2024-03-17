@@ -8,10 +8,15 @@
 <h2>Ajouter un ami</h2>
 <input type="text" id="username" placeholder="Nom d'utilisateur">
 <button id="addFriend">Ajouter comme ami</button>
+<h2>Notifications</h2>
+<button id="refreshNotifications">Actualiser les Notifications</button>
+<ul id="notificationsList"></ul>
+
 
 <!-- Ajout de l'élément pour afficher la liste d'amis -->
 <h2>Liste d'Amis</h2>
 <ul id="friendsList"></ul>
+
 
 <script>
     document.getElementById("addFriend").addEventListener("click", function() {
@@ -54,5 +59,6 @@
 
     fetchFriends();
 </script>
+<script src="userProfile.js"></script>
 </body>
 </html>

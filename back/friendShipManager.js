@@ -23,11 +23,33 @@ async function getUsers(response) {
         await client.close();
     }
 }
-
+async function getNotifications(token, response) {
+    try {
+        await client.connect();
+        const db = client.db('sample_mflix');
+        const notificationsCollection = db.collection("Notifications");
+        const decoded = jwt.verify(token, secretKey);
+        const Username = decoded.username;
+        console.log(decoded+"9999");
+        console.log("Token received:", token+"888");
+        const notifications = await notificationsCollection.find({ recipient: Username }).toArray();
+        response.setHeader('Content-Type', 'application/json');
+        response.statusCode = 200;
+        response.end(JSON.stringify(notifications));
+    } catch (error) {
+        console.error(error);
+        response.statusCode = 500;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({message: 'Error retrieving notifications'}));
+    } finally {
+        await client.close();
+    }
+}
 
 async function sendFriendRequest(json,response){
 
     console.log(json.token);
+
 
     try {
 
@@ -45,6 +67,12 @@ async function sendFriendRequest(json,response){
         await client.connect();
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Notifications");
+        const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
+        if (existingRequest) {
+            response.writeHead(400, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({ message: 'Une demande d\'ami a déjà été envoyée à cet utilisateur' }));
+            return;
+        }
         const notification = {
             recipient: recipientUsername,
             sender: senderUsername,
@@ -81,7 +109,13 @@ async function sendFriendRequest(json,response){
         }
     }
 }
-
+async function checkExistingRequest(sender, recipient) {
+    await client.connect();
+    const db = client.db('sample_mflix');
+    const notificationsCollection = db.collection("Notifications");
+    const existingRequest = await notificationsCollection.findOne({ sender: sender, recipient: recipient });
+    return existingRequest !== null;
+}
 
 /**async function createNotificationsCollection() {
 
@@ -105,5 +139,6 @@ async function sendFriendRequest(json,response){
 createNotificationsCollection();
 **/
 exports.sendR = {sendFriendRequest};
+exports.Notifications=getNotifications
 
 exports.users = getUsers;
