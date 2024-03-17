@@ -33,19 +33,25 @@
                     <img src="chatInGame/message/welldone.png" alt="welldone" id="welldone" width="50px" height="50px">
                 </div>
                 <div id="secondrow">
-                    <img src="chatInGame/message/welldonetext.png" alt="wdt" id="wdt" width="50px" height="50px">
-                    <img src="chatInGame/message/wowtext.png" alt="wt" id="wt" width="50px" height="50px">
-                    <img src="chatInGame/message/oopstext.png" alt="ot" id="ot" width="50px" height="50px">
-                    <img src="chatInGame/message/goodgametext.png" alt="ggt" id="ggt" width="50px" height="50px">
+                    <img src="chatInGame/message/wdt.png" alt="wdt" id="wdt" width="50px" height="50px">
+                    <img src="chatInGame/message/wt.png" alt="wt" id="wt" width="50px" height="50px">
+                    <img src="chatInGame/message/ot.png" alt="ot" id="ot" width="50px" height="50px">
+                    <img src="chatInGame/message/ggt.png" alt="ggt" id="ggt" width="50px" height="50px">
                 </div>
 
         </div>
     </div>
 </div>
-<script src="./jeu_1v1.js" type="module"></script>
 <script type="module">
-    import {endTurn} from "./jeu_ia.js";
-    document.getElementById("buttonEndTurn").onclick = endTurn;
+    import {getIdOnClick} from "./jeu_1v1.js"
+    document.getElementById('cry').addEventListener('click', getIdOnClick('cry'));
+    document.getElementById('happy').addEventListener('click', getIdOnClick('happy'));
+    document.getElementById('upset').addEventListener('click', getIdOnClick('upset'));
+    document.getElementById('welldone').addEventListener('click', getIdOnClick('welldone'));
+    document.getElementById('wdt').addEventListener('click', getIdOnClick('wdt'));
+    document.getElementById('wt').addEventListener('click', getIdOnClick('wt'));
+    document.getElementById('ot').addEventListener('click', getIdOnClick('ot'));
+    document.getElementById('ggt').addEventListener('click', getIdOnClick('ggt'));
 </script>
 </body>
 </html>

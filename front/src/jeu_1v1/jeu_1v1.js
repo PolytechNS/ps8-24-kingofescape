@@ -88,5 +88,18 @@ socket.on('connect', () => {
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });
 });
+function getIdOnClick(id) {
+    var element = document.getElementById(id);
+    element.addEventListener('click', function() {
+        console.log("ID de l element cliqué : " + id);
+    });
+    displayImgSocket(id);
+}
 
-export {endTurn};
+function displayImgSocket(id) {
+    var element = document.getElementById('chatContent');
+    console.log("ID de l elemetn cliqué  in chatcontent: " + id);
+    element.innerHTML += "<img src='chatInGame/message/" + id + ".png' alt='" + id + "' width='100' height='100' />";
+}
+
+export {endTurn, getIdOnClick, displayImgSocket};
