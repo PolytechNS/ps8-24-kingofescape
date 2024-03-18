@@ -86,7 +86,6 @@ async function sendFriendRequest(json,response){
             read: false
         }).toArray();
 
-        console.log("Notifications non lues pour l'utilisateur", recipientUsername + ":", unreadNotifications);
         await client.close();
 
         console.log("Friend request sent from:", senderUsername, "to:", recipientUsername);
@@ -117,6 +116,47 @@ async function checkExistingRequest(sender, recipient) {
     return existingRequest !== null;
 }
 
+async function acceptFriendRequest(json, response) {
+    try {
+        await client.connect();
+        const db = client.db('sample_mflix');
+        const usersCollection = db.collection("Users");
+        const decoded = jwt.verify(json.token, secretKey);
+        const  sender = decoded.sender;
+        const recipient=decoded.recipient;
+        // Recherche de l'utilisateur expéditeur dans la base de données
+        const senderUser = await usersCollection.findOne({ username: sender });
+        if (!senderUser) {
+            return { success: false, message: 'Utilisateur expéditeur non trouvé' };
+        }
+
+        // Recherche de l'utilisateur destinataire dans la base de données
+        const recipientUser = await usersCollection.findOne({ username: recipient });
+        if (!recipientUser) {
+            return { success: false, message: 'Utilisateur destinataire non trouvé' };
+        }
+
+        // Vérifiez si l'expéditeur est déjà dans la liste d'amis du destinataire pour éviter les doublons
+        if (!recipientUser.friends.includes(sender)) {
+            recipientUser.friends.push(sender); // Ajouter l'expéditeur dans la liste d'amis du destinataire
+            await usersCollection.updateOne({ username: recipient }, { $set: { friends: recipientUser.friends } });
+        }
+
+        // Vérifiez si le destinataire est déjà dans la liste d'amis de l'expéditeur pour éviter les doublons
+        if (!senderUser.friends.includes(recipient)) {
+            senderUser.friends.push(recipient); // Ajouter le destinataire dans la liste d'amis de l'expéditeur
+            await usersCollection.updateOne({ username: sender }, { $set: { friends: senderUser.friends } });
+        }
+
+        return { success: true, message: 'Demande d\'ami acceptée avec succès' };
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
+        return { success: false, message: 'Erreur lors de l\'acceptation de la demande d\'ami' };
+    } finally {
+        await client.close();
+    }
+}
+
 /**async function createNotificationsCollection() {
 
     try {
@@ -139,6 +179,8 @@ async function checkExistingRequest(sender, recipient) {
 createNotificationsCollection();
 **/
 exports.sendR = {sendFriendRequest};
+exports.acceptR={acceptFriendRequest};
 exports.Notifications=getNotifications
+
 
 exports.users = getUsers;
