@@ -89,17 +89,22 @@ socket.on('connect', () => {
     });
 });
 function getIdOnClick(id) {
-    var element = document.getElementById(id);
-    element.addEventListener('click', function() {
-        console.log("ID de l element cliqué : " + id);
-    });
-    displayImgSocket(id);
+    console.log("ID de l element cliqué : " + id.target.id);
+    displayImgSocket(id.target.id);
 }
 
 function displayImgSocket(id) {
     var element = document.getElementById('chatContent');
-    console.log("ID de l elemetn cliqué  in chatcontent: " + id);
-    element.innerHTML += "<img src='chatInGame/message/" + id + ".png' alt='" + id + "' width='100' height='100' />";
+    console.log("ID de l'élément cliqué dans chatcontent: " + id);
+    element.innerHTML += "<img id='img_" + id + "' src='chatInGame/message/" + id + ".png' alt='" + id + "' width='150' height='150' />";
+
+    setTimeout(function() {
+        var imgToRemove = document.getElementById('img_' + id);
+        if (imgToRemove) {
+            imgToRemove.parentNode.removeChild(imgToRemove);
+        }
+    }, 3000); 
 }
+
 
 export {endTurn, getIdOnClick, displayImgSocket};
