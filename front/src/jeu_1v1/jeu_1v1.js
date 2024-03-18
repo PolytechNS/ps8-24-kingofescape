@@ -3,6 +3,7 @@ import {createTable, printPlayer, printWall, getCoordinate, removePlayer} from "
 let aiPlay = getIAPlay();
 let coordinatePlayer = getCoordinate(3 - aiPlay, (aiPlay === 1)? '9' : '1');
 const socket = io.connect('http://localhost:8000/api/game');
+const socketChat = io.connect('http://localhost:8000/api/chatInGame');
 
 /**
  * Get the number of the player that the AI will play
@@ -87,24 +88,25 @@ socket.on('connect', () => {
         window.alert(result);
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });
+
+    socketChat.on('message1', (id) => {
+        var element = document.getElementById('chatContent');
+        console.log("ID de l'élément cliqué dans chatcontent: " + id);
+        element.innerHTML += "<img id='img_" + id + "' src='chatInGame/message/" + id + ".png' alt='" + id + "' width='150' height='150' />";
+
+        setTimeout(function() {
+            var imgToRemove = document.getElementById('img_' + id);
+            if (imgToRemove) {
+                imgToRemove.parentNode.removeChild(imgToRemove);
+            }
+        }, 3000); 
+    });
+
 });
 function getIdOnClick(id) {
     console.log("ID de l element cliqué : " + id.target.id);
-    displayImgSocket(id.target.id);
-}
-
-function displayImgSocket(id) {
-    var element = document.getElementById('chatContent');
-    console.log("ID de l'élément cliqué dans chatcontent: " + id);
-    element.innerHTML += "<img id='img_" + id + "' src='chatInGame/message/" + id + ".png' alt='" + id + "' width='150' height='150' />";
-
-    setTimeout(function() {
-        var imgToRemove = document.getElementById('img_' + id);
-        if (imgToRemove) {
-            imgToRemove.parentNode.removeChild(imgToRemove);
-        }
-    }, 3000); 
+    socketChat.emit('message', id.target.id);
 }
 
 
-export {endTurn, getIdOnClick, displayImgSocket};
+export {endTurn, getIdOnClick};
