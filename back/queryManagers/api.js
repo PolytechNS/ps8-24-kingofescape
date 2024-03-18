@@ -3,7 +3,7 @@ const { signin, login } = require("../login/login.js").login;
 const getUsers = require("../friendShipManager.js").users;
 const getNotifications=require("../friendShipManager").Notifications;
 const {sendFriendRequest}=require("../friendShipManager").sendR;
-const {acceptFriendRequest}=require("../friendShipManager").acceptR;
+
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -34,10 +34,6 @@ function manageRequest(request, response) {
                     json=JSON.parse(body);
                    sendFriendRequest(json,response);
 
-                }
-                if (filePath[2] === 'acceptFriendRequest') {
-                    json = JSON.parse(body);
-                    acceptFriendRequest(json, response);
                 }
 
 
