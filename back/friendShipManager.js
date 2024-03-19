@@ -27,12 +27,13 @@ async function getNotifications(token, response) {
     try {
         await client.connect();
         const db = client.db('sample_mflix');
-        const notificationsCollection = db.collection("Notifications");
+        const notificationsCollection = db.collection("Friendrequest");
         const decoded = jwt.verify(token, secretKey);
         const Username = decoded.username;
         console.log(decoded+"9999");
         console.log("Token received:", token+"888");
         const notifications = await notificationsCollection.find({ recipient: Username }).toArray();
+        console.log(notifications);
         response.setHeader('Content-Type', 'application/json');
         response.statusCode = 200;
         response.end(JSON.stringify(notifications));
@@ -65,7 +66,7 @@ async function sendFriendRequest(json,response){
         const client = new MongoClient(urlAdressDb);
         await client.connect();
         const db = client.db('sample_mflix');
-        const notificationsCollection = db.collection("Notifications");
+        const notificationsCollection = db.collection("Friendrequest");
         const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
         if (existingRequest) {
             response.writeHead(400, {'Content-Type': 'application/json'});
@@ -111,50 +112,93 @@ async function sendFriendRequest(json,response){
 async function checkExistingRequest(sender, recipient) {
     await client.connect();
     const db = client.db('sample_mflix');
-    const notificationsCollection = db.collection("Notifications");
-    const existingRequest = await notificationsCollection.findOne({ sender: sender, recipient: recipient });
+    const notificationsCollection = db.collection("Friendrequest");
+    const existingRequest = await notificationsCollection.findOne({sender: sender, recipient: recipient});
     return existingRequest !== null;
 }
-    async function acceptFriendRequest(json, response) {
-        try {
-            await client.connect();
-            const db = client.db('sample_mflix');
-            const usersCollection = db.collection("Users");
-            const decoded = jwt.verify(json.token, secretKey);
-            const  sender = decoded.sender;
-            const recipient=decoded.recipient;
-            // Recherche de l'utilisateur expéditeur dans la base de données
-            const senderUser = await usersCollection.findOne({ username: sender });
-            if (!senderUser) {
-                return { success: false, message: 'Utilisateur expéditeur non trouvé' };
-            }
+async function acceptFriendRequest(json, response) {
+    try {
+        await client.connect();
+        const db = client.db('sample_mflix');
+        const usersCollection = db.collection("Users");
+        const notificationsCollection = db.collection("Notifications");
 
-            // Recherche de l'utilisateur destinataire dans la base de données
-            const recipientUser = await usersCollection.findOne({ username: recipient });
-            if (!recipientUser) {
-                return { success: false, message: 'Utilisateur destinataire non trouvé' };
-            }
+        const decoded = jwt.verify(json.token, secretKey);
+        console.log("Decoded JWT:", decoded); // Ajoutez ceci pour déboguer
 
-            // Vérifiez si l'expéditeur est déjà dans la liste d'amis du destinataire pour éviter les doublons
-            if (!recipientUser.friends.includes(sender)) {
-                recipientUser.friends.push(sender); // Ajouter l'expéditeur dans la liste d'amis du destinataire
-                await usersCollection.updateOne({ username: recipient }, { $set: { friends: recipientUser.friends } });
-            }
+        const senderUsername = json.sender
+        const recipientUsername = json.recipient;
 
-            // Vérifiez si le destinataire est déjà dans la liste d'amis de l'expéditeur pour éviter les doublons
-            if (!senderUser.friends.includes(recipient)) {
-                senderUser.friends.push(recipient); // Ajouter le destinataire dans la liste d'amis de l'expéditeur
-                await usersCollection.updateOne({ username: sender }, { $set: { friends: senderUser.friends } });
-            }
+        console.log("Sender:", senderUsername, "Recipient:", recipientUsername); // Vérifiez les valeurs
 
-            return { success: true, message: 'Demande d\'ami acceptée avec succès' };
-        } catch (error) {
-            console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
-            return { success: false, message: 'Erreur lors de l\'acceptation de la demande d\'ami' };
-        } finally {
-            await client.close();
+        const senderUser = await usersCollection.findOne({ username: senderUsername });
+        const recipientUser = await usersCollection.findOne({ username: recipientUsername });
+
+        if (!senderUser || !recipientUser) {
+            response.writeHead(404, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({ success: false, message: 'Utilisateur non trouvé'+senderUser+recipientUser }));
+            return;
         }
+
+        if (!recipientUser.friends.includes(senderUsername)) {
+            await usersCollection.updateOne({ username: recipientUsername }, { $push: { friends: senderUsername } });
+        }
+
+        if (!senderUser.friends.includes(recipientUsername)) {
+            await usersCollection.updateOne({ username: senderUsername }, { $push: { friends: recipientUsername } });
+        }
+
+        await notificationsCollection.deleteOne({
+            recipient: recipientUsername,
+            sender: senderUsername,
+        });
+        const notifc=db.Notifications.find({recipient: "recipientUsername", sender: "senderUsername"})
+        if(notifc){
+            console.log("riennn");
+        }
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify({ success: true, message: 'Demande d\'ami acceptée et notification supprimée avec succès' }));
+
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
+        response.writeHead(500, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify({ success: false, message: 'Erreur lors de l\'acceptation de la demande d\'ami' }));
+    } finally {
+        await client.close();
     }
+}
+
+
+async function rejectFriendRequest(json, response) {
+    try {
+        await client.connect();
+        const db = client.db('sample_mflix');
+        const notificationsCollection = db.collection("Friendrequest");
+        const decoded = jwt.verify(json.token, secretKey);
+        const sender= json.sender
+        const recipient = json.recipient;
+
+
+        // Supprimer la notification de demande d'ami
+        await notificationsCollection.deleteOne({
+            recipient: recipient,
+            sender: sender,
+            // Ajoutez d'autres critères si nécessaire pour cibler spécifiquement la notification de demande d'ami
+        });
+
+        // Répondre avec succès
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify({ success: true, message: 'Demande d\'ami rejetée avec succès et notification supprimée' }));
+
+    } catch (error) {
+        console.error('Erreur lors du rejet de la demande d\'ami:', error);
+        response.writeHead(500, {'Content-Type': 'application/json'});
+        response.end(JSON.stringify({ success: false, message: 'Erreur lors du rejet de la demande d\'ami' }));
+    } finally {
+        await client.close();
+    }
+}
+
 
 /**async function createNotificationsCollection() {
 
@@ -178,6 +222,7 @@ async function checkExistingRequest(sender, recipient) {
 createNotificationsCollection();
 **/
 exports.sendR = {sendFriendRequest};
+exports.rejectR={rejectFriendRequest}
 exports.Notifications=getNotifications
 
 exports.users = getUsers;

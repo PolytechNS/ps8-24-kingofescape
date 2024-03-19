@@ -5,6 +5,7 @@ const getNotifications=require("../friendShipManager").Notifications;
 const {sendFriendRequest}=require("../friendShipManager").sendR;
 
 const {acceptFriendRequest}=require("../friendShipManager").acceptR;
+const {rejectFriendRequest}=require("../friendShipManager").rejectR;
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -40,7 +41,10 @@ function manageRequest(request, response) {
                     json = JSON.parse(body);
                     acceptFriendRequest(json, response);
                 }
-
+                if (filePath[2] === 'rejectFriendRequest') {
+                    json = JSON.parse(body);
+                    rejectFriendRequest(json, response);
+                }
 
 
 
@@ -51,15 +55,16 @@ function manageRequest(request, response) {
                     json = {username: filePath[3], password: filePath[4]};
                     login(json, response);
                 }
-                if(filePath[2] ==='users'){
+                if (filePath[2] === 'users') {
                     getUsers(response);
                 }
-            }
-            if(filePath[2] === 'notifications') {
-                const token = request.headers.authorization.split(' ')[1];
-                getNotifications(token, response);
+                if (filePath[2] === 'friendRequest') {
+                    const token = request.headers.authorization.split(' ')[1];
+                    getNotifications(token, response);
+                }
             }
         });
+
 
     }
     else {

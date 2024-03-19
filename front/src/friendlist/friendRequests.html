@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="friendRequests.css">
+    <script type ="module" src="friendRequests.js"></script>
+    <script src="../js/socket.io.js"></script>
+</head>
+<header>
+    <div id="friends">
+        <button onclick="changePage()" id="buttonFriends"/>
+    </div>
+    <div id="sucess">
+        <button onclick="changePage()" id="buttonSucess"/>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title"> KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+    </div>
+</header>
+<body>
+<div id="windowChat">
+    <div id="toppart">
+        <div id="searchpart">
+            <div id="search">
+                <input type="text" id="username" placeholder="Nom d'utilisateur">
+                <button id="addFriend">Ajouter comme ami</button>
+            </div>
+        </div>
+        <div id="nameFriend"></div>
+    </div>
+    <div id="bottompart">
+        <div id="friend-requests-container">
+            <table id="friend-requests-table">
+                <thead>
+                <tr>
+                    <th>Friend Request</th>
+                    <th>Accept</th>
+                    <th>Decline</th>
+                </tr>
+                </thead>
+                <tbody id="friend-requests-list">
+                <!-- Friend requests will be populated here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div id="button">
+    <div id="friendButton">
+        <img src="../picture/Ajout_ami.png" alt="friend" id="friend" width="30px" height="30px">
+        <p id="friendText"> Friends</p>
+    </div>
+    <div id="chatButton">
+        <img src="../picture/enveloppe.png" alt="chat" id="chat" width="30px" height="30px">
+        <p id="chatText"> Chat</p>
+    </div>
+</div>
+<script>
+
+    document.getElementById("addFriend").addEventListener("click", function() {
+        const recipientUsername = document.getElementById("username").value;
+        let token=document.cookie.split('=')[1];
+
+        fetch('http://localhost:8000/api/sendFriendRequest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ recipient: recipientUsername, token: token }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+
+</script>
+</body>
