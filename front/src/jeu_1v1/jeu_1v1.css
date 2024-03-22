@@ -137,6 +137,14 @@ header {
     align-self: center;
 }
 
+.choose {
+    background-color: gray;
+    border-radius: 100%;
+    height: 60%;
+    width: 60%;
+    align-self: center;
+}
+
 .wallPlayer1 {
     background-color: #ff0000;
 }

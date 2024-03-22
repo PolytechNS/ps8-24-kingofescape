@@ -1,48 +1,70 @@
-/*const http = require('http');
-const socketIo = require('socket.io');
+const game1v1 = require('../jeu1v1/game1v1.js').game1v1;
+const jwt = require('jsonwebtoken');
 
-const PORT = 8000;
-const server = http.createServer();
-const io = socketIo(server);*/
-
+let socketInGame;
+let socketDisconnected;
 let waitingPlayers = [];
 
-function room(io) {
-    io.on("connection", (socket) => {
-        const oldId = socket.handshake.query.id;
-        if (oldId) {
-            console.log(`Player reconnected: ${oldId}`);
-            // Ajouter une logique pour gérer la reconnexion si nécessaire
-        } else {
-            console.log(`New player connected: ${socket.id}`);
-        }
-
-        socket.on('findMatch', () => {
-            console.log(`Player ${socket.id} searching for a match...`);
-            waitingPlayers.push(socket);
-
-            if (waitingPlayers.length >= 2) {
-                const player1 = waitingPlayers.shift();
-                const player2 = waitingPlayers.shift();
-                const room = `room_${player1.id}_${player2.id}`;
-                player1.join(room);
-                player2.join(room);
-                io.to(room).emit('startGame', room);
-                console.log(`Starting game in room: ${room}`);
-            } else {
-                socket.emit('waitingForMatch');
-            }
-        });
-
-        socket.on('disconnect', () => {
-            waitingPlayers = waitingPlayers.filter(player => player.id !== socket.id);
-            console.log(`Player ${socket.id} disconnected.`);
-        });
-    });
+function verifyToken(token) {
+    try {
+        let data = jwt.verify(token, "ps8-koe", {algorithm: 'HS256', noTimestamp: true});
+        return data.username;
+    }
+    catch (e) {
+        return null;
+    }
 }
 
-// server.listen(PORT, () => {
-//     console.log(`Server listening on port ${PORT}`);
-// });
+function room(io) {
+    socketInGame = new Map();
+    socketDisconnected = new Map();
+    const gameSocket1v1 = io.of('/api/1v1');
+
+    gameSocket1v1.on("connection", (socket) => {
+        console.log(`New player connected: ${socket.id}`);
+
+        let usernamePlayer = verifyToken(socket.handshake.query.token);
+        let room = socket.handshake.query.room;
+
+        if (usernamePlayer === null) {
+            socket.emit('errorConnect', 'You are not connect');
+            socket.disconnect();
+        }
+
+        else if (room != null) {
+            if (socketInGame.has(room)) {
+                console.log(`Player ${socket.id} is in room ${room}`);
+                socket.join(room);
+                let game = socketInGame.get(room)[0];
+                if (game.reconnectPlayer(socket, usernamePlayer))
+                    return;
+            }
+
+            socket.emit('errorConnect', 'Room not found');
+            socket.disconnect();
+        }
+
+        else {
+            socket.on('disconnect', () => {
+                console.log(`Player ${socket.id} disconnected.`);
+                console.log(waitingPlayers);
+                waitingPlayers = waitingPlayers.filter(player => player.id !== socket.id);
+            });
+            waitingPlayers.push([socket, usernamePlayer]);
+        }
+
+        if (waitingPlayers.length >= 2) {
+            const player1 = waitingPlayers.shift();
+            const player2 = waitingPlayers.shift();
+            const room = `room_${player1[0].id}_${player2[0].id}`;
+
+            player1[0].join(room);
+            player2[0].join(room);
+            gameSocket1v1.to(room).emit('matchFound', room);
+            socketInGame.set(room, [new game1v1(player1, player2), 1]);
+            console.log(`Starting game in room: ${room}`);
+        }
+    });
+}
 
 exports.room = room;
