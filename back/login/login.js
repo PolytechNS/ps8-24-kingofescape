@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("../env/env.js");
 const jwt = require('jsonwebtoken');
+const {addScore} = require("../1v1/score.js");
 
 
 async function signin(json, response) {
@@ -20,6 +21,7 @@ async function signin(json, response) {
             response.end('User already exists');
         } else {
             await users.collection("Users").insertOne({username:username, password : token});
+            addScore({username: username, score: 0}, response);
             response.statusCode = 200;
             response.end(token);
         }
@@ -28,7 +30,6 @@ async function signin(json, response) {
         response.statusCode = 500;
         response.end('Error creating user');
     }
-
 }
 
 async function login(json, response) {
