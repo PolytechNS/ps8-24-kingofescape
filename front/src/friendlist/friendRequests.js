@@ -47,7 +47,6 @@ function fetchNotifications() {
         .catch(error => console.error('Erreur:', error));
 }
 
-
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
 
@@ -105,4 +104,19 @@ function sendText() {
     messageInput.value = "";
 };
 
-export {sendText};
+function showchat() {
+    console.log('show chat');
+    var element = document.getElementById('windowChat');
+    element.style.display = 'grid';
+    var element2 = document.getElementById('windowFriend');
+    element2.style.display = 'none';
+}
+
+function showfriend() {
+    var element = document.getElementById('windowChat');
+    element.style.display = 'none';
+    var element2 = document.getElementById('windowFriend');
+    element2.style.display = 'grid';
+}
+
+export {sendText, showchat, showfriend};
