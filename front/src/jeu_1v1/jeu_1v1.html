@@ -23,18 +23,40 @@
         </div>
     </div>
     <div id="right">
-        <div>
-            <div id="saveGame"></div>
+            <div id="chatContent"></div>
             <div id="endTurn">
-                <button id="buttonEndTurn">Fin tour</button>
+                <button id="buttonEndTurn">End turn</button>
             </div>
+            <div id="chooseRecation">
+                <div id="firestrow">
+                    <img src="chatInGame/message/cry.png" alt="cry" id="cry" width="50px" height="50px">
+                    <img src="chatInGame/message/happy.png" alt="happy" id="happy" width="50px" height="50px">
+                    <img src="chatInGame/message/upset.png" alt="upset" id="upset" width="50px" height="50px">
+                    <img src="chatInGame/message/welldone.png" alt="welldone" id="welldone" width="50px" height="50px">
+                </div>
+                <div id="secondrow">
+                    <img src="chatInGame/message/wdt.png" alt="wdt" id="wdt" width="50px" height="50px">
+                    <img src="chatInGame/message/wt.png" alt="wt" id="wt" width="50px" height="50px">
+                    <img src="chatInGame/message/ot.png" alt="ot" id="ot" width="50px" height="50px">
+                    <img src="chatInGame/message/ggt.png" alt="ggt" id="ggt" width="50px" height="50px">
+                </div>
+
         </div>
     </div>
 </div>
 <script src="./jeu_1v1.js" type="module"></script>
-<!--<script type="module">
-    import {endTurn} from "./jeu_ia.js";
-    document.getElementById("buttonEndTurn").onclick = endTurn;
-</script>-->
+<script type="module">
+    import {getIdOnClick} from "./jeu_1v1.js"
+    /*import {endTurn} from "./jeu_1v1.js";
+    document.getElementById("buttonEndTurn").onclick = endTurn;*/
+    document.getElementById('cry').addEventListener('click',getIdOnClick);
+    document.getElementById('happy').addEventListener('click', getIdOnClick);
+    document.getElementById('upset').addEventListener('click', getIdOnClick);
+    document.getElementById('welldone').addEventListener('click', getIdOnClick);
+    document.getElementById('wdt').addEventListener('click', getIdOnClick);
+    document.getElementById('wt').addEventListener('click', getIdOnClick);
+    document.getElementById('ot').addEventListener('click', getIdOnClick);
+    document.getElementById('ggt').addEventListener('click', getIdOnClick);
+</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
 const { signin, login } = require("../login/login.js").login;
+const { addScore, getScores, getScoresAllUsers, setScore} = require("../1v1/score.js");
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -19,6 +20,7 @@ function manageRequest(request, response) {
 
         let json;
         request.on('end', function () {
+            console.log(filePath[2]);
             if(request.method === 'POST') {
                 if (filePath[2] === 'signin') {
                     console.log(body);
@@ -26,12 +28,28 @@ function manageRequest(request, response) {
                     console.log(json);
                     signin(json, response);
                 }
-
+                if(filePath[2] === 'addScore') {
+                    json = JSON.parse(body);
+                    addScore(json, response);
+                }
             }
             if (request.method === 'GET') {
                 if (filePath[2] === 'login') {
                     json = {username: filePath[3], password: filePath[4]};
                     login(json, response);
+                }
+                if (filePath[2] === 'getScores') {
+                    json = {username: filePath[3]};
+                    getScores(json, response);
+                }
+                if(filePath[2] === 'getScoresAllUsers') {
+                    getScoresAllUsers(json, response);
+                }
+            }
+            if (request.method === 'PUT') {
+                if (filePath[2] === 'setScore') {
+                    json = {username: filePath[3],score: filePath[4]}
+                    setScore(json, response);
                 }
             }
         });
