@@ -1,28 +1,21 @@
-/*const socketChatFriend = io.connect('http://localhost:3001/chatFriend');
+const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
 
-socketChatFriend.on('connect', () => {
+chatFriend.on('connect', () => {
     console.log('connecté au serveur.');
-    socketChatFriend.on('mesg', (message) => {
-        var element = document.createElement('chatContent');
-        console.log('message: ' + message);
-        element.insertBefore(document.createTextNode(message), element.firstChild);
+    chatFriend.on('msg1', (message) => {
+        var element = document.getElementById('chatContent');
+        var paragraph = document.createElement('p');
+        paragraph.textContent = message;
+        element.appendChild(paragraph);
     });
-});*/
+});
 
 function sendText() {
     var messageInput = document.getElementById('message');
     var text = messageInput.value;
-    console.log('text: ' + text);
+    console.log('text send: ' + text);
+    chatFriend.emit('msg', text);
     messageInput.value = "";
-    displayMessage(text);
-    //socketChatFriend.emit('message', text);
 };
 
-function displayMessage(message) {
-    var element = document.getElementById('chatContent');
-    console.log('message: ' + message);
-    var paragraph = document.createElement('p');
-    paragraph.textContent = message;
-    element.appendChild(paragraph);
-}
-export {sendText, displayMessage};
+export {sendText};
