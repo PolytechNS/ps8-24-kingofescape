@@ -47,8 +47,9 @@
 <script src="./jeu_1v1.js" type="module"></script>
 <script type="module">
     import {getIdOnClick} from "./jeu_1v1.js"
-    /*import {endTurn} from "./jeu_1v1.js";
-    document.getElementById("buttonEndTurn").onclick = endTurn;*/
+    import {endTurn} from "./jeu_1v1.js";
+    document.getElementById("buttonEndTurn").onclick = endTurn;
+
     document.getElementById('cry').addEventListener('click',getIdOnClick);
     document.getElementById('happy').addEventListener('click', getIdOnClick);
     document.getElementById('upset').addEventListener('click', getIdOnClick);
