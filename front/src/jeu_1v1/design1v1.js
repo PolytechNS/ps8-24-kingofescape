@@ -30,7 +30,7 @@ function createTable() {
     }
 }
 
-function printAllWallPossible() {
+function printAllWallPossible(sentWall) {
     for (let i = 1; i <= 9; i++) {
         for (let j = 1; j <= 9; j++) {
             if (j !== 9) {

@@ -1,7 +1,6 @@
-const {room} = require("../waiting_room/roomManager");
 const GameManager = require("../logic/gameManager.js").gameManager;
 const Arbitre = require("../logic/arbitre.js").arbitre;
-const removeRoom = require("../waiting_room/roomManager.js").deleteRoom;
+const Chat = require("../chat/chat.js").chat;
 
 class GestionSocketPlayer {
     constructor(player1, player2, game1v1) {
@@ -49,18 +48,29 @@ class GestionSocketPlayer {
         this.#initSocketPlayer(this.player2[0], 2);
     }
 
+    #initSocketChat(numberPlayer) {
+        this.chat = new Chat(this);
+
+        if (numberPlayer === 1)
+            this.player1[0].on('message', (message) => this.chat.getMessage(message, numberPlayer));
+        else
+            this.player2[0].on('message', (message) => this.chat.getMessage(message, numberPlayer));
+    }
+
     #verifyInit(socket, numberPlayer) {
         let verifyInitPlayer1 = this.game1v1.initPosition1 !== null;
         let verifyInitPlayer2 = this.game1v1.initPosition2 !== null;
 
         if (verifyInitPlayer1 && verifyInitPlayer2) {
             this.#initSocketPlayer(socket, numberPlayer);
+            this.#initSocketChat(numberPlayer);
             socket.emit('reload', this.game1v1.generateGameState(numberPlayer));
         }
         else if ((numberPlayer === 1 && verifyInitPlayer1) || (numberPlayer === 2 && verifyInitPlayer2))
             socket.emit('positionDepart', [numberPlayer, (numberPlayer === 1)? this.game1v1.initPosition1 : this.game1v1.initPosition2]);
         else {
             this.initSocketStartGame(socket, numberPlayer);
+            this.#initSocketChat(numberPlayer);
             socket.emit('positionInit', numberPlayer);
         }
     }
@@ -88,18 +98,14 @@ class GestionSocketPlayer {
 
         return true;
     }
-
-    disconnectPlayer(socket, nameRoom) {
-        socket.leave(nameRoom);
-    }
 }
 
 class Game1v1 {
-    constructor(player1, player2, room) {
+    constructor(player1, player2, functionEndGame) {
         this.initPosition1 = null;
         this.initPosition2 = null;
         this.gestionSocketPlayer = new GestionSocketPlayer(player1, player2, this);
-        this.room = room;
+        this.functionEndGame = functionEndGame;
     }
 
     setPositionPlayer(position, numberPlayer) {
@@ -140,7 +146,7 @@ class Game1v1 {
                 if (stateGame !== -1) {
                     this.gestionSocketPlayer.emitSocket('endGame', "win", stateGame);
                     this.gestionSocketPlayer.emitSocket('endGame', "lose", 3 - stateGame);
-                    removeRoom(this.room);
+                    this.functionEndGame();
                 }
             }
             catch (e) {

@@ -65,7 +65,7 @@ function room(io) {
             player1[0].join(room);
             player2[0].join(room);
             gameSocket1v1.to(room).emit('matchFound', room);
-            socketInGame.set(room, [new game1v1(player1, player2, room), 1]);
+            socketInGame.set(room, [new game1v1(player1, player2, function(){ endGame(room) }), 1]);
             console.log(`Starting game in room: ${room}`);
         }
     });

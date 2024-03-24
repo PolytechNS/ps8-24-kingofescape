@@ -91,7 +91,7 @@ function endTurn() {
 
 
 createTable();
-printAllWallPossible();
+printAllWallPossible(sentWall);
 
 if (room != null) {
     socket = io.connect('http://localhost:8000/api/1v1', {
@@ -150,6 +150,19 @@ if (room != null) {
             changePage(`${game}/${game}.html`);
         });
 
+        socket.on('message', (id) => {
+            let element = document.getElementById('chatContent');
+            console.log("ID de l'élément cliqué dans chatcontent: " + id);
+            element.innerHTML += "<img id='img_" + id + "' src='chatInGame/message/" + id + ".png' alt='" + id + "' width='150' height='150' />";
+
+            setTimeout(function() {
+                var imgToRemove = document.getElementById('img_' + id);
+                if (imgToRemove) {
+                    imgToRemove.parentNode.removeChild(imgToRemove);
+                }
+            }, 3000);
+        });
+
         socket.on('errorConnect', (message) => {
             window.alert(message);
             changePage("mode/mode.html");
@@ -161,11 +174,9 @@ if (room != null) {
     });
 }
 
-const socketChat = io.connect('http://localhost:8000/api/chatInGame');
-
 function getIdOnClick(id) {
     console.log("ID de l element cliqué : " + id.target.id);
-    socketChat.emit('message', id.target.id);
+    socket.emit('message', id.target.id);
 }
 
 
