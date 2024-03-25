@@ -4,7 +4,7 @@
   "description": "",
   "main": "back/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node back/test_logic/main_test.spec.js",
     "start": "node ./back/index.js"
   },
   "repository": {
@@ -20,6 +20,5 @@
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
     "socket.io": "^4.7.4"
-  },
-  "type": "module"
+  }
 }

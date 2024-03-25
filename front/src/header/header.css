@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF2E3;
+}
+
+#friends {
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2vw;
+}
+
+#sucess {
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2vw;
+}
+
+#banner {
+    grid-column: 3/4;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF2E3;
+    background-image: url('mur.jpg');
+    background-size: contain;
+    background-repeat: repeat;
+    
+}
+
+.flag {
+    background-image: url('banniere.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#flag1 {
+    grid-column: 1/2;
+}
+
+#flag2 {
+    grid-column: 3/4;
+}
+
+#buttonSucess {
+    grid-column: 2/3;
+    background-image: url('coupe.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+#buttonFriends {
+    grid-column: 1/2;
+    background-image: url('Ajout_ami.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+}
+
+#title {
+    font-size: 50px;
+}
+#login {
+    grid-column: 4/5;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    margin: 10%;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF2E3;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 10% 10% 60% 20%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF2E3;
+}
