@@ -84,13 +84,13 @@ header {
 }
 
 #chatContent {
-    min-width: 400px; 
-    min-height: 200px; 
+    min-width: 400px;
+    min-height: 200px;
     margin: 3%;
-    border-radius:5px; 
-    overflow-y: auto; 
-    border: 3px solid #ECD6BC; 
-    box-sizing: border-box; 
+    border-radius:5px;
+    overflow-y: auto;
+    border: 3px solid #ECD6BC;
+    box-sizing: border-box;
     box-shadow: 0 0 10px #ECD6BC;
     background-color: #fefefe;
     padding: 1%;
@@ -106,8 +106,8 @@ header {
     margin: auto;
     width: 90%;
     height: 50%;
-    border-radius:5px; 
-    border: 3px solid #ECD6BC; 
+    border-radius:5px;
+    border: 3px solid #ECD6BC;
     background-color: #fff8f1;
     grid-row: 1/2;
     box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
@@ -118,7 +118,7 @@ header {
     grid-row: 1/2;
     height: 100%;
     width: 100%;
-    border-bottom: 3px solid #ECD6BC; 
+    border-bottom: 3px solid #ECD6BC;
     grid-template-columns: 30% 70%;
 
 }
@@ -138,7 +138,7 @@ header {
 #nameFriend{
     display: grid;
     grid-column: 2/3;
-    border-left: 3px solid #ECD6BC; 
+    border-left: 3px solid #ECD6BC;
 }
 
 #bottompart{
@@ -148,16 +148,23 @@ header {
     width: 100%;
     grid-template-columns: 30% 70%;
 }
+#bottompart2{
+    display: grid;
+    grid-row: 2/3;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 30% 70%;
+}
 #friendList{
     display: grid;
     grid-column: 1/2;
-    width: 100%;    
+    width: 100%;
     height: 100%;
 }
 #chatpart{
     display: grid;
     grid-column: 2/3;
-    border-left: 3px solid #ecd6bc; 
+    border-left: 3px solid #ecd6bc;
     width: 100%;
     height: 100%;
     grid-template-rows: 90% 10%;
@@ -181,12 +188,12 @@ header {
 }
 #button{
     display: flex;
-    justify-content:left; 
+    justify-content:left;
     margin-left: 5%;
 }
 #friendButton{
     display: flex;
-    border-left: 3px solid #ecd6bc; 
+    border-left: 3px solid #ecd6bc;
     border-right: 3px solid #ecd6bc;
     border-bottom: 3px solid #ecd6bc;
     grid-template-columns: 30% 70%;
@@ -209,7 +216,7 @@ header {
 }
 #chatButton{
     display: flex;
-    border-right: 3px solid #ecd6bc; 
+    border-right: 3px solid #ecd6bc;
     border-bottom: 3px solid #ecd6bc;
     width: 100px;
     height: 50px;
@@ -237,8 +244,8 @@ header {
     margin: auto;
     width: 90%;
     height: 50%;
-    border-radius:5px; 
-    border: 3px solid #ECD6BC; 
+    border-radius:5px;
+    border: 3px solid #ECD6BC;
     background-color: #fff8f1;
     grid-row: 1/2;
     box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
@@ -249,7 +256,7 @@ header {
     grid-row: 1/2;
     height: 100%;
     width: 100%;
-    border-bottom: 3px solid #ECD6BC; 
+    border-bottom: 3px solid #ECD6BC;
     grid-template-columns:95% 5%;
 }
 #Friendsearch{
@@ -268,7 +275,7 @@ header {
 #addFriend {
     display: grid;
     grid-column: 2/3;
-    border-left: 3px solid #ECD6BC; 
+    border-left: 3px solid #ECD6BC;
 }
 #listfriend{
     display: grid;
@@ -294,14 +301,14 @@ header {
     grid-column: 2/3;
     height: 100%;
     width: 100%;
-    border-left: 3px solid #ECD6BC; 
+    border-left: 3px solid #ECD6BC;
 }
 #fightFriend {
     display: grid;
     grid-column: 3/4;
     height: 100%;
-    width: 100%;    
-    border-left: 3px solid #ECD6BC; 
+    width: 100%;
+    border-left: 3px solid #ECD6BC;
 }
 #deleteFriend {
     display: grid;
@@ -314,7 +321,7 @@ header {
     display: grid;
     height: 100%;
     width: 100%;
-    border-top: 3px solid #ECD6BC; 
+    border-top: 3px solid #ECD6BC;
     grid-template-columns: 80% 10% 10%;
 }
 #usernameRequest {
@@ -328,15 +335,25 @@ header {
     grid-column: 2/3;
     height: 100%;
     width: 100%;
-    border-left: 3px solid #ECD6BC; 
+    border-left: 3px solid #ECD6BC;
 }
 #deleteRequest {
     display: grid;
     grid-column: 3/4;
     height: 100%;
     width: 100%;
-    border-left: 3px solid #ECD6BC; 
+    border-left: 3px solid #ECD6BC;
 
+}
+.image-button {
+    background: none; /* Aucun fond pour que l'image soit visible */
+    border: none; /* Pas de bordure */
+    cursor: pointer; /* Change le curseur pour indiquer qu'il s'agit d'un bouton */
+    padding: 0; /* Aucun remplissage */
+}
+
+.image-button img {
+    display: block; /* Assure que l'image est affichée correctement dans le bouton */
 }
 
 .invisible {

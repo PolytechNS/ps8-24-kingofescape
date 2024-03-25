@@ -23,6 +23,33 @@ async function getUsers(response) {
         await client.close();
     }
 }
+async function getFriendsList(token, response) {
+    try {
+        await client.connect();
+        const db = client.db('sample_mflix');
+        const usersCollection = db.collection("Users");
+        const decoded = jwt.verify(token, secretKey);
+        const Username = decoded.username;
+        const user = await usersCollection.findOne({ username: Username }, { projection: { friends: 1, _id: 0 } });
+        console.log(user+"88");
+        console.log(Username+"99");
+        if (user) {
+            response.setHeader('Content-Type', 'application/json');
+            response.statusCode = 200;
+            response.end(JSON.stringify(user.friends));
+        } else {
+            throw new Error('Utilisateur non trouvé');
+        }
+    } catch (error) {
+        console.error(error);
+        response.statusCode = 500;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ message: 'Erreur lors de la récupération de la liste d\'amis' }));
+    } finally {
+        await client.close();
+    }
+}
+
 async function getNotifications(token, response) {
     try {
         await client.connect();
@@ -116,57 +143,63 @@ async function checkExistingRequest(sender, recipient) {
     const existingRequest = await notificationsCollection.findOne({sender: sender, recipient: recipient});
     return existingRequest !== null;
 }
-async function acceptFriendRequest(json, response) {
-    try {
-        await client.connect();
-        const db = client.db('sample_mflix');
-        const usersCollection = db.collection("Users");
-        const notificationsCollection = db.collection("Notifications");
+    async function acceptFriendRequest(json, response) {
+        try {
+            await client.connect();
+            const db = client.db('sample_mflix');
+            const usersCollection = db.collection("Users");
+            const notificationsCollection = db.collection("Friendrequest");
 
-        const decoded = jwt.verify(json.token, secretKey);
-        console.log("Decoded JWT:", decoded); // Ajoutez ceci pour déboguer
+            const senderUsername = json.sender;
+            const recipientUsername = json.recipient;
 
-        const senderUsername = json.sender
-        const recipientUsername = json.recipient;
+            const senderUser = await usersCollection.findOne({username: senderUsername});
+            const recipientUser = await usersCollection.findOne({username: recipientUsername});
 
-        console.log("Sender:", senderUsername, "Recipient:", recipientUsername); // Vérifiez les valeurs
+            // Vérifier si les utilisateurs existent
+            if (!senderUser) {
+                console.error(`Expéditeur ${senderUsername} non trouvé`);
+                throw new Error(`Expéditeur non trouvé`);
+            }
 
-        const senderUser = await usersCollection.findOne({ username: senderUsername });
-        const recipientUser = await usersCollection.findOne({ username: recipientUsername });
+            if (!recipientUser) {
+                console.error(`Destinataire ${recipientUsername} non trouvé`);
+                throw new Error(`Destinataire non trouvé`);
+            }
 
-        if (!senderUser || !recipientUser) {
-            response.writeHead(404, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({ success: false, message: 'Utilisateur non trouvé'+senderUser+recipientUser }));
-            return;
+            // Vérifier et mettre à jour la liste d'amis pour le destinataire
+            if (!Array.isArray(recipientUser.friends)) {
+                recipientUser.friends = [];
+            }
+            if (!recipientUser.friends.includes(senderUsername)) {
+                await usersCollection.updateOne({username: recipientUsername}, {$push: {friends: senderUsername}});
+            }
+
+            // Vérifier et mettre à jour la liste d'amis pour l'expéditeur
+            if (!Array.isArray(senderUser.friends)) {
+                senderUser.friends = [];
+            }
+            if (!senderUser.friends.includes(recipientUsername)) {
+                await usersCollection.updateOne({username: senderUsername}, {$push: {friends: recipientUsername}});
+            }
+
+            // Supprimer la notification de demande d'ami
+            await notificationsCollection.deleteOne({recipient: recipientUsername, sender: senderUsername});
+
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({
+                success: true,
+                message: 'Demande d\'ami acceptée et notification supprimée avec succès'
+            }));
+
+        } catch (error) {
+            console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
+            response.writeHead(500, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({success: false, message: error.message}));
+        } finally {
+            await client.close();
         }
-
-        if (!recipientUser.friends.includes(senderUsername)) {
-            await usersCollection.updateOne({ username: recipientUsername }, { $push: { friends: senderUsername } });
-        }
-
-        if (!senderUser.friends.includes(recipientUsername)) {
-            await usersCollection.updateOne({ username: senderUsername }, { $push: { friends: recipientUsername } });
-        }
-
-        await notificationsCollection.deleteOne({
-            recipient: recipientUsername,
-            sender: senderUsername,
-        });
-        const notifc=db.Notifications.find({recipient: "recipientUsername", sender: "senderUsername"})
-        if(notifc){
-            console.log("riennn");
-        }
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ success: true, message: 'Demande d\'ami acceptée et notification supprimée avec succès' }));
-
-    } catch (error) {
-        console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
-        response.writeHead(500, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ success: false, message: 'Erreur lors de l\'acceptation de la demande d\'ami' }));
-    } finally {
-        await client.close();
     }
-}
 
 
 async function rejectFriendRequest(json, response) {
@@ -224,6 +257,7 @@ createNotificationsCollection();
 exports.sendR = {sendFriendRequest};
 exports.rejectR={rejectFriendRequest}
 exports.Notifications=getNotifications
+exports.friends=getFriendsList
 
 exports.users = getUsers;
 exports.acceptR={acceptFriendRequest};

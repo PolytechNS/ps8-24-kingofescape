@@ -4,6 +4,7 @@ const getUsers = require("../friendShipManager.js").users;
 const getNotifications = require("../friendShipManager").Notifications;
 const { sendFriendRequest } = require("../friendShipManager").sendR;
 
+const getFriendsList=require("../friendShipManager").friends;
 const { acceptFriendRequest } = require("../friendShipManager").acceptR;
 const { rejectFriendRequest } = require("../friendShipManager").rejectR;
 const { addScore, getScores, getScoresAllUsers, setScore } = require("../1v1/score.js");
@@ -25,9 +26,8 @@ function manageRequest(request, response) {
         });
 
         let json;
-        request.on('end', function() {
-            console.log(filePath[2]);
-            if (request.method === 'POST') {
+        request.on('end', function () {
+            if(request.method === 'POST') {
                 if (filePath[2] === 'signin') {
                     console.log(body);
                     json = JSON.parse(body);
@@ -46,6 +46,11 @@ function manageRequest(request, response) {
                     json = JSON.parse(body);
                     rejectFriendRequest(json, response);
                 }
+                if(filePath[2]==='invite'){
+                    console.log("on joueee")
+                }
+
+
                 if (filePath[2] === 'addScore') {
                     json = JSON.parse(body);
                     addScore(json, response);
@@ -68,6 +73,10 @@ function manageRequest(request, response) {
                     json = { username: filePath[3] };
                     getScores(json, response);
                 }
+                if (filePath[2] === 'friendlist') {
+                    const token = request.headers.authorization.split(' ')[1];
+                    getFriendsList(token, response);
+                }
                 if (filePath[2] === 'getScoresAllUsers') {
                     getScoresAllUsers(json, response);
                 }
@@ -81,7 +90,8 @@ function manageRequest(request, response) {
         });
 
 
-    } else {
+    }
+    else {
         response.statusCode = 200;
         response.end(`Ok`);
     }

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="friendlist.css">
+    <script src="../js/socket.io.js"></script>
+</head>
+<header>
+    <div id="friends">
+        <button onclick="changePage()" id="buttonFriends"/>
+    </div>
+    <div id="sucess">
+        <button onclick="changePage()" id="buttonSucess"/>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title"> KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+    </div>
+</header>
+<body>
+    <div id="bottompart">
+        <div id="friend-requests-container">
+            <table id="friend-requests-table">
+                <thead>
+                <tr>
+                    <th>Friends</th>
+                    <th>Lest's have a battle</th>
+                </tr>
+                </thead>
+                <tbody id="friendsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div id="button">
+    <div id="friendButton">
+        <img src="../picture/Ajout_ami.png" alt="friend" id="friend" width="30px" height="30px">
+        <button onclick="changePage('friendlist/friendlist.html')" id="friendText">Friends</button>
+    </div>
+    <div id="chatButton">
+        <img src="../picture/enveloppe.png" alt="chat" id="chat" width="30px" height="30px">
+        <p id="chatText"> Chat</p>
+    </div>
+</div>
+    <script type ="module" src="friendlist.js"></script>
+<script src="../changePage.js"></script>
+</body>
