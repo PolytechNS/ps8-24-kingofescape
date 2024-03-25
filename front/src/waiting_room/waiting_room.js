@@ -24,6 +24,7 @@ socket.on('connect', () => {
     socket.on('matchFound', (room) => {
         console.log('Match found!');
         localStorage.setItem("room", room);
+        socket.disconnect();
         changePage("jeu_1v1/jeu_1v1.html");
     });
 

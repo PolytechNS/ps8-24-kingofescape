@@ -136,6 +136,10 @@ header {
     align-self: center;
 }
 
+.invisible {
+    background-color: #c6c6c6;
+}
+
 .wallPlayer1 {
     background-color: #ff0000;
 }
