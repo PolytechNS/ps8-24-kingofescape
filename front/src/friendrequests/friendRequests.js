@@ -75,7 +75,7 @@ export function fetchFriendList() {
                 // Colonne Username
                 const usernameCell = document.createElement('td');
 
-                usernameCell.textContent = friend;
+                usernameCell.textContent = friend.toString();
                 row.appendChild(usernameCell);
 
                 // Colonne Message
