@@ -185,3 +185,19 @@ header {
     width: 45px;
     height: 45px;
 }
+
+div.player1 {
+    border: 3px solid #FFD700;
+}
+
+div.player2 {
+    border: 3px solid #C0C0C0;
+}
+
+div.player3 {
+    border: 3px solid #D98843;
+}
+
+div.player {
+    border: 3px solid #ECD6BC;
+}

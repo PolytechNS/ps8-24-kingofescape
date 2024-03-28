@@ -1,4 +1,4 @@
-function affichePlayer(position, username, score) {
+function affichePlayer(position, username, score, isThisPlayer= false) {
     let linePlayer = document.createElement('div');
     let leaderBoard = document.getElementById('leaderboard');
     let positionPlayer;
@@ -9,6 +9,9 @@ function affichePlayer(position, username, score) {
         positionPlayer = document.createElement('p');
         positionPlayer.innerHTML = position;
     }
+
+    if (isThisPlayer === true)
+        linePlayer.classList.add((position <= 3)? `player${position}` : 'player');
 
     let elementUsername = document.createElement('p');
     let elementScore = document.createElement('p');
@@ -21,8 +24,55 @@ function affichePlayer(position, username, score) {
     leaderBoard.appendChild(linePlayer);
 }
 
-affichePlayer(1, 'toto', 1000);
-affichePlayer(2, 'toto', 900);
-affichePlayer(3, 'toto', 800);
-affichePlayer(4, 'toto', 700);
-affichePlayer(5, 'toto', 600);
+let name;
+
+function redirection() {
+    window.alert('You need to be connected to access this page');
+    changePage('mode/mode.html');
+}
+
+function verifyConnect() {
+    let result = verifyLogin();
+
+    if (result == null) {
+        redirection();
+    }
+    else (result.then(async (response) => {
+        if (response.status !== 200)
+            redirection();
+        else {
+            name = await response.text();
+            document.getElementById("name").innerHTML = name;
+        }
+    }));
+}
+
+function getLeaderboard() {
+    fetch('http://localhost:8000/api/getScoresAllUsers', {
+        method: 'get'
+    }).then(async (response) => {
+        if (response.status === 200) {
+            let res = await response.text();
+            let json = JSON.parse(res);
+            let numberPlayerPrint = 0;
+            let playerIsPrint = false;
+
+            for (let i = 0; i < json.length; i++) {
+                if (name === json[i].username) {
+                    affichePlayer(i + 1, json[i].username, json[i].score, true);
+                    playerIsPrint = true;
+                    numberPlayerPrint++;
+                }
+                else if (numberPlayerPrint >= 5 && playerIsPrint === true)
+                    break;
+                else if (numberPlayerPrint < 5) {
+                    affichePlayer(i + 1, json[i].username, json[i].score);
+                    numberPlayerPrint++;
+                }
+            }
+        }
+    });
+}
+
+verifyConnect();
+getLeaderboard();

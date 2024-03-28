@@ -15,13 +15,13 @@ async function signin(json, response) {
         const mail = json.mail;
         const user = await users.collection("Users").findOne({username : username});
 
-        const token = jwt.sign({username:username, mail: mail, password:password},"ps8-koe", {algorithm: 'HS256', noTimestamp: true});
+        const token = jwt.sign({username:username, password:password},"ps8-koe", {algorithm: 'HS256', noTimestamp: true});
 
         if (user) {
             response.statusCode = 404;
             response.end('User already exists');
         } else {
-            await users.collection("Users").insertOne({username:username, password : token});
+            await users.collection("Users").insertOne({username:username, password : token, mail: mail});
             addScore({username: username, score: 0}, response);
             response.statusCode = 200;
             response.end(token);
