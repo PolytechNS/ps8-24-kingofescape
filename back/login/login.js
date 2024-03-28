@@ -12,9 +12,10 @@ async function signin(json, response) {
     try{
         const username = json.username;
         const password = json.password;
+        const mail = json.mail;
         const user = await users.collection("Users").findOne({username : username});
 
-        const token = jwt.sign({username:username, password:password},"ps8-koe", {algorithm: 'HS256', noTimestamp: true});
+        const token = jwt.sign({username:username, mail: mail, password:password},"ps8-koe", {algorithm: 'HS256', noTimestamp: true});
 
         if (user) {
             response.statusCode = 404;
@@ -57,7 +58,18 @@ async function login(json, response) {
         response.statusCode = 500;
         response.end('Error creating user');
     }
-
 }
 
-exports.login = {signin, login};
+function verifyLogin(token, response) {
+    jwt.verify(token, "ps8-koe", {algorithm: 'HS256'}, function(err, decoded) {
+        if (err) {
+            response.statusCode = 404;
+            response.end('Invalid token');
+        } else {
+            response.statusCode = 200;
+            response.end(decoded.username);
+        }
+    });
+}
+
+exports.login = {signin, login, verifyLogin};

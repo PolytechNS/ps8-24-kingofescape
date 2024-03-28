@@ -1,3 +1,38 @@
+function displayOff(mode) {
+    let element = document.getElementById(mode);
+    element.style.display = "none";
+}
+
+function displayOffAllConnect() {
+    displayOff("modeIA");
+    displayOff("modeMultiplayer");
+    displayOff("friends");
+    displayOff("success");
+    displayOff("profile");
+}
+
+function verifyLogin() {
+    let token = getCookie("token");
+    displayOff("modeContinue");
+
+    if (token == null) {
+        displayOffAllConnect();
+    }
+    else {
+        fetch("http://localhost:8000/api/verifyLogin/" + token, {
+            method: "get"
+        }).then(async (response) => {
+            if (response.status === 404) {
+                displayOffAllConnect();
+            } else {
+                displayOff("login");
+                let p = document.getElementById("name");
+                p.innerHTML = await response.text();
+            }
+        })
+    }
+}
+
 function togglePopup() {
     document.getElementById("popup-overlay").classList.toggle("open");
 }
@@ -47,3 +82,5 @@ function signIn() {
         }
     });
 }
+
+verifyLogin();
