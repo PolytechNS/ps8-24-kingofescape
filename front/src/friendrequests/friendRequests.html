@@ -60,30 +60,35 @@
     </div>
 </div>
 
-    <div id="listfriend">
-        <div id="FriendsList">
-            <div id="usernameFriend"></div>
-            <div id="messageFriend">
-                <img src="../picture/enveloppe.png" alt="messageenv" id="messageenv" width="30px" height="30px">
-            </div>
-            <div id="fightFriend">
-                <img src="../picture/multi.png" alt="fight" id="fight" width="30px" height="30px">
-            </div>
-            <div id="deleteFriend">
-                <img src="../picture/redcross.png" alt="delete" id="delete" width="30px" height="30px">
-            </div>
-        </div>
-        <div id="request">
-            <div id="usernameRequest"></div>
-            <div id="acceptRequest">
-                <img src="../picture/accept.png" alt="accept" id="accept" width="30px" height="30px">
-            </div>
-            <div id="deleteRequest">
-                <img src="../picture/redcross.png" alt="delete" id="deleterequtes" width="30px" height="30px">
-            </div>
-        </div>
-    </div>
+<div id="listfriend">
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Message</th>
+            <th>Fight</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody id="friendListTable">
+        </tbody>
+    </table>
 </div>
+
+<div id="friend-requests-container">
+    <table id="friend-requests-table">
+        <thead>
+        <tr>
+            <th>Request</th>
+            <th>Accept</th>
+            <th>Decline</th>
+        </tr>
+        </thead>
+        <tbody id="friend-requests-list"><!-- Les demandes d'amis seront ajoutées ici par JavaScript -->
+        </tbody>
+    </table>
+</div>
+
 <div id="button">
     <div id="friendButton">
         <img src="../picture/Ajout_ami.png" alt="friend" id="friend" width="30px" height="30px">
@@ -119,22 +124,7 @@
 
 
 </script>
-<div id="bottompart2">
-    <div id="friend-requests-container">
-        <table id="friend-requests-table">
-            <thead>
-            <tr>
-                <th>Friend Request</th>
-                <th>Accept</th>
-                <th>Decline</th>
-            </tr>
-            </thead>
-            <tbody id="friend-requests-list">
-            <!-- Friend requests will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </div>
-</div>
+
 <script type="module">
     import {sendText, showchat, showfriend} from "./friendRequests.js"
     document.getElementById('send').addEventListener('click',sendText);

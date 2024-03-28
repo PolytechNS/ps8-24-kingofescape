@@ -1,9 +1,10 @@
-/**const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
+const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
 document.addEventListener('DOMContentLoaded', () => {
+    fetchFriendList();
     fetchNotifications();
+
 });
-**/
-function fetchNotifications() {
+export function fetchNotifications() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendRequest';
 
@@ -12,32 +13,39 @@ function fetchNotifications() {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json())
+        .then(handleResponse)
         .then(data => {
-
-
+            const friendRequestsTableBody = document.getElementById('friend-requests-list');
+            friendRequestsTableBody.innerHTML = '';
             data.forEach(notification => {
                 const tr = document.createElement('tr');
 
+                // Colonne pour le message de la demande
                 const nameTd = document.createElement('td');
                 nameTd.textContent = notification.message;
+                tr.appendChild(nameTd);
 
-                const acceptButton = document.createElement('button');
-                acceptButton.textContent = 'Accept';
-                acceptButton.onclick = () => acceptFriendRequest(notification.sender, notification.recipient); // Set up onClick
-
-                const declineButton = document.createElement('button');
-                declineButton.textContent = 'Decline';
-                declineButton.onclick = () => rejectFriendRequest(notification.sender,notification.recipient); // Set up onClick
-
+                // Colonne pour le bouton Accepter
                 const acceptTd = document.createElement('td');
-                acceptTd.appendChild(acceptButton);
+                const acceptImg = document.createElement('img');
+                acceptImg.src = '../picture/accept.png';
+                acceptImg.alt = 'Accept';
+                acceptImg.width = 30;
+                acceptImg.height = 30;
+                acceptImg.style.cursor = 'pointer';
+                acceptImg.onclick = () => acceptFriendRequest(notification.sender, notification.recipient);
+                acceptTd.appendChild(acceptImg);
+                tr.appendChild(acceptTd);
 
                 const declineTd = document.createElement('td');
-                declineTd.appendChild(declineButton);
-
-                tr.appendChild(nameTd);
-                tr.appendChild(acceptTd);
+                const declineImg = document.createElement('img');
+                declineImg.src = '../picture/redcross.png';
+                declineImg.alt = 'Decline';
+                declineImg.width = 30;
+                declineImg.height = 30;
+                declineImg.style.cursor = 'pointer';
+                declineImg.onclick = () => rejectFriendRequest(notification.sender, notification.recipient);
+                declineTd.appendChild(declineImg);
                 tr.appendChild(declineTd);
 
                 friendRequestsTableBody.appendChild(tr);
@@ -45,7 +53,10 @@ function fetchNotifications() {
         })
         .catch(error => console.error('Erreur:', error));
 }
-function fetchfriendlist() {
+
+
+
+export function fetchFriendList() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendlist/';
 
@@ -54,44 +65,54 @@ function fetchfriendlist() {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json())
-        .then(data => {
-            const friendListContainer = document.getElementById('listfriend');
-            friendListContainer.innerHTML = ''; // Clear the existing list
+        .then(handleResponse)
+        .then(friends => {
+            const friendListTable = document.getElementById('friendListTable');
+            friendListTable.innerHTML = '';
+            friends.forEach(friend => {
+                const row = document.createElement('tr');
 
-            data.forEach(friend => {
-                // Création du conteneur pour un ami
-                const friendDiv = document.createElement('div');
-                friendDiv.id = 'FriendsList';
+                // Colonne Username
+                const usernameCell = document.createElement('td');
+                usernameCell.textContent = friend.username; // Adaptez en fonction de votre structure de données
+                row.appendChild(usernameCell);
 
-                // Username de l'ami
-                const usernameDiv = document.createElement('div');
-                usernameDiv.id = 'usernameFriend';
-                usernameDiv.textContent = friend;
-                friendDiv.appendChild(usernameDiv);
-
-                // Bouton de message
-                const messageFriendDiv = document.createElement('div');
-                messageFriendDiv.id = 'messageFriend';
+                // Colonne Message
+                const messageCell = document.createElement('td');
                 const messageIcon = document.createElement('img');
                 messageIcon.src = '../picture/enveloppe.png';
                 messageIcon.alt = 'message';
-                messageIcon.id = 'messageenv';
                 messageIcon.width = 30;
                 messageIcon.height = 30;
-                messageFriendDiv.appendChild(messageIcon);
-                friendDiv.appendChild(messageFriendDiv);
+                messageCell.appendChild(messageIcon);
+                row.appendChild(messageCell);
 
-                // Boutons combat et suppression
-                // Ajouter des éléments similaires pour 'fightFriend' et 'deleteFriend'
+                // Colonne Fight
+                const fightCell = document.createElement('td');
+                const fightIcon = document.createElement('img');
+                fightIcon.src = '../picture/multi.png';
+                fightIcon.alt = 'fight';
+                fightIcon.width = 30;
+                fightIcon.height = 30;
+                fightCell.appendChild(fightIcon);
+                row.appendChild(fightCell);
 
-                friendListContainer.appendChild(friendDiv);
+                // Colonne Delete
+                const deleteCell = document.createElement('td');
+                const deleteIcon = document.createElement('img');
+                deleteIcon.src = '../picture/redcross.png';
+                deleteIcon.alt = 'delete';
+                deleteIcon.width = 30;
+                deleteIcon.height = 30;
+                deleteCell.appendChild(deleteIcon);
+                row.appendChild(deleteCell);
+
+                friendListTable.appendChild(row);
             });
+
         })
-        .catch(error => console.error('Erreur:', error));
+        .catch(error => console.error('Error:', error));
 }
-
-
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
     console.log(sender+"8888");
@@ -211,5 +232,12 @@ function sendFriendRequest() {
             console.error('Error:', error);
         });
 }
-
+function handleResponse(response) {
+    if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.text().then(text => {
+        return text ? JSON.parse(text) : {};
+    });
+}
 export {sendText, showchat, showfriend};

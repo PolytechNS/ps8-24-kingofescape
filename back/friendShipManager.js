@@ -3,10 +3,32 @@ const { urlAdressDb } = require("./env/env.js");
 const jwt = require('jsonwebtoken');
 const secretKey = "ps8-koe";
 const client = new MongoClient(urlAdressDb);
-async function getUsers(response) {
+let isConnected = false; // Custom flag to track connection status
+async function connectToMongoDB() {
+    if (isConnected) {
+        return;
+    }
 
     try {
         await client.connect();
+        isConnected = true;
+        console.log('Connected to MongoDB.');
+
+        client.on('close', () => {
+            isConnected = false;
+            console.log('MongoDB connection closed.');
+        });
+    } catch (error) {
+        console.error('Failed to connect to MongoDB:', error);
+        isConnected = false;
+        throw error;
+    }
+}
+
+async function getUsers(response) {
+
+    try {
+      await connectToMongoDB();
         const db = client.db('sample_mflix');
         const usersCollection = db.collection("Users");
 
@@ -19,13 +41,11 @@ async function getUsers(response) {
         response.statusCode = 500;
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify({message: 'Error retrieving users'}));
-    } finally {
-        await client.close();
-    }
+    } f
 }
 async function getFriendsList(token, response) {
     try {
-        await client.connect();
+            await  connectToMongoDB();
         const db = client.db('sample_mflix');
         const usersCollection = db.collection("Users");
         const decoded = jwt.verify(token, secretKey);
@@ -45,14 +65,13 @@ async function getFriendsList(token, response) {
         response.statusCode = 500;
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify({ message: 'Erreur lors de la récupération de la liste d\'amis' }));
-    } finally {
-        await client.close();
     }
 }
 
 async function getNotifications(token, response) {
     try {
-        await client.connect();
+        await connectToMongoDB();
+
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Friendrequest");
         const decoded = jwt.verify(token, secretKey);
@@ -69,8 +88,6 @@ async function getNotifications(token, response) {
         response.statusCode = 500;
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify({message: 'Error retrieving notifications'}));
-    } finally {
-        await client.close();
     }
 }
 async function sendFriendRequest(json,response){
@@ -90,8 +107,7 @@ async function sendFriendRequest(json,response){
         console.log(decoded+"9999");
         console.log("Token received:", json.token+"888");
         const recipientUsername = json.recipient;
-        const client = new MongoClient(urlAdressDb);
-        await client.connect();
+        await  connectToMongoDB();
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Friendrequest");
         const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
@@ -114,7 +130,7 @@ async function sendFriendRequest(json,response){
         }).toArray();
 
         console.log("Notifications non lues pour l'utilisateur", recipientUsername + ":", unreadNotifications);
-        await client.close();
+
 
         console.log("Friend request sent from:", senderUsername, "to:", recipientUsername);
         response.writeHead(200, {'Content-Type': 'application/json'});
@@ -137,7 +153,7 @@ async function sendFriendRequest(json,response){
     }
 }
 async function checkExistingRequest(sender, recipient) {
-    await client.connect();
+    await connectToMongoDB();
     const db = client.db('sample_mflix');
     const notificationsCollection = db.collection("Friendrequest");
     const existingRequest = await notificationsCollection.findOne({sender: sender, recipient: recipient});
@@ -145,7 +161,7 @@ async function checkExistingRequest(sender, recipient) {
 }
     async function acceptFriendRequest(json, response) {
         try {
-            await client.connect();
+          await  connectToMongoDB();
             const db = client.db('sample_mflix');
             const usersCollection = db.collection("Users");
             const notificationsCollection = db.collection("Friendrequest");
@@ -196,15 +212,13 @@ async function checkExistingRequest(sender, recipient) {
             console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
             response.writeHead(500, {'Content-Type': 'application/json'});
             response.end(JSON.stringify({success: false, message: error.message}));
-        } finally {
-            await client.close();
         }
     }
 
 
 async function rejectFriendRequest(json, response) {
-    try {
-        await client.connect();
+    try { await connectToMongoDB();
+
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Friendrequest");
         const decoded = jwt.verify(json.token, secretKey);
@@ -227,8 +241,6 @@ async function rejectFriendRequest(json, response) {
         console.error('Erreur lors du rejet de la demande d\'ami:', error);
         response.writeHead(500, {'Content-Type': 'application/json'});
         response.end(JSON.stringify({ success: false, message: 'Erreur lors du rejet de la demande d\'ami' }));
-    } finally {
-        await client.close();
     }
 }
 
@@ -254,6 +266,7 @@ async function rejectFriendRequest(json, response) {
 // Appeler la fonction pour créer la collection "Notifications"
 createNotificationsCollection();
 **/
+
 exports.sendR = {sendFriendRequest};
 exports.rejectR={rejectFriendRequest}
 exports.Notifications=getNotifications
