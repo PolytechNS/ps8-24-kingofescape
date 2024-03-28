@@ -1,27 +1,26 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Castle Siege: Comrades and Rivalries</title>
     <link rel="stylesheet" href="friendRequests.css">
     <script type ="module" src="friendRequests.js"></script>
     <script src="../js/socket.io.js"></script>
 </head>
 <header>
     <div id="friends">
-        <button onclick="changePage()" id="buttonFriends"/>
+        <button onclick="changePage()" id="buttonFriends">Allies</button>
     </div>
     <div id="sucess">
-        <button onclick="changePage()" id="buttonSucess"/>
+        <button onclick="changePage()" id="buttonSucess">Achievements</button>
     </div>
     <div id="banner">
         <div class="flag" id="flag1"></div>
-        <p id="title"> KING OF ESCAPE</p>
+        <h1 id="title">Castle Siege</h1>
         <div class="flag" id="flag2"></div>
     </div>
     <div id="login">
-        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+        <button onclick="changePage('login/login.html')" id="buttonLogin">Enter the Keep</button>
     </div>
 </header>
 <body>
@@ -64,39 +63,38 @@
     <table>
         <thead>
         <tr>
-            <th>Username</th>
-            <th>Message</th>
-            <th>Fight</th>
-            <th>Delete</th>
+            <th>Ally</th>
+            <th>Send Pigeon</th>
+            <th>Challenge to Joust</th>
+            <th>Expel from Kingdom</th>
         </tr>
         </thead>
         <tbody id="friendListTable">
         </tbody>
     </table>
 </div>
-
-<div id="friend-requests-container">
-    <table id="friend-requests-table">
+<div id="friend-requests-table">
+    <table>
         <thead>
         <tr>
             <th>Request</th>
-            <th>Accept</th>
-            <th>Decline</th>
+            <th>Accept into Court</th>
+            <th>Decline with Regret</th>
         </tr>
         </thead>
-        <tbody id="friend-requests-list"><!-- Les demandes d'amis seront ajoutées ici par JavaScript -->
+        <tbody id="friend-requests-list">
         </tbody>
     </table>
-</div>
+    </div>
 
 <div id="button">
     <div id="friendButton">
-        <img src="../picture/Ajout_ami.png" alt="friend" id="friend" width="30px" height="30px">
-        <p id="friendText"> Friends</p>
+        <img src="../picture/Ajout_ami.png" alt="Ally" id="friend" width="30px" height="30px">
+        <p id="friendText"> Allies</p>
     </div>
     <div id="chatButton">
-        <img src="../picture/enveloppe.png" alt="chat" id="chat2" width="30px" height="30px">
-        <p id="chatText"> Chat</p>
+        <img src="../picture/enveloppe.png" alt="Pigeon" id="chat2" width="30px" height="30px">
+        <p id="chatText"> Council</p>
     </div>
 </div>
 <script>

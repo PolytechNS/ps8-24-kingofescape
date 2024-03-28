@@ -1,4 +1,5 @@
 body {
+    font-family: 'Goudy Bookletter 1911', sans-serif;
     margin: 0;
     height: 100%;
     width: 100%;
@@ -8,13 +9,29 @@ body {
     background-position: center; /* Center the image in the body */
 }
 
+button {
+    background: url('parchment.jpg'); /* Use a parchment texture for buttons */
+    border: none;
+    font-family: 'Goudy Bookletter 1911', sans-serif;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    color: #5D3A00;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+button:hover {
+    background: url('parchment.jpg'); /* Darker parchment texture on hover */
+}
+
+
 
 #friends, #sucess {
     padding: 20px;
     border-radius: 10px;
     font-size: 2vw;
 }
-
 #banner {
     grid-column: 3/4;
     display: grid;
@@ -160,6 +177,63 @@ header {
     width: 100%;
     grid-template-columns: 30% 70%;
 }
+#listfriend {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    max-width: 1300px;
+    margin: 20px auto; /* Centrer dans la vue et ajouter de l'espace */
+    width: calc(100% - 40px); /* Largeur moins le padding */
+    height: auto;
+    border-radius: 5px;
+    border: 3px solid #ECD6BC;
+    background-color: #fff8f1;
+    box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
+    padding: 20px; /* Espacement à l'intérieur du conteneur */
+}
+
+/* Styles pour le tableau à l'intérieur de #listfriend */
+#listfriend table {
+    width: 100%; /* Assurer que le tableau prend toute la largeur disponible */
+    border-collapse: collapse; /* Pour les bordures collées entre les cellules */
+    table-layout: fixed; /* Colonne de largeur fixe */
+}
+
+/* Styles pour les en-têtes de tableau et les cellules dans #listfriend */
+#listfriend th,
+#listfriend td {
+    border: 1px solid #ddd; /* Bordure des cellules */
+    text-align: center; /* Alignement du texte au centre */
+    padding: 8px; /* Espacement interne pour le texte */
+}
+
+/* Styles des en-têtes de #listfriend */
+#listfriend th {
+    background-color: #f3f3f3; /* Couleur de fond pour les entêtes */
+    font-weight: bold; /* Texte en gras */
+}
+
+/* Styles pour les images dans les boutons de #listfriend */
+#listfriend img {
+    width: 30px; /* Largeur de l'image */
+    height: 30px; /* Hauteur de l'image */
+    margin: auto; /* Centrer l'image dans le bouton */
+}
+
+/* Alternance des couleurs de fond pour les lignes du tableau */
+#listfriend tr:nth-child(odd) {
+    background-color: #fefefe; /* Couleur pour les lignes impaires */
+}
+
+/* Couleur de fond lors du survol d'une rangée */
+#listfriend tr:hover {
+    background-color: #f1f1f1;
+}
+/* Pour les images dans les boutons, vous pourriez vouloir assurer leur alignement et leur taille */
+.image-button img {
+    width: 30px; /* Largeur de l'image */
+    height: 30px; /* Hauteur de l'image */
+    margin: auto; /* Centre l'image dans le bouton */
+}
 #friendList{
     display: grid;
     grid-column: 1/2;
@@ -256,6 +330,86 @@ header {
     box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
 }
 
+#listfriend {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    max-width: 1300px;
+    margin: 20px auto; /* Centrer dans la vue et ajouter de l'espace */
+    width: calc(100% - 40px); /* Largeur moins le padding */
+    height: auto;
+    border-radius: 5px;
+    border: 3px solid #ECD6BC;
+    background-color: #fff8f1;
+    box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
+    padding: 20px; /* Espacement à l'intérieur du conteneur */
+}
+
+#friend-requests-table {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    max-width: 1300px;
+    margin: 20px auto; /* Centrer dans la vue et ajouter de l'espace */
+    width: calc(100% - 40px); /* Largeur moins le padding */
+    height: auto;
+    border-radius: 5px;
+    border: 3px solid #ECD6BC;
+    background-color: #fff8f1;
+    box-shadow: 0 0 10px rgba(11, 11, 11, 0.276);
+    padding: 20px; /* Espacement à l'intérieur du conteneur */
+}
+/* Styles pour le tableau à l'intérieur de #listfriend */
+#friend-requests-table table {
+    width: 100%; /* Assurer que le tableau prend toute la largeur disponible */
+    border-collapse: collapse; /* Pour les bordures collées entre les cellules */
+    table-layout: fixed; /* Colonne de largeur fixe */
+}
+
+/* Styles pour les en-têtes de tableau et les cellules dans #listfriend */
+#friend-requests-table th,
+#friend-requests-table td {
+    border: 1px solid #ddd; /* Bordure des cellules */
+    text-align: center; /* Alignement du texte au centre */
+    padding: 8px; /* Espacement interne pour le texte */
+}
+
+/* Styles des en-têtes de #listfriend */
+#friend-requests-table th {
+    background-color: #f3f3f3; /* Couleur de fond pour les entêtes */
+    font-weight: bold; /* Texte en gras */
+}
+
+/* Styles pour les images dans les boutons de #listfriend */
+#friend-requests-table img {
+    width: 30px; /* Largeur de l'image */
+    height: 30px; /* Hauteur de l'image */
+    margin: auto; /* Centrer l'image dans le bouton */
+}
+
+/* Alternance des couleurs de fond pour les lignes du tableau */
+#friend-requests-table tr:nth-child(odd) {
+    background-color: #fefefe; /* Couleur pour les lignes impaires */
+}
+
+/* Couleur de fond lors du survol d'une rangée */
+#friend-requests-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Styles pour les boutons et les images à l'intérieur */
+.image-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.image-button img {
+    display: block;
+    width: 30px; /* Définir la taille de l'image */
+    height: 30px;
+    margin: auto; /* Centrer l'image dans le bouton */
+}
+
 #searchFriendpart{
     display: grid;
     grid-row: 1/2;
@@ -283,6 +437,12 @@ header {
     border-left: 3px solid #ECD6BC;
 }
 #listfriend{
+    display: grid;
+    grid-row: 2/3;
+    height: 100%;
+    width: 100%;
+}
+#friend-requests-table{
     display: grid;
     grid-row: 2/3;
     height: 100%;
