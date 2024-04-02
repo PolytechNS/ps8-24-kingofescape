@@ -2,6 +2,8 @@ const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("../env/env.js");
 const jwt = require('jsonwebtoken');
 const {addScore} = require("../1v1/score.js");
+const { addStat } = require("../sucess/sucess.js");
+
 
 
 async function signin(json, response) {
@@ -23,6 +25,7 @@ async function signin(json, response) {
         } else {
             await users.collection("Users").insertOne({username:username, password : token, mail: mail});
             addScore({username: username, score: 0}, response);
+            addStat({username: username, win: 0, lose: 0, total: 0}, response);
             response.statusCode = 200;
             response.end(token);
         }
