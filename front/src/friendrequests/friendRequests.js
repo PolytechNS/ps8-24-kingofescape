@@ -1,6 +1,7 @@
 const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
 document.addEventListener('DOMContentLoaded', () => {
-    fetchFriendList();
+  fetchBasicFriendList();
+    fetchFullFriendList();
     fetchNotifications();
 
 });
@@ -55,8 +56,7 @@ export function fetchNotifications() {
 }
 
 
-
-export function fetchFriendList() {
+export function fetchFullFriendList() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendlist/';
 
@@ -72,48 +72,67 @@ export function fetchFriendList() {
             friends.forEach(friend => {
                 const row = document.createElement('tr');
 
-                // Colonne Username
+                // Username
                 const usernameCell = document.createElement('td');
-
                 usernameCell.textContent = friend.toString();
                 row.appendChild(usernameCell);
 
-                // Colonne Message
+                // Message
                 const messageCell = document.createElement('td');
-                const messageIcon = document.createElement('img');
-                messageIcon.src = '../picture/enveloppe.png';
-                messageIcon.alt = 'message';
-                messageIcon.width = 30;
-                messageIcon.height = 30;
-                messageCell.appendChild(messageIcon);
+                appendIconToCell(messageCell, '../picture/enveloppe.png', 'message');
                 row.appendChild(messageCell);
 
-                // Colonne Fight
+                // Fight
                 const fightCell = document.createElement('td');
-                const fightIcon = document.createElement('img');
-                fightIcon.src = '../picture/multi.png';
-                fightIcon.alt = 'fight';
-                fightIcon.width = 30;
-                fightIcon.height = 30;
-                fightCell.appendChild(fightIcon);
+                appendIconToCell(fightCell, '../picture/multi.png', 'fight');
                 row.appendChild(fightCell);
 
-                // Colonne Delete
+                // Delete
                 const deleteCell = document.createElement('td');
-                const deleteIcon = document.createElement('img');
-                deleteIcon.src = '../picture/redcross.png';
-                deleteIcon.alt = 'delete';
-                deleteIcon.width = 30;
-                deleteIcon.height = 30;
-                deleteCell.appendChild(deleteIcon);
+                appendIconToCell(deleteCell, '../picture/redcross.png', 'delete');
                 row.appendChild(deleteCell);
 
                 friendListTable.appendChild(row);
             });
-
         })
         .catch(error => console.error('Error:', error));
 }
+
+function appendIconToCell(cell, src, alt) {
+    const icon = document.createElement('img');
+    icon.src = src;
+    icon.alt = alt;
+    icon.width = 30;
+    icon.height = 30;
+    cell.appendChild(icon);
+}
+export function fetchBasicFriendList() {
+    let token = document.cookie.split('=')[1];
+    const url = 'http://localhost:8000/api/friendlist/';
+
+    fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(handleResponse)
+        .then(friends => {
+            const friendListTable = document.getElementById('friendList'); // Ensure this ID is unique in HTML
+            friendListTable.innerHTML = '';
+            friends.forEach(friend => {
+                const row = document.createElement('tr');
+
+                // Username only
+                const usernameCell = document.createElement('td');
+                usernameCell.textContent = friend.toString(); // Make sure this correctly reflects the friend's username
+                row.appendChild(usernameCell);
+
+                friendListTable.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
     console.log(sender+"8888");
@@ -177,14 +196,27 @@ function showchat() {
     element.style.display = 'grid';
     var element2 = document.getElementById('windowFriend');
     element2.style.display = 'none';
+    var element3= document.getElementById('friend-requests-table');
+    element3.style.display = 'none';
 }
 
+function showRequest() {
+    console.log('show request');
+    var element = document.getElementById('windowChat');
+    element.style.display = 'none';
+    var element2 = document.getElementById('windowFriend');
+    element2.style.display = 'none';
+    var element3= document.getElementById('friend-requests-table');
+    element3.style.display = 'grid';
+}
 function showfriend() {
     var element = document.getElementById('windowChat');
     element.style.display = 'none';
 
     var element2 = document.getElementById('windowFriend');
     element2.style.display = 'grid';
+    var element3= document.getElementById('friend-requests-table');
+    element3.style.display = 'none';
 }
 function inviteForGame(friendUsername) {
     let token = document.cookie.split('=')[1];
@@ -241,4 +273,4 @@ function handleResponse(response) {
         return text ? JSON.parse(text) : {};
     });
 }
-export {sendText, showchat, showfriend};
+export {sendText, showchat, showfriend,showRequest};
