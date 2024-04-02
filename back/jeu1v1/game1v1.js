@@ -143,11 +143,8 @@ class Game1v1 {
 
                 let stateGame = this.arbitre.isEndGame(this.game.gameStatePlayer1.positionPlayer, this.game.gameStatePlayer2.positionPlayer);
 
-                if (stateGame !== -1) {
-                    this.gestionSocketPlayer.emitSocket('endGame', "win", stateGame);
-                    this.gestionSocketPlayer.emitSocket('endGame', "lose", 3 - stateGame);
-                    this.functionEndGame();
-                }
+                if (stateGame !== -1)
+                    this.functionEndGame(stateGame === 1);
             }
             catch (e) {
                 console.log(e);

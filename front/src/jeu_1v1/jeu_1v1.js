@@ -1,7 +1,6 @@
 import {printPlayer, printWall, removePlayer} from "../js/affichage_jeu.js";
 import {createTable, printAllWallPossible} from "./design1v1.js";
 
-
 let numberPlayer;
 let room = localStorage.getItem('room');
 let socket;
@@ -145,9 +144,12 @@ if (room != null) {
             removeChoosePosition();
         });
 
-        socket.on('endGame', (game) => {
+        socket.on('endGame', (valueEndGame) => {
             socket.disconnect();
-            changePage(`${game}/${game}.html`);
+
+            localStorage.setItem('newElo', valueEndGame[1].elo);
+            localStorage.setItem('score+', valueEndGame[1].earn);
+            changePage(`${valueEndGame[0]}/${valueEndGame[0]}.html`);
         });
 
         socket.on('message', (id) => {

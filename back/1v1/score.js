@@ -1,28 +1,47 @@
 const {MongoClient} = require('mongodb');
 const {urlAdressDb} = require('../env/env.js');
-const jwt = require('jsonwebtoken');
 
-async function getScores(json, response) {
+let users = undefined;
+
+function connect() {
     const client = new MongoClient(urlAdressDb);
     client.connect();
-    const users = client.db('sample_mflix');
+    users = client.db('sample_mflix');
+}
+
+async function getScoreTable(username) {
+    if(users === undefined)
+        connect();
 
     try {
-        const username = json.username;
         const scores = await users.collection("Scores").find({username: username}).toArray();
-        response.statusCode = 200;
-        response.end(JSON.stringify(scores));
+        return [200, scores[0]];
     } catch (error) {
         console.log(error);
-        response.statusCode = 500;
-        response.end('Error getting scores');
+        return [500, -1];
     }
 }
 
+async function setScoreTable(username, score) {
+    try {
+        await users.collection("Scores").updateOne({username: username}, {$set: {score: score}}, upsert=false);
+        return 200;
+    } catch (error) {
+        console.log(error);
+        return 500;
+    }
+}
+
+function getScores(json, response) {
+    getScoreTable(json.username).then(([status, scores]) => {
+       response.statusCode = status;
+       response.end(JSON.stringify(scores));
+    });
+}
+
 async function getScoresAllUsers(json, response) {
-    const client = new MongoClient(urlAdressDb);
-    client.connect();
-    const users = client.db('sample_mflix');
+    if(users === undefined)
+        connect();
 
     try {
         const scores = await users.collection("Scores").find().sort({ score: -1 }).toArray();
@@ -35,22 +54,17 @@ async function getScoresAllUsers(json, response) {
     }
 }
 
-async function setScore(json, response) {
-    const client = new MongoClient(urlAdressDb);
-    client.connect();
-    const users = client.db('sample_mflix');
-
-    try {
-        const username = json.username;
-        const score = json.score;
-        await users.collection("Scores").updateOne({username: username}, {$set: {score: score}}, upsert=false);
-        response.statusCode = 200;
-        response.end('Score set');
-    } catch (error) {
-        console.log(error);
-        response.statusCode = 500;
-        response.end('Error setting score');
-    }
+function setScore(json, response) {
+    setScoreTable(json.username, json.score).then(status => {
+      if (status === 200) {
+          response.statusCode = 200;
+          response.end('Score set');
+      }
+      else {
+          response.statusCode = 500;
+          response.end('Error setting score');
+      }
+    });
 }
 
 async function addScore(json, response) {
@@ -73,5 +87,7 @@ async function addScore(json, response) {
 
 exports.addScore = addScore;
 exports.getScores = getScores;
+exports.getScoreTable = getScoreTable;
+exports.setScoreTable = setScoreTable;
 exports.getScoresAllUsers = getScoresAllUsers;
 exports.setScore = setScore;

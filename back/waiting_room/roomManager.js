@@ -1,9 +1,33 @@
 const game1v1 = require('../jeu1v1/game1v1.js').game1v1;
 const jwt = require('jsonwebtoken');
+const elo = require('../1v1/elo.js');
+const getScoreTable = require('../1v1/score.js').getScoreTable;
 
 let socketInGame;
 let socketDisconnected;
 let waitingPlayers = [];
+
+class stockPoints {
+    constructor(username1, username2) {
+        this.username1 = [username1, undefined];
+        this.username2 = [username2, undefined];
+
+        this.getScore(username1, 1);
+        this.getScore(username2, 2);
+    }
+
+    getScore(username, numberPlayer) {
+        getScoreTable(username).then(([status, scores]) => {
+            console.log(scores);
+            if (status === 200) {
+                if (numberPlayer === 1)
+                    this.username1[1] = scores.score;
+                else
+                    this.username2[1] = scores.score;
+            }
+        });
+    }
+}
 
 function verifyToken(token) {
     try {
@@ -15,8 +39,12 @@ function verifyToken(token) {
     }
 }
 
-function endGame(nameRoom) {
-    socketInGame.delete(nameRoom);
+function endGame(nameRoom, isFirstPlayerWin) {
+    if (socketInGame.has(nameRoom)) {
+        let game = socketInGame.get(nameRoom);
+        elo.calculeElo(game[1], (isFirstPlayerWin)? 1 : 0, game[0].gestionSocketPlayer);
+        socketInGame.delete(nameRoom);
+    }
 }
 
 function room(io) {
@@ -65,7 +93,7 @@ function room(io) {
             player1[0].join(room);
             player2[0].join(room);
             gameSocket1v1.to(room).emit('matchFound', room);
-            socketInGame.set(room, [new game1v1(player1, player2, function(){ endGame(room) }), 1]);
+            socketInGame.set(room, [new game1v1(player1, player2, function(isFirstPlayer){ endGame(room, isFirstPlayer) }), new stockPoints(player1[1], player2[1])]);
             console.log(`Starting game in room: ${room}`);
         }
     });
