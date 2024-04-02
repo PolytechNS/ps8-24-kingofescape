@@ -21,3 +21,16 @@ function getCookie(name) {
     // Retourne null si le cookie n'est pas trouvé
     return null;
 }
+
+function verifyLogin() {
+    let token = getCookie("token");
+
+    if (token == null) {
+        return null;
+    }
+    else {
+        return fetch("http://localhost:8000/api/verifyLogin/" + token, {
+            method: "get"
+        })
+    }
+}

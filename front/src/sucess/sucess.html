@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King of Escape</title>
+    <link rel="stylesheet" href="sucess.css">
+    <script src="sucess.css"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <header>
+        <div id="friends">
+            <button onclick="changePage('friendlist/friendRequests.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage()" id="buttonSucess"></button>
+        </div>
+        <div id="banner">
+            <div class="flag" id="flag1"></div>
+            <p id="title">KING OF ESCAPE</p>
+            <div class="flag" id="flag2"></div>
+        </div>
+        <div id="login">
+            <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+        </div>
+    </header>
+    <div id="sucesses">
+        <div id="textSucess"> Quest Achived</div>
+        <div id="sucess">
+            <div id="sucess_win1" class="successC">
+                <img src="pictures/crown5.png" alt="win1" id="win1" class="images" width="100px" height="100px">
+                <div id="text_win1" class="sucesstext">Win 1 game</div>
+            </div>
+            <div id="sucess_loos1" class="successC">
+                <img src="pictures/heart1.png" alt="loos1" id="loos1" class="images" width="100px" height="100px">
+                <div id="text_loos1" class="sucesstext">Loose 1 game</div>
+            </div>
+            <div id="sucess_friend1" class="successC">
+                <img src="pictures/friends1.png" alt="friend1" id="friend1" class="images" width="100px" height="100px">
+                <div id="text_friend1" class="sucesstext">Add 1 friend</div>
+            </div>
+            <div id="sucess_score1" class="successC">
+                <img src="pictures/coins1.png" alt="score1" id="score1" class="images" width="100px" height="100px">
+                <div id="text_score1" class="sucesstext">Reach 1000 points</div>
+            </div>
+            <div id="sucess_win5" class="successC">
+                <img src="pictures/crown10.png" alt="win5" id="win5" class="images" width="100px" height="100px">
+                <div id="text_win5" class="sucesstext">Win 5 games</div>
+            </div>
+            <div id="sucess_loos5" class="successC">
+                <img src="pictures/heart5.png" alt="loos5" id="loos5" class="images" width="100px" height="100px">
+                <div id="text_loos5" class="sucesstext">Loose 5 games</div>
+            </div>
+            <div id="sucess_friend5" class="successC">
+                <img src="pictures/friends2.png" alt="friend5" id="friend5" class="images" width="100px" height="100px">
+                <div id="text_friend5" class="sucesstext">Add 5 friends</div>
+            </div>
+            <div id="sucess_score2" class="successC">
+                <img src="pictures/coins2.png" alt="score2" id="score2" class="images" width="100px" height="100px">
+                <div id="text_score2" class="sucesstext">Reach 2000 points</div>
+            </div>
+            <div id="sucess_win10" class="successC">
+                <img src="pictures/crown25.png" alt="win10" id="win10" class="images" width="100px" height="100px">
+                <div id="text_win10" class="sucesstext">Win 10 games</div>
+            </div>
+            <div id="sucess_loos10" class="successC">
+                <img src="pictures/heart10.png" alt="loos10" id="loos10" class="images" width="100px" height="100px">
+                <div id="text_loos10" class="sucesstext">Loose 10 games</div>
+            </div> 
+            <div id="sucess_friend10" class="successC">
+                <img src="pictures/friends3.png" alt="friend10" id="friend10" class="images" width="100px" height="100px">
+                <div id="text_friend10" class="sucesstext">Add 10 friends</div>
+            </div>
+            <div id="sucess_score3" class="successC">
+                <img src="pictures/coins3.png" alt="score3" id="score3" class="images" width="100px" height="100px">
+                <div id="text_score3" class="sucesstext">Reach 3000 points</div>
+            </div>
+            <div id="sucess_win20" class="successC">
+                <img src="pictures/crown50.png" alt="win20" id="win20" class="images" width="100px" height="100px">
+                <div id="text_win20" class="sucesstext">Win 20 games</div>
+            </div>
+            <div id="sucess_loos20" class="successC">
+                <img src="pictures/heart25.png" alt="loos20" id="loos20" class="images" width="100px" height="100px">
+                <div id="text_loos20" class="sucesstext">Loose 20 games</div>
+            </div>
+            <div id="sucess_friend20" class="successC">
+                <img src="pictures/friends4.png" alt="friend20" id="friend20" class="images" width="100px" height="100px">
+                <div id="text_friend20" class="sucesstext">Add 20 friends</div>
+            </div>
+            <div id="sucess_score4" class="successC">
+                <img src="pictures/coins4.png" alt="score4" id="score4" class="images" width="100px" height="100px">
+                <div id="text_score4" class="sucesstext">Reach 4000 points</div>
+            </div>
+            <div id="sucess1win50" class="successC">
+                <img src="pictures/crown100.png" alt="win50" id="win50" class="images" width="100px" height="100px">
+                <div id="text_win50" class="sucesstext">Win 50 games</div>
+            </div>
+            <div id="sucess_loos50" class="successC">
+                <img src="pictures/heart50.png" alt="loos50" id="loos50" class="images" width="100px" height="100px">
+                <div id="text_loos50" class="sucesstext">Loose 50 games</div>
+            </div>
+            <div id="sucess_score5" class="successC">
+                <img src="pictures/coins5.png" alt="score5" id="score5" class="images" width="100px" height="100px">
+                <div id="text_score5" class="sucesstext">Reach 5000 points</div>
+            </div>
+            <div id="sucess_win100" class="successC">
+                <img src="pictures/crown250.png" alt="win100" id="win100" class="images" width="100px" height="100px">
+                <div id="text_win100" class="sucesstext">Win 100 games</div>
+            </div>
+            <div id="sucess_score6" class="successC">
+                <img src="pictures/coins6.png" alt="score6" id="score6" class="images" width="100px" height="100px">
+                <div id="text_score6" class="sucesstext">Reach 6000 points</div>
+            </div>
+            <div id="sucess_win200" class="successC">
+                <img src="pictures/crown500.png" alt="win200" id="win200" class="images" width="100px" height="100px">
+                <div id="text_win200" class="sucesstext">Win 200 games</div>
+            </div>
+            <div id="sucess_score7" class="successC">
+                <img src="pictures/coins7.png" alt="score7" id="score7" class="images" width="100px" height="100px">
+                <div id="text_score7" class="sucesstext">Reach 7000 points</div>
+            </div>
+            <div id="sucess_win500" class="successC">
+                <img src="pictures/crown1000.png" alt="win500" id="win500" class="images" width="100px" height="100px">
+                <div id="text_win500" class="sucesstext">Win 500 games</div>
+            </div>
+            <div id="sucess_score8" class="successC">
+                <img src="pictures/coins8.png" alt="score8" id="score8" class="images" width="100px" height="100px">
+                <div id="text_score8" class="sucesstext">Reach 8000 points</div>
+            </div>
+            <div id="sucess_win1000" class="successC">
+                <img src="pictures/crown1500.png" alt="win1000" id="win1000" class="images" width="100px" height="100px">
+                <div id="text_win1000" class="sucesstext">Win 1000 games</div>
+            </div>
+        </div>
+</body>
+</html>
