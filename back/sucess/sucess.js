@@ -46,6 +46,8 @@ function setStat(json, response) {
 }
 
 async function setStatTable(username, win, lose, total) {
+    console.log(username, win, lose, total);
+    console.log(typeof win, typeof lose, typeof total)
     if (users === undefined) 
         connect(); 
     try {
@@ -62,6 +64,7 @@ async function getStatTable(username) {
         connect(); 
     try {
         const stats = await users.collection("Stats").find({ username: username }).toArray();
+        console.log(stats);
         return [200, stats[0]];
     } catch (error) {
         console.log(error);

@@ -1,5 +1,5 @@
 const {setScoreTable} = require('./score.js');
-
+const {getStat, setStat, getStatTable, setStatTable} = require('../sucess/sucess.js');
 function calculeElo(stockPoints, resultatPartie, gestionSocketPlayer) {
         let player1 = stockPoints.username1;
         let player2 = stockPoints.username2;
@@ -19,6 +19,34 @@ function calculeElo(stockPoints, resultatPartie, gestionSocketPlayer) {
 
         setScoreTable(player1[0], nouveauEloJoueur1);
         setScoreTable(player2[0], nouveauEloJoueur2);
+
+        getStatTable(player1[0]).then(([status, stats]) => {
+                let win = parseInt(stats.win);
+                let lose = parseInt(stats.lose);
+                let total = parseInt(stats.total);
+                if (status === 200) {
+                        if (resultatPartie === 1) {
+                                setStatTable(player1[0], win+1, lose, total+1);
+                        }
+                        else {
+                                setStatTable(player1[0], win, lose+1, total+1);
+                        }
+                }
+        });
+
+        getStatTable(player2[0]).then(([status, stats]) => {
+                let win = parseInt(stats.win);
+                let lose = parseInt(stats.lose);
+                let total = parseInt(stats.total);
+                if (status === 200) {
+                        if (resultatPartie === 0) {
+                                setStatTable(player2[0], win+1, lose, total+1);
+                        }
+                        else {
+                                setStatTable(player2[0], win, lose+1, total+1);
+                        }
+                }
+        });
 }
 
 exports.calculeElo = calculeElo;
