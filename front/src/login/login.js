@@ -8,6 +8,7 @@ function login() {
         method: 'get'
     }).then( async (response) => {
         let res = await response.text();
+        localStorage.setItem('currentUser', 'username');
         document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });

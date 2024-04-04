@@ -7,6 +7,7 @@ const { sendFriendRequest } = require("../friendShipManager").sendR;
 const getFriendsList=require("../friendShipManager").friends;
 const { acceptFriendRequest } = require("../friendShipManager").acceptR;
 const { rejectFriendRequest } = require("../friendShipManager").rejectR;
+const {removeFriend}=require("../friendShipManager.js").deleteF;
 const { addScore, getScores, getScoresAllUsers, setScore } = require("../1v1/score.js");
 
 function manageRequest(request, response) {
@@ -33,6 +34,10 @@ function manageRequest(request, response) {
                     json = JSON.parse(body);
                     console.log(json);
                     signin(json, response);
+                }
+                if (filePath[2] === 'deleteFriend') {
+                    json = JSON.parse(body);
+                    removeFriend (json, response);
                 }
                 if (filePath[2] === 'sendFriendRequest') {
                     json = JSON.parse(body);

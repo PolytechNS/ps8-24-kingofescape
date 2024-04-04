@@ -1,10 +1,26 @@
 const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
+const socketFriendListUpdates = io.connect('http://localhost:8000/api/friendListUpdates');
+
 document.addEventListener('DOMContentLoaded', () => {
   fetchBasicFriendList();
     fetchFullFriendList();
     fetchNotifications();
 
 });
+
+
+socketFriendListUpdates.on('update-friends', (data) => {
+
+    let currentUser = localStorage.getItem('username');
+
+    if (data.sender === currentUser || data.friend === currentUser) { // Changement ici
+
+        fetchFullFriendList();
+    }
+});
+
+
+
 export function fetchNotifications() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendRequest';
@@ -89,7 +105,7 @@ export function fetchFullFriendList() {
 
                 // Delete
                 const deleteCell = document.createElement('td');
-                appendIconToCell(deleteCell, '../picture/redcross.png', 'delete');
+                appendIconToCell(deleteCell, '../picture/redcross.png', 'delete',friend);
                 row.appendChild(deleteCell);
 
                 friendListTable.appendChild(row);
@@ -98,14 +114,28 @@ export function fetchFullFriendList() {
         .catch(error => console.error('Error:', error));
 }
 
-function appendIconToCell(cell, src, alt) {
+function appendIconToCell(cell, src, alt, friendUsername) {
     const icon = document.createElement('img');
     icon.src = src;
     icon.alt = alt;
     icon.width = 30;
     icon.height = 30;
+    icon.style.cursor = 'pointer';
+
+    if (alt === 'delete') {
+        icon.onclick = () => {
+            removeFriend( friendUsername)
+                .then(() => {
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la suppression:', error);
+                });
+        };
+    }
+
     cell.appendChild(icon);
 }
+
 export function fetchBasicFriendList() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendlist/';
@@ -133,6 +163,7 @@ export function fetchBasicFriendList() {
         .catch(error => console.error('Error:', error));
 }
 
+
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
     console.log(sender+"8888");
@@ -152,6 +183,32 @@ function acceptFriendRequest(sender, recipient) {
         })
         .catch(error => console.error('Erreur:', error));
 }
+function removeFriend(friendUsername) {
+    const url = 'http://localhost:8000/api/deleteFriend';
+    const token = document.cookie.split('=')[1];
+
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ friendUsername, token })
+    })
+        .then(response => response.json())
+        .then(result => {
+
+            console.log('Ami supprimé avec succès');
+            return result;
+        })
+        .catch((error) => {
+            console.error('Erreur:', error);
+            throw error;
+        });
+}
+
+
+
 function rejectFriendRequest(sender,recipient) {
     let token = document.cookie.split('=')[1];
 
@@ -273,4 +330,5 @@ function handleResponse(response) {
         return text ? JSON.parse(text) : {};
     });
 }
+
 export {sendText, showchat, showfriend,showRequest};
