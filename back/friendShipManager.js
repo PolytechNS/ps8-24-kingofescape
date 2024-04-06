@@ -53,7 +53,7 @@ async function getFriendsList(token, response) {
         sendErrorResponse(response, error);
     }
 }
-async function getNotifications(token, response) {
+async function getFriendrequests(token, response) {
     try {
         const decoded = jwt.verify(token, secretKey);
         await connectToMongoDB();
@@ -112,9 +112,21 @@ async function sendFriendRequest(json, response) {
 async function checkExistingRequest(sender, recipient) {
     await connectToMongoDB();
     const db = client.db('sample_mflix');
+
+
     const notificationsCollection = db.collection("Friendrequest");
-    const existingRequest = await notificationsCollection.findOne({sender: sender, recipient: recipient});
-    return existingRequest !== null;
+    const existingRequest = await notificationsCollection.findOne({ sender: sender, recipient: recipient });
+    if (existingRequest) {
+        return true; // Il existe déjà une demande d'ami
+    }
+
+    const usersCollection = db.collection("Users");
+    const recipientUser = await usersCollection.findOne({ username: recipient }, { projection: { friends: 1, _id: 0 } });
+    if (recipientUser && recipientUser.friends.includes(sender)) {
+        return true;
+    }
+
+    return false;
 }
     async function acceptFriendRequest(json, response) {
             try {
@@ -186,7 +198,6 @@ async function rejectFriendRequest(json, response) {
 
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Friendrequest");
-        const decoded = jwt.verify(json.token, secretKey);
         const sender= json.sender
         const recipient = json.recipient;
 
@@ -195,14 +206,12 @@ async function rejectFriendRequest(json, response) {
             sender: sender,
         });
 
-        // Répondre avec succès
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ success: true, message: 'Demande d\'ami rejetée avec succès et notification supprimée' }));
+                sendResponse(response, 200, {'success': true, 'message': 'Friend request rejected successfully and notification removed'});
+
 
     } catch (error) {
         console.error('Erreur lors du rejet de la demande d\'ami:', error);
-        response.writeHead(500, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ success: false, message: 'Erreur lors du rejet de la demande d\'ami' }));
+        sendErrorResponse(response, error);
     }
 }
 
@@ -219,11 +228,11 @@ function standardizeErrorResponse(error, response) {
     }
 }
 
-exports.sendR = {sendFriendRequest};
-exports.rejectR={rejectFriendRequest}
-exports.deleteF={removeFriend}
-exports.Notifications=getNotifications
+exports.sendFriendRequest = {sendFriendRequest};
+exports.rejectFriendRequest={rejectFriendRequest}
+exports.removeFriend={removeFriend}
+exports.Notifications=getFriendrequests
 exports.friends=getFriendsList
 
 exports.users = getUsers;
-exports.acceptR={acceptFriendRequest};
+exports.acceptFriendRequest={acceptFriendRequest};

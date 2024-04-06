@@ -5,6 +5,18 @@ const chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
 });
 const user = localStorage.getItem('currentUser');
 
+document.addEventListener('DOMContentLoaded', () => {
+    const addButton = document.getElementById('addFriend');
+    addButton.addEventListener('click', sendFriendRequest);
+});
+document.addEventListener('DOMContentLoaded', () => {
+    fetchBasicFriendList();
+    fetchFullFriendList();
+    fetchNotifications();
+
+});
+
+
 let room ; 
 const socketFriendListUpdates = io.connect('http://localhost:8000/api/friendListUpdates');
 chatFriend.on('connect', () => {
@@ -25,12 +37,6 @@ chatFriend.on('connect', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  fetchBasicFriendList();
-    fetchFullFriendList();
-    fetchNotifications();
-
-});
 
 
 socketFriendListUpdates.on('update-friends', (data) => {
@@ -44,57 +50,64 @@ socketFriendListUpdates.on('update-friends', (data) => {
 });
 
 
-
-export function fetchNotifications() {
-    let token = document.cookie.split('=')[1];
+export async function fetchNotifications() {
+    const token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendRequest';
 
-    fetch(url, {
-        headers: {
-            'Authorization': `Bearer ${token}`
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
         }
-    })
-        .then(handleResponse)
-        .then(data => {
-            const friendRequestsTableBody = document.getElementById('friend-requests-list');
-            friendRequestsTableBody.innerHTML = '';
-            data.forEach(notification => {
-                const tr = document.createElement('tr');
 
-                // Colonne pour le message de la demande
-                const nameTd = document.createElement('td');
-                nameTd.textContent = notification.message;
-                tr.appendChild(nameTd);
-
-                // Colonne pour le bouton Accepter
-                const acceptTd = document.createElement('td');
-                const acceptImg = document.createElement('img');
-                acceptImg.src = '../picture/accept.png';
-                acceptImg.alt = 'Accept';
-                acceptImg.width = 30;
-                acceptImg.height = 30;
-                acceptImg.style.cursor = 'pointer';
-                acceptImg.onclick = () => acceptFriendRequest(notification.sender, notification.recipient);
-                acceptTd.appendChild(acceptImg);
-                tr.appendChild(acceptTd);
-
-                const declineTd = document.createElement('td');
-                const declineImg = document.createElement('img');
-                declineImg.src = '../picture/redcross.png';
-                declineImg.alt = 'Decline';
-                declineImg.width = 30;
-                declineImg.height = 30;
-                declineImg.style.cursor = 'pointer';
-                declineImg.onclick = () => rejectFriendRequest(notification.sender, notification.recipient);
-                declineTd.appendChild(declineImg);
-                tr.appendChild(declineTd);
-
-                friendRequestsTableBody.appendChild(tr);
-            });
-        })
-        .catch(error => console.error('Erreur:', error));
+        const data = await response.json();
+        populateFriendRequestsTable(data);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
 }
 
+function populateFriendRequestsTable(friendRequests) {
+    const friendRequestsTableBody = document.getElementById('friend-requests-list');
+    friendRequestsTableBody.innerHTML = '';
+
+    friendRequests.forEach(notification => {
+        const tr = createFriendRequestRow(notification);
+        friendRequestsTableBody.appendChild(tr);
+    });
+}
+
+function createFriendRequestRow(notification) {
+    const tr = document.createElement('tr');
+    tr.appendChild(createTableCell(notification.message));
+    tr.appendChild(createButtonCell('../picture/accept.png', 'Accept', () => acceptFriendRequest(notification.sender, notification.recipient)));
+    tr.appendChild(createButtonCell('../picture/redcross.png', 'Decline', () => rejectFriendRequest(notification.sender, notification.recipient)));
+    return tr;
+}
+
+function createTableCell(text) {
+    const td = document.createElement('td');
+    td.textContent = text;
+    return td;
+}
+
+function createButtonCell(imageSrc, altText, onClick) {
+    const td = document.createElement('td');
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.alt = altText;
+    img.width = 30;
+    img.height = 30;
+    img.style.cursor = 'pointer';
+    img.onclick = onClick;
+    td.appendChild(img);
+    return td;
+}
 
 export function fetchFullFriendList() {
     let token = document.cookie.split('=')[1];
@@ -193,7 +206,6 @@ export function fetchBasicFriendList() {
 
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
-    console.log(sender+"8888");
     // Envoi d'une requête POST pour accepter la demande d'ami
     fetch('http://localhost:8000/api/acceptFriendRequest', {
         method: 'POST',
@@ -260,57 +272,18 @@ function sendText() {
     chatFriend.emit('msg', { room, text, user});
     messageInput.value = "";
 };
+function show(displayChat, displayRequest, displayFriend) {
+    var chatElement = document.getElementById('windowChat');
+    var requestElement = document.getElementById('friend-requests-table');
+    var friendElement = document.getElementById('windowFriend');
 
-function showchat() {
-    console.log('show chat');
-    var element = document.getElementById('windowChat');
-    element.style.display = 'grid';
-    var element2 = document.getElementById('windowFriend');
-    element2.style.display = 'none';
-    var element3= document.getElementById('friend-requests-table');
-    element3.style.display = 'none';
+
+    chatElement.style.display = displayChat;
+    requestElement.style.display = displayRequest;
+    friendElement.style.display = displayFriend;
 }
 
-function showRequest() {
-    console.log('show request');
-    var element = document.getElementById('windowChat');
-    element.style.display = 'none';
-    var element2 = document.getElementById('windowFriend');
-    element2.style.display = 'none';
-    var element3= document.getElementById('friend-requests-table');
-    element3.style.display = 'grid';
-}
-function showfriend() {
-    var element = document.getElementById('windowChat');
-    element.style.display = 'none';
 
-    var element2 = document.getElementById('windowFriend');
-    element2.style.display = 'grid';
-    var element3= document.getElementById('friend-requests-table');
-    element3.style.display = 'none';
-}
-function inviteForGame(friendUsername) {
-    let token = document.cookie.split('=')[1];
-
-    fetch('http://localhost:8000/api/invite', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ recipient: friendUsername })
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Invitation envoyée', data);
-            // Gérer la réponse - par exemple, afficher un message à l'utilisateur
-        })
-        .catch(error => console.error('Erreur:', error));
-}
-document.addEventListener('DOMContentLoaded', () => {
-    const addButton = document.getElementById('addFriend');
-    addButton.addEventListener('click', sendFriendRequest);
-});
 
 function sendFriendRequest() {
     const recipientUsername = document.getElementById("usernamesearch").value;
@@ -345,4 +318,4 @@ function handleResponse(response) {
     });
 }
 
-export {sendText, showchat, showfriend,showRequest};
+export {sendText, show};

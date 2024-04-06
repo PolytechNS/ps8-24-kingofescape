@@ -2,12 +2,12 @@
 const { signin, login } = require("../login/login.js").login;
 const getUsers = require("../friendShipManager.js").users;
 const getNotifications = require("../friendShipManager").Notifications;
-const { sendFriendRequest } = require("../friendShipManager").sendR;
+const { sendFriendRequest } = require("../friendShipManager").sendFriendRequest;
 
 const getFriendsList=require("../friendShipManager").friends;
-const { acceptFriendRequest } = require("../friendShipManager").acceptR;
-const { rejectFriendRequest } = require("../friendShipManager").rejectR;
-const {removeFriend}=require("../friendShipManager.js").deleteF;
+const { acceptFriendRequest } = require("../friendShipManager").acceptFriendRequest;
+const { rejectFriendRequest } = require("../friendShipManager").rejectFriendRequest;
+const {removeFriend}=require("../friendShipManager.js").removeFriend;
 const { addScore, getScores, getScoresAllUsers, setScore } = require("../1v1/score.js");
 
 function manageRequest(request, response) {
@@ -51,11 +51,6 @@ function manageRequest(request, response) {
                     json = JSON.parse(body);
                     rejectFriendRequest(json, response);
                 }
-                if(filePath[2]==='invite'){
-                    console.log("on joueee")
-                }
-
-
                 if (filePath[2] === 'addScore') {
                     json = JSON.parse(body);
                     addScore(json, response);

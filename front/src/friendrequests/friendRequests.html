@@ -100,44 +100,7 @@
         <img src="../picture/ajout%20ami.png" alt="Request" id="ajout" width="30px" height="30px">
     </div>
 </div>
-<script>
-    document.getElementById("addFriend").addEventListener("click", function() {
-        const recipientUsername = document.getElementById("searchFriend").value;
-        let token=document.cookie.split('=')[1];
 
-        fetch('http://localhost:8000/api/sendFriendRequest', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ recipient: recipientUsername, token: token }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    });
-
-
-
-</script>
-
-<script type="module">
-    import {sendText, showchat, showfriend,showRequest} from "./friendRequests.js"
-    document.getElementById('send').addEventListener('click',sendText);
-    document.getElementById('message').addEventListener('keydown', function(event) {
-        if (event.keyCode === 13) {
-            sendText();
-        }
-    });
-
-    document.getElementById('chatButton').addEventListener('click',showchat);
-    document.getElementById('friendButton').addEventListener('click',showfriend);
-    document.getElementById('requestButton').addEventListener('click',showRequest);
-</script>
+<script src="DispalyManager.js"></script>
 <script src="../changePage.js"></script>
 </body>

@@ -193,18 +193,6 @@ header {
     margin-left: 30px;
     margin-right: 20px;
 }
-#waitingScreen {
-    display: none; /* Hidden by default */
-    position: fixed; /* Positioned relative to the viewport */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background-color: rgba(0, 0, 0, 0.75); /* Black background with opacity */
-    color: white;
-    text-align: center;
-    z-index: 1000; /* Sit on top of other elements */
-}
 
 #waitingScreen h2 {
     position: absolute;
