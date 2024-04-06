@@ -224,12 +224,10 @@ function removeFriend(friendUsername) {
     })
         .then(response => response.json())
         .then(result => {
-
-            console.log('Ami supprimé avec succès');
+            fetchFullFriendList()
             return result;
         })
         .catch((error) => {
-            console.error('Erreur:', error);
             throw error;
         });
 }

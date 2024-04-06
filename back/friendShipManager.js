@@ -2,10 +2,10 @@ const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("./env/env.js");
 const jwt = require('jsonwebtoken');
 const secretKey = "ps8-koe";
+const { sendResponse, sendErrorResponse } = require('./friendshipManager/responsehelper.js');
 const client = new MongoClient(urlAdressDb);
 let isConnected = false;
 
-// Connects to MongoDB if not already connected
 async function connectToMongoDB() {
     if (isConnected) return;
 
@@ -24,68 +24,49 @@ async function connectToMongoDB() {
     }
 }
 
-// Gets users from the database
 async function getUsers(response) {
     try {
-        await connectToMongoDB();
+     await connectToMongoDB();
         const db = client.db('sample_mflix');
         const usersCollection = db.collection("Users");
         const users = await usersCollection.find().toArray();
-
-        response.setHeader('Content-Type', 'application/json');
-        response.statusCode = 200;
-        response.end(JSON.stringify(users));
+        sendResponse(response, 200, users);
     } catch (error) {
-        console.error(error);
-        response.statusCode = 500;
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify({message: 'Error retrieving users'}));
+        sendErrorResponse(response, error);
     }
 }
 
-// Fetches the friend list for a user based on the token
 async function getFriendsList(token, response) {
     try {
+        const decoded = jwt.verify(token, secretKey);
         await connectToMongoDB();
         const db = client.db('sample_mflix');
         const usersCollection = db.collection("Users");
-        const decoded = jwt.verify(token, secretKey);
-        const Username = decoded.username;
 
-        const user = await usersCollection.findOne({ username: Username }, { projection: { friends: 1, _id: 0 } });
+        const user = await usersCollection.findOne({ username: decoded.username }, { projection: { friends: 1, _id: 0 } });
         if (user) {
-            response.setHeader('Content-Type', 'application/json');
-            response.statusCode = 200;
-            response.end(JSON.stringify(user.friends));
+            sendResponse(response, 200, user.friends);
         } else {
             throw new Error('User not found');
         }
     } catch (error) {
-        console.error(error);
-        response.statusCode = 500;
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify({ message: 'Error retrieving friend list' }));
+        sendErrorResponse(response, error);
     }
 }
 async function getNotifications(token, response) {
     try {
+        const decoded = jwt.verify(token, secretKey);
         await connectToMongoDB();
         const db = client.db('sample_mflix');
         const notificationsCollection = db.collection("Friendrequest");
-        const decoded = jwt.verify(token, secretKey);
-        const Username = decoded.username;
 
-        const notifications = await notificationsCollection.find({ recipient: Username }).toArray();
-        response.setHeader('Content-Type', 'application/json');
-        response.statusCode = 200;
-        response.end(JSON.stringify(notifications));
+        const notifications = await notificationsCollection.find({ recipient: decoded.username }).toArray();
+        sendResponse(response, 200, notifications);
     } catch (error) {
-        console.error(error);
-        response.statusCode = 500;
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify({message: 'Error retrieving notifications'}));
+        sendErrorResponse(response, error);
     }
 }
+
 
 // Handles sending a friend request
 async function sendFriendRequest(json, response) {
@@ -128,7 +109,6 @@ async function sendFriendRequest(json, response) {
     }
 }
 
-// Checks if there is an existing friend request
 async function checkExistingRequest(sender, recipient) {
     await connectToMongoDB();
     const db = client.db('sample_mflix');
@@ -137,99 +117,65 @@ async function checkExistingRequest(sender, recipient) {
     return existingRequest !== null;
 }
     async function acceptFriendRequest(json, response) {
-        try {
-          await  connectToMongoDB();
-            const db = client.db('sample_mflix');
-            const usersCollection = db.collection("Users");
-            const notificationsCollection = db.collection("Friendrequest");
+            try {
+                await connectToMongoDB();
+                const db = client.db('sample_mflix');
+                const usersCollection = db.collection("Users");
+                const notificationsCollection = db.collection("Friendrequest");
 
-            const senderUsername = json.sender;
-            const recipientUsername = json.recipient;
+                const { sender, recipient } = json;
+                const senderUser = await usersCollection.findOne({ username: sender });
+                const recipientUser = await usersCollection.findOne({ username: recipient });
 
-            const senderUser = await usersCollection.findOne({username: senderUsername});
-            const recipientUser = await usersCollection.findOne({username: recipientUsername});
+                if (!senderUser || !recipientUser) {
+                    throw new Error(`One or both users not found`);
+                }
 
-            // Vérifier si les utilisateurs existent
-            if (!senderUser) {
-                console.error(`Expéditeur ${senderUsername} non trouvé`);
-                throw new Error(`Expéditeur non trouvé`);
+                const updateFriendsList = async (username, newFriend) => {
+                    const user = await usersCollection.findOne({ username: username });
+                    if (!user.friends.includes(newFriend)) {
+                        await usersCollection.updateOne({ username: username }, { $push: { friends: newFriend } });
+                    }
+                };
+
+                await updateFriendsList(sender, recipient);
+                await updateFriendsList(recipient, sender);
+
+                await notificationsCollection.deleteOne({ recipient: recipient, sender: sender });
+
+                sendResponse(response, 200, {
+                    success: true,
+                    message: "Friend request accepted successfully and notification removed"
+                });
+            } catch (error) {
+                sendErrorResponse(response, error);
             }
-
-            if (!recipientUser) {
-                console.error(`Destinataire ${recipientUsername} non trouvé`);
-                throw new Error(`Destinataire non trouvé`);
-            }
-
-            // Vérifier et mettre à jour la liste d'amis pour le destinataire
-            if (!Array.isArray(recipientUser.friends)) {
-                recipientUser.friends = [];
-            }
-            if (!recipientUser.friends.includes(senderUsername)) {
-                await usersCollection.updateOne({username: recipientUsername}, {$push: {friends: senderUsername}});
-            }
-
-            // Vérifier et mettre à jour la liste d'amis pour l'expéditeur
-            if (!Array.isArray(senderUser.friends)) {
-                senderUser.friends = [];
-            }
-            if (!senderUser.friends.includes(recipientUsername)) {
-                await usersCollection.updateOne({username: senderUsername}, {$push: {friends: recipientUsername}});
-            }
-
-            // Supprimer la notification de demande d'ami
-            await notificationsCollection.deleteOne({recipient: recipientUsername, sender: senderUsername});
-
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({
-                success: true,
-                message: 'Demande d\'ami acceptée et notification supprimée avec succès'
-            }));
-
-        } catch (error) {
-            console.error('Erreur lors de l\'acceptation de la demande d\'ami:', error);
-            response.writeHead(500, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({success: false, message: error.message}));
-        }
     }
+
 async function removeFriend(json, response, io) {
     try {
-        console.log("removeFriend function called. Data:", json);
-
-        await connectToMongoDB();
-        console.log("Connected to MongoDB.");
-
+     await connectToMongoDB();
         const db = client.db('sample_mflix');
         const usersCollection = db.collection("Users");
-        const friendUsername = json.friendUsername;
 
-        const decoded = jwt.verify(json.token, secretKey);
+        const { friendUsername, token } = json;
+        const decoded = jwt.verify(token, secretKey);
         const currentUsername = decoded.username;
 
-        await usersCollection.updateOne(
-            { username: currentUsername },
-            { $pull: { friends: friendUsername } }
-        );
-        console.log(`Friend removed from ${currentUsername}'s friend list: ${friendUsername}`);
+        const updateFriendList2 = async (username, friendToRemove) => {
+            await usersCollection.updateOne(
+                { username: username },
+                { $pull: { friends: friendToRemove } }
+            );
+            io.of('/api/friendListUpdates').emit('update-friends', { sender: username, friend: friendToRemove });
+        };
 
-        await usersCollection.updateOne(
-            { username: friendUsername },
-            { $pull: { friends: currentUsername } }
-        );
-        console.log(`Friend removed from ${friendUsername}'s friend list: ${currentUsername}`);
+        await updateFriendList2(currentUsername, friendUsername);
+        await updateFriendList2(friendUsername, currentUsername);
 
-        io.of('/api/friendListUpdates').emit('update-friends', { sender: currentUsername, friend: friendUsername });
-        console.log(`Emitting 'update-friends' event for: ${currentUsername} and ${friendUsername}`);
-
-        io.of('/api/friendListUpdates').emit('update-friends', { sender: friendUsername, friend: currentUsername });
-        console.log(`Emitting 'update-friends' event for: ${friendUsername} and ${currentUsername}`);
-
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ message: 'Ami supprimé avec succès' }));
-
+        sendResponse(response, 200, { message: 'Friend removed successfully' });
     } catch (error) {
-        console.error('Erreur lors de la suppression de l\'ami:', error);
-        response.writeHead(500, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({ message: 'Erreur lors de la suppression de l\'ami' }));
+        sendErrorResponse(response, error);
     }
 }
 
@@ -244,8 +190,6 @@ async function rejectFriendRequest(json, response) {
         const sender= json.sender
         const recipient = json.recipient;
 
-
-        // Supprimer la notification de demande d'ami
         await notificationsCollection.deleteOne({
             recipient: recipient,
             sender: sender,
