@@ -8,7 +8,7 @@ function login() {
         method: 'get'
     }).then( async (response) => {
         let res = await response.text();
-        localStorage.setItem('currentUser', 'username');
+        localStorage.setItem('currentUser', username);
         document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });
@@ -28,6 +28,7 @@ function signIn() {
         body: JSON.stringify(data),
     }).then( async (response) => {
         let res = await response.text();
+        localStorage.setItem('currentUser', username);
         document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });

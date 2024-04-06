@@ -25,6 +25,12 @@ button:hover {
     background: url('parchment.jpg'); /* Darker parchment texture on hover */
 }
 
+.message-sent{
+    color: blue;
+}
+.message-received{
+    color: green;
+}
 
 
 #friends, #sucess {

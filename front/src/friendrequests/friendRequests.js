@@ -1,5 +1,29 @@
-const chatFriend = io.connect('http://localhost:8000/api/chatFriend');
+const chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
+    query: {
+        username: localStorage.getItem('currentUser')
+    }
+});
+const user = localStorage.getItem('currentUser');
+
+let room ; 
 const socketFriendListUpdates = io.connect('http://localhost:8000/api/friendListUpdates');
+chatFriend.on('connect', () => {
+    console.log('connecté au serveur.');
+    chatFriend.on('matchFound', (roomName) => {
+        room = roomName;
+    });
+    chatFriend.on('msg1', (message) => {
+        console.log('message received: ',message );
+        let text = message.text;
+        let usersend = message.user;
+        const isCurrentUser = usersend === user;
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        paragraph.classList.add(isCurrentUser ? 'message-sent' : 'message-received');
+        const element = document.getElementById('chatContent');
+        element.appendChild(paragraph);
+    });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchBasicFriendList();
@@ -156,6 +180,9 @@ export function fetchBasicFriendList() {
                 const usernameCell = document.createElement('td');
                 usernameCell.textContent = friend.toString(); // Make sure this correctly reflects the friend's username
                 row.appendChild(usernameCell);
+                usernameCell.addEventListener('click', () => {
+                    chatFriend.emit('friend', usernameCell.textContent);
+                });
 
                 friendListTable.appendChild(row);
             });
@@ -229,21 +256,10 @@ function rejectFriendRequest(sender,recipient) {
         .catch(error => console.error('Erreur:', error));
 }
 
-chatFriend.on('connect', () => {
-    console.log('connecté au serveur.');
-    chatFriend.on('msg1', (message) => {
-        var element = document.getElementById('chatContent');
-        var paragraph = document.createElement('p');
-        paragraph.textContent = message;
-        element.appendChild(paragraph);
-    });
-});
-
 function sendText() {
     var messageInput = document.getElementById('message');
     var text = messageInput.value;
-    console.log('text send: ' + text);
-    chatFriend.emit('msg', text);
+    chatFriend.emit('msg', { room, text, user});
     messageInput.value = "";
 };
 
