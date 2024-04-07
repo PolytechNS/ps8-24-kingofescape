@@ -5,14 +5,15 @@
     <title>Page jeu</title>
     <link rel="stylesheet" href="jeu.css">
     <script src="../js/socket.io.js"></script>
+    <script src="../changePage.js"></script>
 </head>
 <header>
     <div id="buttonConnect">
         <div id="friends">
-            <button onclick="changePage()" id="buttonFriends"></button>
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage()" id="buttonSuccess"></button>
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
         </div>
     </div>
     <div id="banner">
@@ -20,7 +21,7 @@
         <p id="title">KING OF ESCAPE</p>
         <div class="flag" id="flag2"></div>
     </div>
-    <div id="profile">
+    <div id="profile" onclick="changePage('profil/profil.html')">
         <p id="name">Test1234</p>
         <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>

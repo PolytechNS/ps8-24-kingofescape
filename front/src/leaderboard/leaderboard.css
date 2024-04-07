@@ -12,6 +12,7 @@ body {
     background-repeat: no-repeat; 
     background-position: center;
     display: grid;
+    grid-template-rows: 12% 10% 58% 20%;
 }
 
 header {
