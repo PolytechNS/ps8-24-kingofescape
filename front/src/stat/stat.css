@@ -109,6 +109,7 @@ header {
     margin-top: auto;
     margin-bottom: auto;
     box-shadow: 0 0 10px #ECD6BC;
+    cursor: pointer;
 }
 
 #name {
@@ -166,6 +167,7 @@ header {
     margin: auto;
     border-radius: 30px;
     box-shadow: 0 0 10px #444343;
+    cursor: pointer;
 }
 
 #retour > p {

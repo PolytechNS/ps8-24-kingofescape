@@ -172,11 +172,14 @@ header {
     font-size: 30px; 
     font-weight: bold;
     color: #969696;
+    cursor: pointer;
 }
+
 #imguser{
     grid-column: 2/3;
     background-image: url('../picture/king.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
     margin-left: 5%;
 }

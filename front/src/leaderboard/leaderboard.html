@@ -14,7 +14,7 @@
             <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+            <button id="buttonSuccess"></button>
         </div>
     </div>
     <div id="banner">
@@ -28,12 +28,14 @@
     </div>
 </header>
 <body>
-    <div id="texte">
-        <h1>Leaderboard</h1>
+    <div id="informationBloc" >
+        <div id="texte">
+            <h1>🏆 Leaderboard 🏆</h1>
+        </div>
+        <div id="leaderboard">
+        </div>
     </div>
-    <div id="leaderboard">
-    </div>
-    <div id="retour">
+    <div id="retour" onclick="changePage('profil/profil.html')">
         <button id="back"></button>
         <p>Back</p>
     </div>
