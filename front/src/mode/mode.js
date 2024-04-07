@@ -20,7 +20,7 @@ function login() {
     let password = document.getElementById('password').value;
 
     if (username !== "" && password !== "") {
-        let url = 'http://localhost:8000/api/login/'+ username +'/' + password;
+        let url = `${apiURL}api/login/`+ username +'/' + password;
 
         fetch(url, {
             method: 'get'
@@ -37,7 +37,7 @@ function login() {
 }
 
 function signIn() {
-    let url = 'http://localhost:8000/api/signin';
+    let url = `${apiURL}api/signin`;
     let mail = document.getElementById("inputMail").value;
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;

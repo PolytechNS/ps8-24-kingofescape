@@ -1,3 +1,21 @@
+// URL du site en développement (localhost)
+const developmentURL = 'http://localhost:8000/'
+
+// URL du vrai site (production)
+const productionURL = 'http://15.236.93.186/';
+
+// Fonction pour obtenir l'URL appropriée en fonction de l'environnement
+function getAPIURL() {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return developmentURL;
+    } else {
+        return productionURL;
+    }
+}
+
+const apiURL = getAPIURL();
+
+
 function getCookie(name) {
     // Sépare la chaîne de cookies en segments individuels
     const cookieArray = document.cookie.split(';');
@@ -29,7 +47,7 @@ function verifyLogin() {
         return null;
     }
     else {
-        return fetch("http://localhost:8000/api/verifyLogin/" + token, {
+        return fetch(`${apiURL}api/verifyLogin/${token}`, {
             method: "get"
         })
     }
