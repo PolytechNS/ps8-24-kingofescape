@@ -28,6 +28,7 @@ async function addStat(json, response) {
 
 function getStat(json, response) {
     getStatTable(json.username).then(([status, stats]) => {
+
         response.statusCode = status;
         response.end(JSON.stringify(stats));
     });

@@ -25,7 +25,7 @@ async function signin(json, response) {
         } else {
             await users.collection("Users").insertOne({username:username, password : token, mail: mail});
             addScore({username: username, score: 0}, response);
-            addStat({username: username, win: 0, lose: 0, total: 0}, response);
+            addStat({username: username, win: "0", lose: "0", total: "0"}, response);
             response.statusCode = 200;
             response.end(token);
         }

@@ -40,10 +40,10 @@ function calculeElo(stockPoints, resultatPartie, gestionSocketPlayer) {
                 let total = parseInt(stats.total);
                 if (status === 200) {
                         if (resultatPartie === 0) {
-                                setStatTable(player2[0], win+1, lose, total+1);
+                                setStatTable(player2[0], String(win+1), String(lose), String(total+1));
                         }
                         else {
-                                setStatTable(player2[0], win, lose+1, total+1);
+                                setStatTable(player2[0], String(win), String(lose+1), String(total+1));
                         }
                 }
         });
