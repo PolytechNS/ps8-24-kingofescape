@@ -8,23 +8,26 @@
     <script src="sucess.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 </head>
-<body>
-    <header>
+<header>
+    <div id="buttonConnect">
         <div id="friends">
-            <button onclick="changePage('friendlist/friendRequests.html')" id="buttonFriends"></button>
+            <button onclick="changePage()" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage()" id="buttonSucess"></button>
+            <button onclick="changePage()" id="buttonSuccess"></button>
         </div>
-        <div id="banner">
-            <div class="flag" id="flag1"></div>
-            <p id="title">KING OF ESCAPE</p>
-            <div class="flag" id="flag2"></div>
-        </div>
-        <div id="login">
-            <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
-        </div>
-    </header>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="profile">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+    </div>
+</header>
+<body>
     <div id="sucesses">
         <div id="textSucess"> Quest Achived</div>
         <div id="sucess">

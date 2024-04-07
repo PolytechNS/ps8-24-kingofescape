@@ -4,16 +4,15 @@ html {
 }
 
 body {
-    display: grid;
-    grid-template-rows: 10% 90%;
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
-    background-image: url('../picture/background.jpg'); 
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center; 
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    display: grid;
+    grid-template-rows: 12% 10% 58% 20%;
 }
 
 header {
@@ -45,6 +44,7 @@ header {
 #buttonFriends {
     background-image: url('../picture/Ajout_ami.png');
     background-size: cover;
+    box-shadow: 0 0 10px #444343;
 }
 
 #buttonSuccess {
@@ -52,6 +52,7 @@ header {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    box-shadow: 0 0 10px #444343;
 }
 
 #buttonFriends, #buttonSuccess {
@@ -71,6 +72,8 @@ header {
     background-size: contain;
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
 }
 
 .flag {
@@ -96,6 +99,26 @@ header {
     margin: auto;
 }
 
+#profile {
+    display: grid;
+    width: 15%;
+    height: 80%;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    grid-template-columns: 70% 30%;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: 0 0 10px #444343;
+}
+
+#name {
+    grid-column: 1 / 2;
+    margin: auto;
+    font-size: 25px;
+    color: #CD9B75;
+}
+
 #avatar {
     grid-column: 2 / 3;
     background-size: contain;
@@ -108,17 +131,15 @@ header {
     height: 45px;
 }
 
-
-#profile {
-    display: grid;
-    width: 15%;
-    height: 80%;
+#buttonLogin {
+    margin: auto;
+    font-size: 30px;
+    padding: 3%;
+    border-radius: 15px;
     border: 2px solid #ECD6BC;
     background-color: #F5F5F5;
-    border-radius: 15px;
-    grid-template-columns: 70% 30%;
-    margin-top: auto;
-    margin-bottom: auto;
+    color: #7B6F66;
+    cursor: pointer;
 }
 
 #name {
@@ -289,5 +310,4 @@ header {
 .square{
     background-color:#ECD6BC;
     border-radius: 5px;
-    box-shadow: 3px 3px 3px #888888;
 }

@@ -7,9 +7,11 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
     display: grid;
-    grid-template-rows: 12% 10% 68% 10%;
 }
 
 header {
@@ -20,6 +22,48 @@ header {
     justify-content: space-around;
 }
 
+
+#buttonConnect {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    justify-content: space-around;
+}
+
+#friends, #success {
+    display: flex;
+    margin: auto;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 2vw;
+    text-align: center;
+    align-items: center;
+}
+
+#buttonFriends {
+    background-image: url('../picture/Ajout_ami.png');
+    background-size: cover;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonSuccess {
+    background-image: url('../picture/coupe.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonFriends, #buttonSuccess {
+    background-color: #F5F5F5;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #ECD6BC;
+    cursor: pointer;
+}
+
 #banner {
     height: 100%;
     width: 50%;
@@ -27,6 +71,8 @@ header {
     background-size: contain;
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
 }
 
 .flag {
@@ -58,10 +104,11 @@ header {
     height: 80%;
     border: 2px solid #ECD6BC;
     background-color: #F5F5F5;
-    border-radius: 30px;
+    border-radius: 15px;
     grid-template-columns: 70% 30%;
     margin-top: auto;
     margin-bottom: auto;
+    box-shadow: 0 0 10px #444343;
 }
 
 #name {
@@ -81,6 +128,17 @@ header {
     border-radius: 30px;
     width: 45px;
     height: 45px;
+}
+
+#buttonLogin {
+    margin: auto;
+    font-size: 30px;
+    padding: 3%;
+    border-radius: 15px;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    color: #7B6F66;
+    cursor: pointer;
 }
 
 #blankHeader {
