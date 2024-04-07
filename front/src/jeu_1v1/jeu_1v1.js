@@ -74,6 +74,10 @@ function printTableTurn(possibleMove, gameState) {
         if (div.className !== colorOpponent)
             printWall(wall, colorOpponent);
     }
+    let oppentwall = document.getElementById('opponentWallsContent');
+    oppentwall.innerHTML = 'Number of remaining walls : ' + (10 - gameState.opponentWalls.length);
+    let ownwall = document.getElementById('ownWallsContent');
+    ownwall.innerHTML = 'Number of remaining walls : ' + (10 - gameState.ownWalls.length);
 }
 
 function sentWall(event) {

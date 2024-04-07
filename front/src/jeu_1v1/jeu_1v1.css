@@ -109,7 +109,7 @@ header {
     grid-template-columns: 70% 30%;
     margin-top: auto;
     margin-bottom: auto;
-    box-shadow: 0 0 10px #444343;
+    box-shadow: 0 0 5px #ECD6BC;
 }
 
 #name {
@@ -154,6 +154,55 @@ header {
     grid-template-columns: 20% 60% 20%;
     grid-row: 2 / 3;
 }
+#left {
+    display: grid;
+    grid-column: 1 / 2;
+    height: 100%;
+    width: 100%;
+    grid-template-rows:30% 10% 20% 10% 30%;
+}
+
+#opponentWalls{
+    display: grid;
+    grid-row: 2 / 3;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    margin: 3%;    
+    color: #CD9B75;
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+#opponentWallsTitle{
+    margin: auto;
+    font-size: 25px;
+}
+#opponentWallsContent{
+    margin: auto;
+}
+
+#ownWalls{
+    display: grid;
+    grid-row: 4 / 5;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    color: #CD9B75;
+    border-radius: 15px;
+    margin: 3%;
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+#ownWallsTitle{
+    margin: auto;
+    font-size: 25px;
+}
+#ownWallsContent{
+    margin: auto;
+}
 
 #center {
     display: grid;
@@ -181,7 +230,7 @@ header {
 
 #right {
     display: grid;
-    grid-template-rows: 40% 20% 40%;
+    grid-template-rows: 40% 30% 30%;
     grid-column: 3 / 4;
     height: 100%;
     width: 100%;
@@ -200,14 +249,14 @@ header {
 }
 
 #buttonEndTurn {
-    align-self: center;
-    font-size: 130%;
-    border-radius: 30px;
+    border-radius: 15px;
+    border: 2px solid #ECD6BC;
     background-color: #F5F5F5;
-    border: 3px solid #ECD6BC;
-    display: inline-block;
+    color: #CD9B75;
+    height: 100%;
     width: 50%;
-    height: 50%;
+    font-size: 20px;
+    box-shadow: 0 0 5px #ECD6BC;
 }
 
 header {
@@ -287,27 +336,51 @@ header {
     background-color: #0000ff;
 }
 
-.chatContent{
+#chatContent{
     grid-row: 1 / 2;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    border-radius: 15px;
+    margin: 5%;
+    box-shadow: 0 0 5px #ECD6BC;
 }
 .endTurn{
     grid-row: 2 / 3;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
 }
-.chooseReaction{
+#chooseRecation{
     grid-row: 3 / 4;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+.reaction {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    box-sizing: border-box; 
+    box-shadow: 0 0 10px #CD9B75; 
+    margin-bottom:20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px;
 }
 
 .square{
     background-color:#ECD6BC;
     border-radius: 5px;
+    box-shadow: 3px 3px 3px #888888;
 }
