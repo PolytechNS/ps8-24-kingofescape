@@ -5,6 +5,10 @@ document.getElementById('message').addEventListener('keydown', function(event) {
         sendText();
     }
 });
+document.addEventListener('DOMContentLoaded', (event) => {
+    show('none', 'none', 'grid');
+});
+
 document.getElementById("addFriend").addEventListener("click", function() {
     const recipientUsername = document.getElementById("searchFriend").value;
     let token=document.cookie.split('=')[1];
