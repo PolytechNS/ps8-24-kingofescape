@@ -8,8 +8,8 @@ function calculeElo(stockPoints, resultatPartie, gestionSocketPlayer) {
         let eloJoueur2 = Number.parseInt(player2[1]);
 
         const k = 32;
-        const esperance1 = 1 / (1 + Math.pow(10, (eloJoueur2 - eloJoueur1) / 400));
-        const esperance2 = 1 / (1 + Math.pow(10, (eloJoueur1 - eloJoueur2) / 400));
+        const esperance1 = Math.round(1 / (1 + Math.pow(10, (eloJoueur2 - eloJoueur1) / 400)));
+        const esperance2 = Math.round(1 / (1 + Math.pow(10, (eloJoueur1 - eloJoueur2) / 400)));
 
         const nouveauEloJoueur1 = eloJoueur1 + k * (resultatPartie - esperance1);
         const nouveauEloJoueur2 = eloJoueur2 + k * ((1 - resultatPartie) - esperance2);

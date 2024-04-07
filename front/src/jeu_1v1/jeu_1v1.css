@@ -151,7 +151,6 @@ header {
 }
 
 #jeu > div {
-    border: 1px solid black;
     height: 100%;
     width: 100%;
     text-align: center;
@@ -255,6 +254,8 @@ header {
 
 .invisible {
     background-color: #c6c6c6;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #888888;
 }
 
 .wallPlayer1 {
@@ -288,4 +289,5 @@ header {
 .square{
     background-color:#ECD6BC;
     border-radius: 5px;
+    box-shadow: 3px 3px 3px #888888;
 }

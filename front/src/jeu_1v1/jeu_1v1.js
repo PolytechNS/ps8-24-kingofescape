@@ -53,7 +53,7 @@ function printTableTurn(possibleMove, gameState) {
             if (gameState.board[i][j] === -1)
                 document.getElementById('I ' + position).className = 'invisible';
             else if (gameState.board[i][j] === 0)
-                document.getElementById('I ' + position).className= '';
+                document.getElementById('I ' + position).className= 'square';
             else if (gameState.board[i][j] === 1)
                 printPlayer(position, numberPlayer === 1);
             else

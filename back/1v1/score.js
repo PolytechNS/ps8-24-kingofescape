@@ -23,6 +23,8 @@ async function getScoreTable(username) {
 }
 
 async function setScoreTable(username, score) {
+    if(users === undefined)
+        connect();
     try {
         await users.collection("Scores").updateOne({username: username}, {$set: {score: score}}, upsert=false);
         return 200;
