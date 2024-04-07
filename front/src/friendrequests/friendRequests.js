@@ -260,16 +260,6 @@ function sendText() {
     chatFriend.emit('msg', { room, text, user});
     messageInput.value = "";
 };
-function show(displayChat, displayRequest, displayFriend) {
-    var chatElement = document.getElementById('windowChat');
-    var requestElement = document.getElementById('friend-requests-table');
-    var friendElement = document.getElementById('windowFriend');
-
-
-    chatElement.style.display = displayChat;
-    requestElement.style.display = displayRequest;
-    friendElement.style.display = displayFriend;
-}
 
 
 
@@ -306,4 +296,4 @@ function handleResponse(response) {
     });
 }
 
-export {sendText, show};
+export {sendText};

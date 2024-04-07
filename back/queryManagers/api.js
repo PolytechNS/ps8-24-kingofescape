@@ -1,6 +1,6 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
 const { signin, login } = require("../login/login.js").login;
-const getUsers = require("../login/login.JS").users;
+const getUsers = require("../login/login.js").users;
 const getNotifications = require("../friendShipManager").Notifications;
 const { sendFriendRequest } = require("../friendShipManager").sendFriendRequest;
 
