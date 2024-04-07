@@ -5,6 +5,10 @@ const secretKey = "ps8-koe";
 const { sendResponse, sendErrorResponse } = require('./friendshipManager/responsehelper.js');
 const client = new MongoClient(urlAdressDb);
 let isConnected = false;
+async function getDatabase() {
+    await connectToMongoDB();
+    return client.db('sample_mflix');
+}
 
 async function connectToMongoDB() {
     if (isConnected) return;
@@ -24,23 +28,10 @@ async function connectToMongoDB() {
     }
 }
 
-async function getUsers(response) {
-    try {
-     await connectToMongoDB();
-        const db = client.db('sample_mflix');
-        const usersCollection = db.collection("Users");
-        const users = await usersCollection.find().toArray();
-        sendResponse(response, 200, users);
-    } catch (error) {
-        sendErrorResponse(response, error);
-    }
-}
-
 async function getFriendsList(token, response) {
     try {
         const decoded = jwt.verify(token, secretKey);
-        await connectToMongoDB();
-        const db = client.db('sample_mflix');
+        const db = await getDatabase();
         const usersCollection = db.collection("Users");
 
         const user = await usersCollection.findOne({ username: decoded.username }, { projection: { friends: 1, _id: 0 } });
@@ -56,8 +47,7 @@ async function getFriendsList(token, response) {
 async function getFriendrequests(token, response) {
     try {
         const decoded = jwt.verify(token, secretKey);
-        await connectToMongoDB();
-        const db = client.db('sample_mflix');
+        const db = await getDatabase();
         const notificationsCollection = db.collection("Friendrequest");
 
         const notifications = await notificationsCollection.find({ recipient: decoded.username }).toArray();
@@ -76,14 +66,11 @@ async function sendFriendRequest(json, response) {
             response.end(JSON.stringify({message: 'No token provided'}));
             return;
         }
+        const db = await getDatabase();
         const decoded = jwt.verify(json.token, secretKey);
         const senderUsername = decoded.username;
         const recipientUsername = json.recipient;
-
-        await connectToMongoDB();
-        const db = client.db('sample_mflix');
-        const notificationsCollection = db.collection("Friendrequest");
-
+        const Friendrequests = db.collection("Friendrequest");
         const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
         if (existingRequest) {
             response.writeHead(400, {'Content-Type': 'application/json'});
@@ -99,21 +86,20 @@ async function sendFriendRequest(json, response) {
             read: false
         };
 
-        await notificationsCollection.insertOne(notification);
+        await Friendrequests.insertOne(notification);
 
-        response.writeHead(200, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({message: 'Friend request sent successfully'}));
+        sendResponse(response, 200, {
+            success: true,
+            message: 'Friend request sent successfully'
+        });
     } catch (error) {
         console.error('Error sending friend request:', error);
-        standardizeErrorResponse(error, response);
+       sendErrorResponse(error, response);
     }
 }
 
 async function checkExistingRequest(sender, recipient) {
-    await connectToMongoDB();
-    const db = client.db('sample_mflix');
-
-
+    const db = await getDatabase();
     const notificationsCollection = db.collection("Friendrequest");
     const existingRequest = await notificationsCollection.findOne({ sender: sender, recipient: recipient });
     if (existingRequest) {
@@ -130,11 +116,9 @@ async function checkExistingRequest(sender, recipient) {
 }
     async function acceptFriendRequest(json, response) {
             try {
-                await connectToMongoDB();
-                const db = client.db('sample_mflix');
+                const db = await getDatabase();
                 const usersCollection = db.collection("Users");
-                const notificationsCollection = db.collection("Friendrequest");
-
+                const friendsrequests = db.collection("Friendrequest");
                 const { sender, recipient } = json;
                 const senderUser = await usersCollection.findOne({ username: sender });
                 const recipientUser = await usersCollection.findOne({ username: recipient });
@@ -153,7 +137,7 @@ async function checkExistingRequest(sender, recipient) {
                 await updateFriendsList(sender, recipient);
                 await updateFriendsList(recipient, sender);
 
-                await notificationsCollection.deleteOne({ recipient: recipient, sender: sender });
+                await friendsrequests.deleteOne({ recipient: recipient, sender: sender });
 
                 sendResponse(response, 200, {
                     success: true,
@@ -166,8 +150,7 @@ async function checkExistingRequest(sender, recipient) {
 
 async function removeFriend(json, response, io) {
     try {
-     await connectToMongoDB();
-        const db = client.db('sample_mflix');
+        const db = await getDatabase();
         const usersCollection = db.collection("Users");
 
         const { friendUsername, token } = json;
@@ -194,9 +177,7 @@ async function removeFriend(json, response, io) {
 
 
 async function rejectFriendRequest(json, response) {
-    try { await connectToMongoDB();
-
-        const db = client.db('sample_mflix');
+    try { const db = await getDatabase();
         const notificationsCollection = db.collection("Friendrequest");
         const sender= json.sender
         const recipient = json.recipient;
@@ -215,18 +196,6 @@ async function rejectFriendRequest(json, response) {
     }
 }
 
-function standardizeErrorResponse(error, response) {
-    if (error.name === 'JsonWebTokenError') {
-        response.writeHead(401, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({message: 'Invalid token'}));
-    } else if (error.name === 'SyntaxError') {
-        response.writeHead(400, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({message: 'Invalid JSON in request body'}));
-    } else {
-        response.writeHead(500, {'Content-Type': 'application/json'});
-        response.end(JSON.stringify({message: error.message || 'Error processing request'}));
-    }
-}
 
 exports.sendFriendRequest = {sendFriendRequest};
 exports.rejectFriendRequest={rejectFriendRequest}
@@ -234,5 +203,5 @@ exports.removeFriend={removeFriend}
 exports.Notifications=getFriendrequests
 exports.friends=getFriendsList
 
-exports.users = getUsers;
+
 exports.acceptFriendRequest={acceptFriendRequest};

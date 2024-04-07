@@ -12,13 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     fetchBasicFriendList();
     fetchFullFriendList();
-    fetchNotifications();
+    fetchFriendsRequests();
 
 });
 
 
-let room ; 
-const socketFriendListUpdates = io.connect('http://localhost:8000/api/friendListUpdates');
+let room ;
 chatFriend.on('connect', () => {
     console.log('connecté au serveur.');
     chatFriend.on('matchFound', (roomName) => {
@@ -39,18 +38,7 @@ chatFriend.on('connect', () => {
 
 
 
-socketFriendListUpdates.on('update-friends', (data) => {
-
-    let currentUser = localStorage.getItem('username');
-
-    if (data.sender === currentUser || data.friend === currentUser) { // Changement ici
-
-        fetchFullFriendList();
-    }
-});
-
-
-export async function fetchNotifications() {
+export async function fetchFriendsRequests() {
     const token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendRequest';
 
@@ -218,7 +206,7 @@ function acceptFriendRequest(sender, recipient) {
         .then(response => response.json())
         .then(data => {
             console.log(data.message);
-            fetchNotifications();
+            fetchFriendsRequests();
         })
         .catch(error => console.error('Erreur:', error));
 }
@@ -261,7 +249,7 @@ function rejectFriendRequest(sender,recipient) {
         .then(response => response.json())
         .then(data => {
             console.log(data.message);
-            fetchNotifications();
+            fetchFriendsRequests();
         })
         .catch(error => console.error('Erreur:', error));
 }

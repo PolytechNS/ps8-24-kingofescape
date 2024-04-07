@@ -7,7 +7,7 @@ const gestionSocketIA = require('./jeu_ia/socketIAManager.js').gameIA;
 const room = require("./waiting_room/roomManager.js").room
 const gestionSocketChatInGame = require('./chat/chat.js').gestionSocketChatInGame;
 const gestionSocketChatFriend = require('./chatFriend/chatFriend.js').gestionSocketChatFriend;
-const  gestionSocketFriendListUpdates=require('./friendshipManager/friendshipManagerSocket.js').gestionSocketFriendListUpdates;
+
 
 const server = http.createServer(function (request, response) {
 
@@ -50,4 +50,3 @@ gestionSocketIA(io);
 room(io);
 gestionSocketChatInGame(io);
 gestionSocketChatFriend(io);
-gestionSocketFriendListUpdates(io);

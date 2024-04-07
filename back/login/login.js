@@ -2,6 +2,7 @@ const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("../env/env.js");
 const jwt = require('jsonwebtoken');
 const {addScore} = require("../1v1/score.js");
+const {sendResponse, sendErrorResponse} = require("../friendshipManager/responsehelper");
 
 
 async function signin(json, response) {
@@ -59,5 +60,18 @@ async function login(json, response) {
     }
 
 }
+
+async function getUsers(response) {
+    try {
+
+        const db = await getDatabase();
+        const usersCollection = db.collection("Users");
+        const users = await usersCollection.find().toArray();
+        sendResponse(response, 200, users);
+    } catch (error) {
+        sendErrorResponse(response, error);
+    }
+}
+exports.users = getUsers;
 
 exports.login = {signin, login};
