@@ -67,6 +67,8 @@ function room(io) {
             if (socketInGame.has(room)) {
                 console.log(`Player ${socket.id} is in room ${room}`);
                 socket.join(room);
+                socket.emit('getUsername', usernamePlayer);
+
                 let game = socketInGame.get(room)[0];
                 if (game.reconnectPlayer(socket, usernamePlayer))
                     return;
@@ -79,11 +81,14 @@ function room(io) {
         else {
             socket.on('disconnect', () => {
                 console.log(`Player ${socket.id} disconnected.`);
+                waitingPlayers = waitingPlayers.filter(player => player[0].id !== socket.id);
                 console.log(waitingPlayers);
-                waitingPlayers = waitingPlayers.filter(player => player.id !== socket.id);
             });
+            console.log("test");
             waitingPlayers.push([socket, usernamePlayer]);
         }
+
+        socket.emit('getUsername', usernamePlayer);
 
         if (waitingPlayers.length >= 2) {
             const player1 = waitingPlayers.shift();

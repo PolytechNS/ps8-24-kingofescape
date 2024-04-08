@@ -109,6 +109,7 @@ header {
     margin-top: auto;
     margin-bottom: auto;
     box-shadow: 0 0 5px #ECD6BC;
+    cursor: pointer;
 }
 
 #name {
@@ -175,6 +176,7 @@ header {
     background-color: aliceblue;
     margin-bottom: 5%;
     box-shadow: 0 0 10px #444343;
+    cursor: pointer;
 }
 
 #buttonHome {
@@ -186,4 +188,5 @@ header {
     border-color: #CD9B75;
     background-color: aliceblue;
     box-shadow: 0 0 10px #444343;
+    cursor: pointer;
 }

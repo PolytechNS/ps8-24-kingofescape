@@ -107,6 +107,10 @@ if (room != null) {
     socket.on('connect', () => {
         console.log('Connecté au serveur.');
 
+        socket.once('getUsername', (username) => {
+            document.getElementById('name').innerHTML = username;
+        });
+
         socket.on('positionInit', (nPlayer) => {
             numberPlayer = nPlayer;
             getPosition();

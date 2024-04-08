@@ -1,16 +1,16 @@
-async function fetchData(endpoint) {
-    let result = await verifyLogin();
-    if (result !== null) {
-        let response = await fetch(endpoint + await result.text());
-        if (response.status === 200) {
-            return await response.json();
-        }
+async function fetchData(endpoint, name) {
+    let response = await fetch(endpoint + name);
+
+    if (response.status === 200) {
+        return await response.json();
     }
-    return null;
+    else {
+        return null;
+    }
 }
 
-async function scoreSuccess() {
-    let res = await fetchData('http://localhost:8000/api/getScores/');
+async function scoreSuccess(name) {
+    let res = await fetchData('http://localhost:8000/api/getScores/', name);
     if (res !== null && res.score !== undefined) {
         let score = res.score;
         let elements = ['score1', 'score2', 'score3', 'score4', 'score5', 'score6', 'score7', 'score8'];
@@ -26,8 +26,9 @@ async function scoreSuccess() {
     }
 }
 
-async function gameSuccess() {
-    let res = await fetchData('http://localhost:8000/api/getStat/');
+async function gameSuccess(name) {
+    let res = await fetchData('http://localhost:8000/api/getStat/', name);
+
     if (res !== null && res.win !== undefined) {
         let win = res.win;
         let lose = res.lose;
@@ -56,5 +57,28 @@ function changeOpacity(id) {
     }
 }
 
-scoreSuccess();
-gameSuccess();
+function loadSuccess() {
+    let result = verifyLogin();
+
+    if (result !== null) {
+        result.then(async (response) => {
+            if (response.status === 200) {
+                const p = document.getElementById("name");
+                const name = await response.text();
+                p.innerHTML = name;
+                scoreSuccess(name);
+                gameSuccess(name);
+            }
+            else {
+                window.alert("Please connect !");
+                changePage('mode/mode.html')
+            }
+        });
+    }
+    else {
+        window.alert("Please connect !");
+        changePage('mode/mode.html')
+    }
+}
+
+loadSuccess();
