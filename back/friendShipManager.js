@@ -198,10 +198,8 @@ async function rejectFriendRequest(json, response) {
 
 
 exports.sendFriendRequest = {sendFriendRequest};
-exports.rejectFriendRequest={rejectFriendRequest}
-exports.removeFriend={removeFriend}
-exports.Notifications=getFriendrequests
-exports.friends=getFriendsList
-
-
+exports.rejectFriendRequest={rejectFriendRequest};
+exports.removeFriend={removeFriend};
+exports.Notifications=getFriendrequests;
+exports.friends=getFriendsList;
 exports.acceptFriendRequest={acceptFriendRequest};
