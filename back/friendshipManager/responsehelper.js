@@ -1,6 +1,11 @@
 function sendResponse(response, statusCode, data) {
-    response.writeHead(statusCode, {'Content-Type': 'application/json'});
-    response.end(JSON.stringify(data));
+    if (response && typeof response.writeHead === 'function') {
+        response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify(data));
+    } else {
+        console.error('Invalid response object provided');
+        // Handle the error or return a different type of response
+    }
 }
 
 function sendErrorResponse(response, error) {

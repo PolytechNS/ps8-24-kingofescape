@@ -103,50 +103,66 @@ async function checkExistingRequest(sender, recipient) {
     const notificationsCollection = db.collection("Friendrequest");
     const existingRequest = await notificationsCollection.findOne({ sender: sender, recipient: recipient });
     if (existingRequest) {
-        return true; // Il existe déjà une demande d'ami
+        return true; // There's already an existing friend request
     }
 
     const usersCollection = db.collection("Users");
     const recipientUser = await usersCollection.findOne({ username: recipient }, { projection: { friends: 1, _id: 0 } });
-    if (recipientUser && recipientUser.friends.includes(sender)) {
-        return true;
+    if (recipientUser && recipientUser.friends && recipientUser.friends.includes(sender)) {
+        return true; // The sender is already a friend
     }
 
     return false;
 }
-    async function acceptFriendRequest(json, response) {
-            try {
-                const db = await getDatabase();
-                const usersCollection = db.collection("Users");
-                const friendsrequests = db.collection("Friendrequest");
-                const { sender, recipient } = json;
-                const senderUser = await usersCollection.findOne({ username: sender });
-                const recipientUser = await usersCollection.findOne({ username: recipient });
+async function acceptFriendRequest(json, response) {
+    try {
+        if (!json.sender || !json.recipient) {
+            throw new Error('Sender or recipient not provided');
+        }
 
-                if (!senderUser || !recipientUser) {
-                    throw new Error(`One or both users not found`);
-                }
+        const db = await getDatabase();
+        const usersCollection = db.collection("Users");
+        const friendsrequests = db.collection("Friendrequest");
 
-                const updateFriendsList = async (username, newFriend) => {
-                    const user = await usersCollection.findOne({ username: username });
-                    if (!user.friends.includes(newFriend)) {
-                        await usersCollection.updateOne({ username: username }, { $push: { friends: newFriend } });
-                    }
-                };
+        // Vérifier si les utilisateurs existent
+        const senderUser = await usersCollection.findOne({ username: json.sender });
+        const recipientUser = await usersCollection.findOne({ username: json.recipient });
 
-                await updateFriendsList(sender, recipient);
-                await updateFriendsList(recipient, sender);
+        if (!senderUser || !recipientUser) {
+            throw new Error(`One or both users not found`);
+        }
 
-                await friendsrequests.deleteOne({ recipient: recipient, sender: sender });
+        const updateFriendsList = async (username, newFriend) => {
+            const user = await usersCollection.findOne({ username: username });
 
-                sendResponse(response, 200, {
-                    success: true,
-                    message: "Friend request accepted successfully and notification removed"
-                });
-            } catch (error) {
-                sendErrorResponse(response, error);
+            if (!Array.isArray(user.friends)) {
+                // Si friends n'existe pas ou n'est pas un tableau, initialisez-le à un tableau vide
+                user.friends = [];
             }
+            // Maintenant, il est sûr d'appeler .includes puisque friends est garanti d'être un tableau
+            if (!user.friends.includes(newFriend)) {
+                await usersCollection.updateOne({ username: username }, { $push: { friends: newFriend } });
+            }
+        };
+
+
+        await updateFriendsList(json.sender, json.recipient);
+        await updateFriendsList(json.recipient, json.sender);
+
+        // Suppression de la demande d'ami
+        await friendsrequests.deleteOne({ recipient: json.recipient, sender: json.sender });
+
+        // Envoyer la réponse de succès
+        sendResponse(response, 200, {
+            success: true,
+            message: "Friend request accepted successfully and notification removed"
+        });
+    } catch (error) {
+        console.error('Error in acceptFriendRequest:', error);
+        sendErrorResponse(response, error);
     }
+}
+
 
 async function removeFriend(json, response, io) {
     try {
