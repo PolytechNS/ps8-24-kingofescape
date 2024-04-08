@@ -97,7 +97,7 @@ createTable();
 printAllWallPossible(sentWall);
 
 if (room != null) {
-    socket = io.connect('http://localhost:8000/api/1v1', {
+    socket = io.connect(`${apiURL}api/1v1`, {
         query: {
             token: getCookie("token"),
             room: room

@@ -7,7 +7,7 @@ async function fetchData(adresse, name) {
 }
 
 async function getScore(name) {
-    const score = await fetchData('http://localhost:8000/api/getScores/', name);
+    const score = await fetchData(`${apiURL}api/getScores/`, name);
 
     if (score != null) {
         document.getElementById("score").innerHTML = score.score;
@@ -16,7 +16,7 @@ async function getScore(name) {
 }
 
 async function getStat(name) {
-    const stat = await fetchData('http://localhost:8000/api/getStat/', name);
+    const stat = await fetchData(`${apiURL}api/getStat/`, name);
 
     if (stat != null) {
         const win = Number.parseInt(stat.win);

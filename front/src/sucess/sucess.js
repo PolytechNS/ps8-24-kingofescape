@@ -10,7 +10,7 @@ async function fetchData(endpoint, name) {
 }
 
 async function scoreSuccess(name) {
-    let res = await fetchData('http://localhost:8000/api/getScores/', name);
+    let res = await fetchData(`${apiURL}api/getScores/`, name);
     if (res !== null && res.score !== undefined) {
         let score = res.score;
         let elements = ['score1', 'score2', 'score3', 'score4', 'score5', 'score6', 'score7', 'score8'];
@@ -27,7 +27,7 @@ async function scoreSuccess(name) {
 }
 
 async function gameSuccess(name) {
-    let res = await fetchData('http://localhost:8000/api/getStat/', name);
+    let res = await fetchData(`${apiURL}api/getStat/`, name);
 
     if (res !== null && res.win !== undefined) {
         let win = res.win;

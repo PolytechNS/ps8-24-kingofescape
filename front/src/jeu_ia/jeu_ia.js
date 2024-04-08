@@ -2,7 +2,7 @@ import {createTable, printPlayer, printWall, getCoordinate, removePlayer} from "
 
 let aiPlay = getIAPlay();
 let coordinatePlayer = getCoordinate(3 - aiPlay, (aiPlay === 1)? '9' : '1');
-const socket = io.connect('http://localhost:8000/api/game');
+const socket = io.connect(`${apiURL}api/game`);
 
 /**
  * Get the number of the player that the AI will play

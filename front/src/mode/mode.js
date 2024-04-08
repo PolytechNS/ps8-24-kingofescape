@@ -15,29 +15,41 @@ function togglePopup() {
     document.getElementById("popup-overlay").classList.toggle("open");
 }
 
+async function setToken(response, responseError) {
+    if (response.status === 200) {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 7);
+
+        let res = await response.text();
+        document.cookie = `token=${res}; expires=${currentDate.toUTCString()}; path=/`;
+        window.location.reload();
+    }
+    else {
+        if (responseError !== undefined)
+            document.getElementById('texteError').innerHTML = responseError;
+        else
+            document.getElementById('texteError').innerHTML = await response.text();
+    }
+
+}
+
 function login() {
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
 
     if (username !== "" && password !== "") {
-        let url = 'http://localhost:8000/api/login/'+ username +'/' + password;
+        let url = `${apiURL}api/login/`+ username +'/' + password;
 
         fetch(url, {
             method: 'get'
         }).then(async (response) => {
-            if (response.status === 200) {
-                let res = await response.text();
-                document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
-                window.location.reload()
-            } else {
-                document.getElementById('texteError').innerHTML = "Invalid username or password";
-            }
+            await setToken(response, "Invalid username or password")
         });
     }
 }
 
 function signIn() {
-    let url = 'http://localhost:8000/api/signin';
+    let url = `${apiURL}api/signin`;
     let mail = document.getElementById("inputMail").value;
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
@@ -50,14 +62,7 @@ function signIn() {
         },
         body: JSON.stringify(data),
     }).then( async (response) => {
-        if (response.status === 200) {
-            let res = await response.text();
-            document.cookie = "token=" + res + "; SameSite=None; Secure; path=/";
-            window.location.reload();
-        }
-        else {
-            document.getElementById('texteError').innerHTML = await response.text();
-        }
+        await setToken(response);
     });
 }
 function startPage() {
