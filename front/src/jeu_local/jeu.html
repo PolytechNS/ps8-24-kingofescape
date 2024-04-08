@@ -7,6 +7,7 @@
     <link rel="icon" href="../picture/banniere.png">
     <script src="../js/socket.io.js"></script>
     <script src="../changePage.js"></script>
+    <script src="../js/utils.js"></script>
 </head>
 <header>
     <div id="buttonConnect">
@@ -26,22 +27,36 @@
         <p id="name">Test1234</p>
         <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
+    <div id="blankHeader">
+
+    </div>
 </header>
 <body>
-    <div id="content">
-        <div id="center">
-            <div id="jeu">
-            </div>
+<div id="content">
+    <div id="left">
+        <div id="opponentWalls">
+            <div id="opponentWallsTitle">Opponent's walls</div>
+            <div id="opponentWallsContent">Number of remaining walls : 10</div>
         </div>
-        <div id="right">
-            <div>
-                <div id="saveGame"></div>
-                <div id="endTurn">
-                    <button id="buttonEndTurn">Fin tour</button>
-                </div>
-            </div>
+        <div id="ownWalls">
+            <div id="ownWallsTitle">Your walls</div>
+            <div id="ownWallsContent">Number of remaining walls : 10</div>
         </div>
     </div>
+    <div id="center">
+        <div id="jeu">
+        </div>
+    </div>
+    <div id="right">
+        <div id="endTurn">
+            <button id="buttonEndTurn">End turn</button>
+        </div>
+    </div>
+</div>
+<div id="retour" onclick="changePage('mode/mode.html')">
+    <button id="back"></button>
+    <p>Back</p>
+</div>
     <script src="./jeu.js" type="module"></script>
     <script type="module">
         import {endTurn} from "./jeu.js";

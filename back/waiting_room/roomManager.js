@@ -84,7 +84,6 @@ function room(io) {
                 waitingPlayers = waitingPlayers.filter(player => player[0].id !== socket.id);
                 console.log(waitingPlayers);
             });
-            console.log("test");
             waitingPlayers.push([socket, usernamePlayer]);
         }
 
