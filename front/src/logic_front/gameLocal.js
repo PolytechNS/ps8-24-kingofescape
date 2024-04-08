@@ -42,6 +42,15 @@ class GameLocal {
         return this.gameManager.getPlayerSee(this.currentPlayer);
     }
 
+
+    generateGameState() {
+        return this.gameManager.generateGameState(this.currentPlayer);
+    }
+
+    getPossibleMoves() {
+        return this.gameManager.getPossibleMove(this.currentPlayer === 1);
+    }
+
     /**
      * Get the current number of the player
      * @returns {number} - The number of the player
