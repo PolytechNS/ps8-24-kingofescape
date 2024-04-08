@@ -87,9 +87,27 @@ async function addScore(json, response) {
     }
 }
 
+async function deleteScore(json, response) {
+    const client = new MongoClient(urlAdressDb);
+    client.connect();
+    const users = client.db('sample_mflix');
+
+    try {
+        const username = json.username;
+        await users.collection("Scores").deleteOne({username: username});
+        response.statusCode = 200;
+        response.end('Score deleted');
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error deleting score');
+    }
+}
+
 exports.addScore = addScore;
 exports.getScores = getScores;
 exports.getScoreTable = getScoreTable;
 exports.setScoreTable = setScoreTable;
 exports.getScoresAllUsers = getScoresAllUsers;
 exports.setScore = setScore;
+exports.deleteScore = deleteScore;

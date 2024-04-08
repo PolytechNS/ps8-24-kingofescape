@@ -23,4 +23,7 @@ function logout() {
     changePage('mode/mode.html');
 }
 
+function deleteAccount() {
+}
+
 loadProfil();

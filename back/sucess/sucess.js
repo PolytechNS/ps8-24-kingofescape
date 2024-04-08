@@ -73,8 +73,26 @@ async function getStatTable(username) {
     }
 }
 
+async function deleteStat(json, response) {
+    const client = new MongoClient(urlAdressDb);
+    client.connect();
+    const users = client.db('sample_mflix');
+
+    try {
+        const username = json.username;
+        await users.collection("Stats").deleteOne({username: username});
+        response.statusCode = 200;
+        response.end('Stat deleted');
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error deleting stat');
+    }
+}
+
 exports.addStat = addStat;
 exports.getStat = getStat;
 exports.setStat = setStat;
 exports.setStatTable = setStatTable;
 exports.getStatTable = getStatTable;
+exports.deleteStat = deleteStat;

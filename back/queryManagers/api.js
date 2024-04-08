@@ -1,7 +1,7 @@
 // Main method, exported at the end of the file. It's the one that will be called when a REST request is received.
-const { signin, login, verifyLogin } = require("../login/login.js").login;
-const { addScore, getScores, getScoresAllUsers, setScore} = require("../1v1/score.js");
-const { addStat, getStat, setStat } = require("../sucess/sucess.js");
+const { signin, login, verifyLogin, deleteAccount } = require("../login/login.js").login;
+const { addScore, getScores, getScoresAllUsers, setScore, deleteScore} = require("../1v1/score.js");
+const { addStat, getStat, setStat, deleteStat } = require("../sucess/sucess.js");
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -65,6 +65,20 @@ function manageRequest(request, response) {
                 if (filePath[2] === 'setStat') {
                     json = {username: filePath[3], win: filePath[4], lose: filePath[5], total: filePath[6]};
                     setStat(json, response);
+                }
+            }
+            if (request.method === 'DELETE') {
+                if (filePath[2] === 'deleteAccount') {
+                    json = {username: filePath[3]};
+                    deleteAccount(json, response);
+                }
+                if (filePath[2] === 'deleteScore') {
+                    json = {username: filePath[3]};
+                    deleteScore(json, response);
+                }
+                if (filePath[2] === 'deleteStat') {
+                    json = {username: filePath[3]};
+                    deleteStat(json, response);
                 }
             }
         });
