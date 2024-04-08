@@ -48,7 +48,7 @@ function verifyConnect() {
 }
 
 function getLeaderboard() {
-    fetch('http://localhost:8000/api/getScoresAllUsers', {
+    fetch(`${apiURL}api/getScoresAllUsers`, {
         method: 'get'
     }).then(async (response) => {
         if (response.status === 200) {

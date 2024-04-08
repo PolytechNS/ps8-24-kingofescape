@@ -2,6 +2,8 @@ const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("../env/env.js");
 const jwt = require('jsonwebtoken');
 const {addScore} = require("../1v1/score.js");
+const { addStat } = require("../sucess/sucess.js");
+
 
 
 async function signin(json, response) {
@@ -23,6 +25,7 @@ async function signin(json, response) {
         } else {
             await users.collection("Users").insertOne({username:username, password : token, mail: mail});
             addScore({username: username, score: 0}, response);
+            addStat({username: username, win: "0", lose: "0", total: "0"}, response);
             response.statusCode = 200;
             response.end(token);
         }
@@ -72,4 +75,28 @@ function verifyLogin(token, response) {
     });
 }
 
-exports.login = {signin, login, verifyLogin};
+async function deleteAccount(json, response) {
+    const client = new MongoClient(urlAdressDb);
+    await client.connect();
+    const users = client.db('sample_mflix');
+
+    try {
+        const username = json.username;
+        const user = await users.collection("Users").findOne({ username: username });
+
+        if (user) {
+            await users.collection("Users").deleteOne({ username: username });
+            response.statusCode = 200;
+            response.end('Account deleted successfully');
+        } else {
+            response.statusCode = 404;
+            response.end('User not found');
+        }
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error deleting user');
+    }
+}    
+
+exports.login = {signin, login, verifyLogin, deleteAccount};

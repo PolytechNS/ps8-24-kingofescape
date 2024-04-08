@@ -1,7 +1,6 @@
 import {printPlayer, printWall, removePlayer} from "../js/affichage_jeu.js";
 import {createTable, printAllWallPossible} from "./design1v1.js";
 
-
 let numberPlayer;
 let room = localStorage.getItem('room');
 let socket;
@@ -54,7 +53,7 @@ function printTableTurn(possibleMove, gameState) {
             if (gameState.board[i][j] === -1)
                 document.getElementById('I ' + position).className = 'invisible';
             else if (gameState.board[i][j] === 0)
-                document.getElementById('I ' + position).className= '';
+                document.getElementById('I ' + position).className= 'square';
             else if (gameState.board[i][j] === 1)
                 printPlayer(position, numberPlayer === 1);
             else
@@ -75,6 +74,10 @@ function printTableTurn(possibleMove, gameState) {
         if (div.className !== colorOpponent)
             printWall(wall, colorOpponent);
     }
+    let oppentwall = document.getElementById('opponentWallsContent');
+    oppentwall.innerHTML = 'Number of remaining walls : ' + (10 - gameState.opponentWalls.length);
+    let ownwall = document.getElementById('ownWallsContent');
+    ownwall.innerHTML = 'Number of remaining walls : ' + (10 - gameState.ownWalls.length);
 }
 
 function sentWall(event) {
@@ -94,7 +97,7 @@ createTable();
 printAllWallPossible(sentWall);
 
 if (room != null) {
-    socket = io.connect('http://localhost:8000/api/1v1', {
+    socket = io.connect(`${apiURL}api/1v1`, {
         query: {
             token: getCookie("token"),
             room: room
@@ -103,6 +106,10 @@ if (room != null) {
 
     socket.on('connect', () => {
         console.log('Connecté au serveur.');
+
+        socket.once('getUsername', (username) => {
+            document.getElementById('name').innerHTML = username;
+        });
 
         socket.on('positionInit', (nPlayer) => {
             numberPlayer = nPlayer;
@@ -145,9 +152,12 @@ if (room != null) {
             removeChoosePosition();
         });
 
-        socket.on('endGame', (game) => {
+        socket.on('endGame', (valueEndGame) => {
             socket.disconnect();
-            changePage(`${game}/${game}.html`);
+
+            localStorage.setItem('newElo', valueEndGame[1].elo);
+            localStorage.setItem('score+', valueEndGame[1].earn);
+            changePage(`${valueEndGame[0]}/${valueEndGame[0]}.html`);
         });
 
         socket.on('message', (id) => {

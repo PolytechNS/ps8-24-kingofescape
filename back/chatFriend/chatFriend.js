@@ -5,5 +5,5 @@ function gestionSocketChatFriend(io){
             socketChatFriend.emit('msg1', message);
         });
     });
-};
+}
 exports.gestionSocketChatFriend = gestionSocketChatFriend;

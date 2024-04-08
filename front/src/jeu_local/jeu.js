@@ -1,23 +1,134 @@
-import {createTable, printPlayer, printWall, removePlayer, getCoordinate} from "../js/affichage_jeu.js";
+import {printPlayer, printWall, removePlayer, getCoordinate} from "../js/affichage_jeu.js";
 import {GameLocal} from "../logic_front/gameLocal.js";
+import {createTable, printAllWallPossible} from "../jeu_1v1/design1v1.js";
 
 let game;
+let positionPlayersY = [undefined, undefined];
 setup();
+verifyConnect();
 
-function setup() {
-    let coordinatePlayer1 = getCoordinate(1, '1');
-    let coordinatePlayer2 = getCoordinate(2,'9');
-    game = new GameLocal(coordinatePlayer1, coordinatePlayer2);
+function verifyConnect() {
+    let result = verifyLogin();
 
-    createTable(coordinatePlayer1, true, move, wall);
+    if (result !== null) {
+        result.then(async (response) => {
+            if (response.status === 200) {
+                document.getElementById("blankHeader").style.display = "none";
+                let p = document.getElementById("name");
+                p.innerHTML = await response.text();
+            }
+            else
+                document.getElementById("profile").style.display = "none";
+        });
+    }
+    else
+        document.getElementById("profile").style.display = "none";
 }
 
-function move(divMoveId) {
+
+function setup() {
+    createTable();
+    getPosition(1);
+}
+
+function removeChoosePosition() {
+    let classChoose = document.getElementsByClassName('choose');
+
+    while (classChoose.length !== 0)
+        classChoose[0].parentNode.removeChild(classChoose[0]);
+}
+
+function choosePositionInit(event) {
+    let tab = event.target.id.split(' ');
+    let position = tab.length === 1 ? tab[0] : tab[1];
+
+    removeChoosePosition();
+    if (positionPlayersY[0] === undefined) {
+        positionPlayersY[0] = position;
+        getPosition(2);
+    }
+    else if (positionPlayersY[1] === undefined){
+        positionPlayersY[1] = position;
+        game = new GameLocal(positionPlayersY[0], positionPlayersY[1]);
+        printAllWallPossible(sentWall);
+        beginTurn();
+    }
+}
+
+function addDivChoosePosition(position, functionName) {
+    let divSquare = document.getElementById('I ' + position);
+    let newDiv = document.createElement('div');
+    newDiv.className = 'choose';
+    newDiv.id = position;
+    divSquare.appendChild(newDiv);
+    divSquare.addEventListener('click', functionName);
+}
+
+function getPosition(numberPlayer) {
+    let positionI = String(numberPlayer === 1 ? 1 : 9);
+
+    for (let j = 1; j <= 9; j++) {
+        addDivChoosePosition(String(j) + positionI, choosePositionInit);
+    }
+}
+
+function printTableTurn(possibleMove, gameState, numberPlayer) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let position = String(j + 1) + String(9 - i);
+
+            if (possibleMove.includes(position))
+                addDivChoosePosition(position, move);
+
+            if (gameState.board[i][j] === -1)
+                document.getElementById('I ' + position).className = 'invisible';
+            else if (gameState.board[i][j] === 0)
+                document.getElementById('I ' + position).className= 'square';
+            else if (gameState.board[i][j] === 1) {
+                document.getElementById('I ' + position).className= 'square';
+                printPlayer(position, numberPlayer === 1);
+            }
+            else {
+                document.getElementById('I ' + position).className= 'square';
+                printPlayer(position, numberPlayer === 2);
+            }
+        }
+    }
+}
+
+
+function sentWall(event) {
+    let tab = event.target.id.split(' ');
+    let orientation = (tab[0] === 'V')? 1 : 0
+    let position = tab[1];
+    let wall = [position, orientation];
+    const isPlayerOne = game.numberPlayer() === 1;
+
+    try {
+        game.doAction({action: "wall", value: wall});
+        printWall(wall, isPlayerOne);
+        removeChoosePosition();
+        if (isPlayerOne) {
+            document.getElementById("ownWallsContent").innerHTML = "Number of remaining walls : " + (10 - game.gameManager.gameStatePlayer1.walls.length);
+        }
+        else
+            document.getElementById("opponentWallsContent").innerHTML = "Number of remaining walls : " + (10 - game.gameManager.gameStatePlayer2.walls.length);
+
+    } catch (e) {
+        window.alert(e.message);
+    }
+}
+
+
+
+function move(event) {
+    let tab = event.target.id.split(' ');
+    let position = tab.length === 1 ? tab[0] : tab[1];
     let isPlayerOne = game.numberPlayer() === 1;
-    let position = divMoveId.split(' ')[1];
 
     try {
         game.doAction({action: "move", value: position});
+        removeChoosePosition();
         removePlayer(isPlayerOne);
         printPlayer(position, isPlayerOne);
 
@@ -33,39 +144,27 @@ function move(divMoveId) {
                 s = "Egalité";
                 break;
         }
-        if (s !== undefined)
+        if (s !== undefined) {
             window.alert(s);
-    } catch (e) {
-        window.alert(e.message);
-    }
-}
-
-function wall(divMoveId) {
-    let split = divMoveId.split(' ');
-    let wall = [split[1], (split[0] === 'V')? 1: 0];
-
-    try {
-        game.doAction({action: "wall", value: wall});
-        printWall(wall, game.numberPlayer() === 1);
+            changePage('mode/mode.html');
+        }
     } catch (e) {
         window.alert(e.message);
     }
 }
 
 function beginTurn() {
-    let player = game.getPlayerSee();
-
-    if (player[0] !== undefined)
-        printPlayer(player[0], true);
-
-    if (player[1] !== undefined)
-        printPlayer(player[1], false);
+    let possibleMoves = game.getPossibleMoves();
+    let gameState = game.generateGameState();
+    console.log(gameState);
+    printTableTurn(possibleMoves, gameState, game.numberPlayer());
 }
 
 function endTurn() {
     game.update();
     removePlayer(true);
     removePlayer(false);
+    removeChoosePosition();
     beginTurn();
 }
 

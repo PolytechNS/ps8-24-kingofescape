@@ -12,7 +12,7 @@ function animateDots() {
 setInterval(animateDots, 500);
 let token = getCookie("token");
 
-const socket = io.connect('http://localhost:8000/api/1v1',{
+const socket = io.connect(`${apiURL}api/1v1`,{
     query: {
         token: token
     }
@@ -20,6 +20,11 @@ const socket = io.connect('http://localhost:8000/api/1v1',{
 
 socket.on('connect', () => {
     console.log('Connecté au serveur.');
+
+    socket.once('getUsername', (username) => {
+        console.log(username);
+        document.getElementById('name').innerHTML = username;
+    });
 
     socket.on('matchFound', (room) => {
         console.log('Match found!');

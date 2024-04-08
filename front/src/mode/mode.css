@@ -7,7 +7,10 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
     display: grid;
     grid-template-rows: 12% 10% 58% 20%;
 }
@@ -19,7 +22,9 @@ header {
     display: flex;
     justify-content: space-around;
 }
-
+#inputMail, #signin, #logint {
+    display: none;
+}
 
 #buttonConnect {
     display: flex;
@@ -41,6 +46,7 @@ header {
 #buttonFriends {
     background-image: url('../picture/Ajout_ami.png');
     background-size: cover;
+    box-shadow: 0 0 10px #444343;
 }
 
 #buttonSuccess {
@@ -48,6 +54,7 @@ header {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    box-shadow: 0 0 10px #444343;
 }
 
 #buttonFriends, #buttonSuccess {
@@ -67,6 +74,8 @@ header {
     background-size: contain;
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
 }
 
 .flag {
@@ -108,6 +117,8 @@ header {
     grid-template-columns: 70% 30%;
     margin-top: auto;
     margin-bottom: auto;
+    box-shadow: 0 0 5px #ECD6BC;
+    cursor: pointer;
 }
 
 #name {
@@ -317,11 +328,11 @@ header {
     cursor: pointer;
 }
 
-#connexion, #popup-login {
+#connexion, #popup-login, #logint {
     background-color: #FDE675;
 }
 
-#inscription, #signin {
+#inscription, #signin, #create {
     background-color: #F9D5A9;
 }
 

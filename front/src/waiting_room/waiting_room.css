@@ -1,54 +1,85 @@
-
-.waiting-screen {
-    text-align: center;
+html {
+    height: 100%;
+    width: 100%;
 }
 
-
-.message {
-    font-size: 24px;
-    color: #333;
-    padding: 10px;
-    background-color: #f3f3f3;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
 body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: grid;
+    grid-template-rows: 12% 78% 10%;
+}
+header {
+    height: 100%;
+    width: 100%;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-around;
 }
 
-#friends {
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 2vw;
+
+#buttonConnect {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    justify-content: space-around;
 }
 
-#sucess {
-    padding: 20px;
+#friends, #success {
+    display: flex;
+    margin: auto;
+    height: 100%;
     border-radius: 10px;
     font-size: 2vw;
+    text-align: center;
+    align-items: center;
+}
+
+#buttonFriends {
+    background-image: url('../picture/Ajout_ami.png');
+    background-size: cover;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonSuccess {
+    background-image: url('../picture/coupe.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonFriends, #buttonSuccess {
+    background-color: #F5F5F5;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #ECD6BC;
+    cursor: pointer;
 }
 
 #banner {
-    grid-column: 3/4;
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    margin: 0;
     height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    width: 50%;
     background-image: url('../picture/mur.jpg');
     background-size: contain;
-    background-repeat: repeat;
-
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
 }
 
 .flag {
     background-image: url('../picture/banniere.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 #flag1 {
@@ -59,169 +90,121 @@ body {
     grid-column: 3/4;
 }
 
-#buttonNotification {
-    grid-column: 2/3;
-    background-image: url('../picture/bell.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-}
-
-#buttonParameter {
-    grid-column: 1/2;
-    background-image: url('../picture/parameter.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px ;
-}
-
 #title {
-    font-size: 50px;
-}
-#login {
-    grid-column: 4/5;
-    display: grid;
-    grid-template-rows: 10% 90%;
-    margin: 10%;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    font-size: 45px;
+    font-weight: bold;
+    color: #2A2928;
+    text-align: center;
+    margin: auto;
 }
 
-header {
+#profile {
     display: grid;
-    grid-template-columns: 10% 10% 60% 20%;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    width: 15%;
+    height: 80%;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    grid-template-columns: 70% 30%;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: 0 0 5px #ECD6BC;
+    cursor: pointer;
 }
-#content {
-    display: grid;
-    grid-template-rows: auto auto 1fr; /* auto for text and button, 1fr for the image */
-    width: 60%;
+
+#name {
+    grid-column: 1 / 2;
     margin: auto;
-    padding: 20px;
+    font-size: 25px;
+    color: #CD9B75;
+}
+
+#avatar {
+    grid-column: 2 / 3;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #F9E7D1;
+    margin: auto;
+    border-radius: 30px;
+    width: 45px;
+    height: 45px;
+}
+
+#content {
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template-rows: 15% 85%;
+    width: 50%;
+    height: 90%;
+    margin: auto;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     border-radius: 8px;
-    position: relative; /* Needed for absolute positioning of children */
 }
 
-#textContainer {
-    position: absolute; /* Position the text container absolutely */
-    z-index: 2; /* Higher z-index so that it appears above the picture */
-    width: 100%; /* Match the width of the content container */
-    text-align: center; /* Center the text */
-    padding: 10px 0; /* Add some padding at the top and bottom */
+#headerContent {
+    grid-row: 1 / 2;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#textWaiting, .dots {
+    font-size: 30px;
+    color: #CD9B75;
+    margin: auto;
+}
+
+#buttonHome {
+    grid-row: 3 / 4;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    width: 10%;
+    height: 80%;
+    margin: auto;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #444343;
+    cursor: pointer;
 }
 
 #textWaiting {
-    font-size: 24px;
-    color: #333;
-    /* No need for padding, margin, or box-shadow here, it's on the textContainer */
+    margin-right: 0;
 }
 
 .dots {
-    font-size: 24px;
-    /* Continue the blinking animation as before */
+    margin-left: 0;
 }
 
-#waitingPicture {
-    grid-row: 1 / span 3; /* Span across all the defined rows */
-    background-size: cover;
+#gifWait {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-
-    z-index: 1; /* Lower z-index */
 }
 
-#buttonHome {
-    z-index: 2; /* Ensure button is above the picture */
-    /* Restyle your button as needed */
+#back {
+    background-image: url("../picture/retour_rouge.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    width: 45px;
+    height: 45px;
 }
 
-#texte {
-    grid-row: 2/3;
-    font-size: 20px;
+#buttonHome > p {
     color: #CD9B75;
-    margin-left: 5%;
-}
-
-#buttonPlayAgain {
-    grid-row: 3/4;
-    width: 75px;
-    height: 45px;
-    border-radius: 8px ;
-    margin-left: 15%;
-    border-color: #CD9B75;
-    background-color: aliceblue;
-    margin-bottom: 5%;
-}
-#buttonHome {
-    grid-row: 4/5;
-    width: 75px;
-    height: 45px;
-    border-radius: 8px ;
-    margin-left: 15%;
-    border-color: #CD9B75;
-    background-color: aliceblue;
-}
-
-.gate {
-    width: 70px;
-    height: 60px;
-    background-color: grey;
-    border: 3px solid #333;
-    border-top: none;
-}
-
-.message {
-    font-size: 24px;
-    color: #333;
-    padding: 10px;
-    background-color: #f3f3f3;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.background-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-@keyframes blink {
-    0% { opacity: .2; }
-    20% { opacity: 1; }
-    100% { opacity: .2; }
-}
-
-/* Blinking animation for the dots */
-@keyframes blink {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-}
-
-.dots::after {
-    content: '•••';
-    animation: blink 1.5s infinite;
-}
-.dots span {
-    animation-name: blink;
-    animation-duration: 1.4s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-}
-
-.dots span:nth-child(2) { animation-delay: .2s; }
-.dots span:nth-child(3) { animation-delay: .4s; }
-.dots {
-    font-size: 24px;
-    margin-top: 10px;
+    margin: auto;
+    font-size: 30px;
+    font-weight: bold;
 }
