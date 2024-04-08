@@ -191,6 +191,10 @@ header {
     cursor: pointer;
 }
 
+#buttonDelete{
+    color: #cd0606;
+}
+
 #imguser{
     grid-column: 2/3;
     background-image: url('../picture/king.png');

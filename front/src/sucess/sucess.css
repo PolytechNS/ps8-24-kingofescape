@@ -12,7 +12,7 @@ body {
     background-repeat: no-repeat; 
     background-position: center;
     display: grid;
-    grid-template-rows: 12% 10% 58% 20%;
+    grid-template-rows: 12% 10% 68% 10%;
 }
 
 header {
@@ -162,4 +162,38 @@ header {
 }
 .images{
     margin: auto;
+}
+
+#retour {
+    grid-row: 4 / 5;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    width: 10%;
+    height: 80%;
+    margin: auto;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #444343;
+    cursor: pointer;
+}
+
+#retour > p {
+    color: #CD9B75;
+    margin: auto;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#back {
+    background-image: url("../picture/retour_rouge.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    width: 45px;
+    height: 45px;
 }
