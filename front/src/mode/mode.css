@@ -22,7 +22,9 @@ header {
     display: flex;
     justify-content: space-around;
 }
-
+#inputMail, #signin, #logint {
+    display: none;
+}
 
 #buttonConnect {
     display: flex;
@@ -326,11 +328,11 @@ header {
     cursor: pointer;
 }
 
-#connexion, #popup-login {
+#connexion, #popup-login, #logint {
     background-color: #FDE675;
 }
 
-#inscription, #signin {
+#inscription, #signin, #create {
     background-color: #F9D5A9;
 }
 
