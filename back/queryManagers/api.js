@@ -30,6 +30,7 @@ function manageRequest(request, response) {
 
         let json;
         request.on('end', function () {
+            console.log(filePath[2]);
             if(request.method === 'POST') {
                 if (filePath[2] === 'signin') {
                     console.log(body);

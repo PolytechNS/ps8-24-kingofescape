@@ -100,7 +100,7 @@ async function deleteAccount(json, response) {
     }
 }
 
-exports.login = {signin, login, verifyLogin, deleteAccount};
+
 async function getUsers(response) {
     try {
 
@@ -114,4 +114,4 @@ async function getUsers(response) {
 }
 exports.users = getUsers;
 
-exports.login = {signin, login};
+exports.login = {signin, login, verifyLogin, deleteAccount};
