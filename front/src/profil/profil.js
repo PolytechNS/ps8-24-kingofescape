@@ -38,9 +38,9 @@ async function fetchData(adresse, name) {
 
 async function deleteAccount() {
     const name = document.getElementById("name").innerHTML;
-    const score = await fetchData('http://localhost:8000/api/deleteScore/', name);
-    const state = await fetchData('http://localhost:8000/api/deleteStat/', name);
-    const account = await fetchData('http://localhost:8000/api/deleteAccount/', name);
+    const score = await fetchData(`${apiURL}api/deleteScore/`, name);
+    const state = await fetchData(`${apiURL}api/deleteStat/`, name);
+    const account = await fetchData(`${apiURL}api/deleteAccount/`, name);
     logout();
 }
 
