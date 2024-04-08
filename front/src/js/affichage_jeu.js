@@ -12,6 +12,7 @@ function createTable(coordinate, isPlayerOne , move, placeWall) {
         for (let j = 1; j <= 9; j++) {
             let divSquare = document.createElement('div');
             divSquare.id = 'I ' + String(j) + String(i);
+            divSquare.className = 'square';
             divSquare.addEventListener('click', () => move(divSquare.id));
             table.appendChild(divSquare);
 

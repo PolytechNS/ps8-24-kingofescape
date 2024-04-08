@@ -4,22 +4,198 @@ html {
 }
 
 body {
-    display: grid;
-    grid-template-rows: 10% 90%;
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
-    background-image: url('../picture/background.jpg'); /* Add your image URL here */
-    background-size: cover; /* Cover the entire body */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-position: center; /* Center the image in the body */
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    display: grid;
+    grid-template-rows: 12% 10% 58% 20%;
 }
+
+header {
+    height: 100%;
+    width: 100%;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+#buttonConnect {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    justify-content: space-around;
+}
+
+#friends, #success {
+    display: flex;
+    margin: auto;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 2vw;
+    text-align: center;
+    align-items: center;
+}
+
+#buttonFriends {
+    background-image: url('../picture/Ajout_ami.png');
+    background-size: cover;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonSuccess {
+    background-image: url('../picture/coupe.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonFriends, #buttonSuccess {
+    background-color: #F5F5F5;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #ECD6BC;
+    cursor: pointer;
+}
+
+#banner {
+    height: 100%;
+    width: 50%;
+    background-image: url('../picture/mur.jpg');
+    background-size: contain;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
+}
+
+.flag {
+    background-image: url('../picture/banniere.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#flag1 {
+    grid-column: 1/2;
+}
+
+#flag2 {
+    grid-column: 3/4;
+}
+
+#title {
+    font-size: 45px;
+    font-weight: bold;
+    color: #2A2928;
+    text-align: center;
+    margin: auto;
+}
+
+#profile {
+    display: grid;
+    width: 15%;
+    height: 80%;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    grid-template-columns: 70% 30%;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+
+#name {
+    grid-column: 1 / 2;
+    margin: auto;
+    font-size: 25px;
+    color: #CD9B75;
+}
+
+#avatar {
+    grid-column: 2 / 3;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #F9E7D1;
+    margin: auto;
+    border-radius: 30px;
+    width: 45px;
+    height: 45px;
+}
+
+#buttonLogin {
+    margin: auto;
+    font-size: 30px;
+    padding: 3%;
+    border-radius: 15px;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    color: #7B6F66;
+    cursor: pointer;
+}
+
 
 #content {
     display: grid;
     grid-template-columns: 20% 60% 20%;
     grid-row: 2 / 3;
+}
+#left {
+    display: grid;
+    grid-column: 1 / 2;
+    height: 100%;
+    width: 100%;
+    grid-template-rows:30% 10% 20% 10% 30%;
+}
+
+#opponentWalls{
+    display: grid;
+    grid-row: 2 / 3;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    margin: 3%;    
+    color: #CD9B75;
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+#opponentWallsTitle{
+    margin: auto;
+    font-size: 25px;
+}
+#opponentWallsContent{
+    margin: auto;
+}
+
+#ownWalls{
+    display: grid;
+    grid-row: 4 / 5;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    color: #CD9B75;
+    border-radius: 15px;
+    margin: 3%;
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+#ownWallsTitle{
+    margin: auto;
+    font-size: 25px;
+}
+#ownWallsContent{
+    margin: auto;
 }
 
 #center {
@@ -33,12 +209,12 @@ body {
     grid-template-columns: 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr;
     grid-template-rows: 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr 1fr 4fr;
     grid-row: 2 / 3;
-    height: 100%;
-    width: 100%;
+    height: 70vh;
+    width: 70vh;
+    margin: auto;
 }
 
 #jeu > div {
-    border: 1px solid black;
     height: 100%;
     width: 100%;
     text-align: center;
@@ -48,7 +224,7 @@ body {
 
 #right {
     display: grid;
-    grid-template-rows: 40% 20% 40%;
+    grid-template-rows: 40% 30% 30%;
     grid-column: 3 / 4;
     height: 100%;
     width: 100%;
@@ -67,14 +243,14 @@ body {
 }
 
 #buttonEndTurn {
-    align-self: center;
-    font-size: 130%;
-    border-radius: 30px;
+    border-radius: 15px;
+    border: 2px solid #ECD6BC;
     background-color: #F5F5F5;
-    border: 3px solid #ECD6BC;
-    display: inline-block;
+    color: #CD9B75;
+    height: 100%;
     width: 50%;
-    height: 50%;
+    font-size: 20px;
+    box-shadow: 0 0 5px #ECD6BC;
 }
 
 header {
@@ -113,18 +289,22 @@ header {
 }
 
 .player1 {
-    background-color: #ff0000;
-    border-radius: 100%;
-    height: 60%;
-    width: 60%;
+    background-image: url('../picture/player1.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 90%;
+    width: 90%;
     align-self: center;
 }
 
 .player2 {
-    background-color: #0000ff;
-    border-radius: 100%;
-    height: 60%;
-    width: 60%;
+    background-image: url('../picture/player2.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 90%;
+    width: 90%;
     align-self: center;
 }
 
@@ -138,6 +318,8 @@ header {
 
 .invisible {
     background-color: #c6c6c6;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #888888;
 }
 
 .wallPlayer1 {
@@ -148,23 +330,52 @@ header {
     background-color: #0000ff;
 }
 
-.chatContent{
+#chatContent{
     grid-row: 1 / 2;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    border-radius: 15px;
+    margin: 5%;
+    box-shadow: 0 0 5px #ECD6BC;
 }
+
 .endTurn{
     grid-row: 2 / 3;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
 }
-.chooseReaction{
+#chooseRecation{
     grid-row: 3 / 4;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #ECD6BC;
+}
+.reaction {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    box-sizing: border-box; 
+    box-shadow: 0 0 10px #CD9B75; 
+    margin-bottom:20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.square{
+    background-color:#ECD6BC;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #888888;
 }
