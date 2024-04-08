@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Waiting for Player</title>
-    <link rel="stylesheet" href="waiting_room.css">
+    <title>King of Escape</title>
     <link rel="icon" href="../picture/banniere.png">
+    <link rel="stylesheet" href="stat.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="../changePage.js"></script>
+    <script src="./stat.js"></script>
 </head>
 <body>
     <header>
@@ -28,18 +30,32 @@
             <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
         </div>
     </header>
-    <div id="content">
-        <div id="headerContent">
-            <p id="textWaiting">Waiting for another player</p>
-            <div class="dots">•••</div>
+    <div id="informationBloc">
+        <div id="texte">
+            <h1>📊 Statistique 📊</h1>
         </div>
-        <img src="../picture/wait.gif" alt="waitingImage" id="gifWait"/>
+        <div id="statistique">
+            <div id="totalGameBloc">
+                <p>Total amount game</p>
+                <p id="totalGame">0</p>
+            </div>
+            <div id="totalVictoryBloc">
+                <p>Total game win</p>
+                <p id="totalVictory">0</p>
+            </div>
+            <div id="scoreBloc">
+                <p>Score</p>
+                <p id="score">0</p>
+            </div>
+            <div id="rateVictoryBloc">
+                <p>Victory rate</p>
+                <p id="rateVictory">0%</p>
+            </div>
+        </div>
     </div>
-    <div id="buttonHome" onclick="changePage('mode/mode.html')">
+    <div id="retour" onclick="changePage('profil/profil.html')">
         <button id="back"></button>
-        <p>Home</p>
+        <p>Back</p>
     </div>
-<script src="waiting_room.js"></script>
-<script src="../changePage.js"></script>
 </body>
 </html>

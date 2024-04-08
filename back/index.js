@@ -40,7 +40,7 @@ const server = http.createServer(function (request, response) {
 
 const io = new Server(server, {
     cors: {
-        origin: "*", methods: ["GET", "POST", "PUT", "PATCH"], allowedHeaders: "*", credentials: true
+        origin: "*", methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], allowedHeaders: "*", credentials: true
     }
 });
 

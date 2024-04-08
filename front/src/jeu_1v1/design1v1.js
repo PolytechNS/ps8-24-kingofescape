@@ -5,6 +5,7 @@ function createTable() {
         for (let j = 1; j <= 9; j++) {
             let divSquare = document.createElement('div');
             divSquare.id = 'I ' + String(j) + String(i);
+            divSquare.className = 'square';
             table.appendChild(divSquare);
 
             if (j !== 9) {

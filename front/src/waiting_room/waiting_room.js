@@ -21,6 +21,11 @@ const socket = io.connect(`${apiURL}api/1v1`,{
 socket.on('connect', () => {
     console.log('Connecté au serveur.');
 
+    socket.once('getUsername', (username) => {
+        console.log(username);
+        document.getElementById('name').innerHTML = username;
+    });
+
     socket.on('matchFound', (room) => {
         console.log('Match found!');
         localStorage.setItem("room", room);
