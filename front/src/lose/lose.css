@@ -1,40 +1,86 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
 body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFF2E3;
+    background-image: url('../picture/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    display: grid;
+    grid-template-rows: 12% 88%;
 }
 
-#friends {
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 2vw;
+header {
+    height: 100%;
+    width: 100%;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-around;
 }
 
-#sucess {
-    padding: 20px;
+
+#buttonConnect {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    justify-content: space-around;
+}
+
+#friends, #success {
+    display: flex;
+    margin: auto;
+    height: 100%;
     border-radius: 10px;
     font-size: 2vw;
+    text-align: center;
+    align-items: center;
+}
+
+#buttonFriends {
+    background-image: url('../picture/Ajout_ami.png');
+    background-size: cover;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonSuccess {
+    background-image: url('../picture/coupe.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 10px #444343;
+}
+
+#buttonFriends, #buttonSuccess {
+    background-color: #F5F5F5;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #ECD6BC;
+    cursor: pointer;
 }
 
 #banner {
-    grid-column: 3/4;
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    margin: 0;
     height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    width: 50%;
     background-image: url('../picture/mur.jpg');
     background-size: contain;
-    background-repeat: repeat;
-    
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
 }
 
 .flag {
     background-image: url('../picture/banniere.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 #flag1 {
@@ -45,52 +91,62 @@ body {
     grid-column: 3/4;
 }
 
-#buttonNotification {
-    grid-column: 2/3;
-    background-image: url('../picture/bell.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-}
-
-#buttonParameter {
-    grid-column: 1/2;
-    background-image: url('../picture/parameter.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px ;
-}
-
 #title {
-    font-size: 50px;
-}
-#login {
-    grid-column: 4/5;
-    display: grid;
-    grid-template-rows: 10% 90%;
-    margin: 10%;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    font-size: 45px;
+    font-weight: bold;
+    color: #2A2928;
+    text-align: center;
+    margin: auto;
 }
 
-header {
+#profile {
     display: grid;
-    grid-template-columns: 10% 10% 60% 20%;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #FFF2E3;
+    width: 15%;
+    height: 80%;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    grid-template-columns: 70% 30%;
+    margin-top: auto;
+    margin-bottom: auto;
+    box-shadow: 0 0 5px #ECD6BC;
+    cursor: pointer;
+}
+
+#name {
+    grid-column: 1 / 2;
+    margin: auto;
+    font-size: 25px;
+    color: #CD9B75;
+}
+
+#avatar {
+    grid-column: 2 / 3;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #F9E7D1;
+    margin: auto;
+    border-radius: 30px;
+    width: 45px;
+    height: 45px;
+}
+
+#buttonLogin {
+    margin: auto;
+    font-size: 30px;
+    padding: 3%;
+    border-radius: 15px;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    color: #7B6F66;
+    cursor: pointer;
 }
 #content {
     display: grid;
     grid-template-rows: 70% 10% 10% 10%;
-    background-color: #FFF2E3;
-    margin-left: 40%;
+    width: 100%;
+    height: 100%;
 }
 
 #pictureLose {
@@ -101,13 +157,14 @@ header {
     width: 400px;
     height: 400px;
     border-radius: 8px ;
+    margin: auto;
 }
 
 #texte {
     grid-row: 2/3;
     font-size: 20px;
     color: #CD9B75;
-    margin-left: 5%;
+    margin: auto;
 }
 
 #buttonPlayAgain {
@@ -115,17 +172,19 @@ header {
     width: 75px;
     height: 45px;
     border-radius: 8px ;
-    margin-left: 15%;
+    margin: auto;
     border-color: #CD9B75;
     background-color: aliceblue;
     margin-bottom: 5%;
+    cursor: pointer;
 }
 #buttonHome {
     grid-row: 4/5;
     width: 75px;
     height: 45px;
     border-radius: 8px ;
-    margin-left: 15%;
+    margin: auto;
     border-color: #CD9B75;
     background-color: aliceblue;
+    cursor: pointer;
 }

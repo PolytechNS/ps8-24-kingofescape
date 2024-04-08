@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>King of Escape</title>
+    <link rel="icon" href="../picture/banniere.png">
     <link rel="stylesheet" href="mode.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/utils.js"></script>
@@ -11,10 +12,10 @@
 <header>
     <div id="buttonConnect">
         <div id="friends">
-            <button onclick="changePage()" id="buttonFriends"></button>
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage()" id="buttonSuccess"></button>
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
         </div>
     </div>
     <div id="banner">
@@ -25,7 +26,7 @@
     <div id="login">
         <button onclick="togglePopup()" id="buttonLogin">LOGIN</button>
     </div>
-    <div id="profile">
+    <div id="profile" onclick="changePage('profil/profil.html')">
         <p id="name">Test1234</p>
         <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
@@ -73,7 +74,9 @@
             <input id="username" type="text" placeholder="username">
             <input id="password" type="password" placeholder="password">
             <button id="signin" onclick="signIn()">sign in </button>
+            <button id="create" onclick="create()">create account</button>
             <button id="popup-login" onclick="login()">login</button>
+            <button id="logint" onclick="logint()">login</button>
         </div>
     </div>
 </div>

@@ -4,20 +4,42 @@
     <meta charset="UTF-8">
     <title>Page jeu</title>
     <link rel="stylesheet" href="./jeu_1v1.css">
+    <link rel="icon" href="../picture/banniere.png">
     <script src="../js/socket.io.js"></script>
     <script src="../changePage.js"></script>
     <script src="../js/utils.js"></script>
 </head>
-<body>
 <header>
-    <div id="parametre"></div>
-    <div id="notification"></div>
-    <div id="barreJeu"></div>
-    <div id="login">
-        <button id="buttonLogin">Login</button>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="profile" onclick="changePage('profil/profil.html')">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
+<body>
 <div id="content">
+    <div id="left">
+        <div id="opponentWalls">
+            <div id="opponentWallsTitle">Opponent's walls</div>
+            <div id="opponentWallsContent">Number of remaining walls : 10</div>
+        </div>
+        <div id="ownWalls">
+            <div id="ownWallsTitle">Your walls</div>
+            <div id="ownWallsContent">Number of remaining walls : 10</div>
+        </div>
+    </div>
     <div id="center">
         <div id="jeu">
         </div>
@@ -28,19 +50,14 @@
                 <button id="buttonEndTurn">End turn</button>
             </div>
             <div id="chooseRecation">
-                <div id="firestrow">
-                    <img src="chatInGame/message/cry.png" alt="cry" id="cry" width="50px" height="50px">
-                    <img src="chatInGame/message/happy.png" alt="happy" id="happy" width="50px" height="50px">
-                    <img src="chatInGame/message/upset.png" alt="upset" id="upset" width="50px" height="50px">
-                    <img src="chatInGame/message/welldone.png" alt="welldone" id="welldone" width="50px" height="50px">
-                </div>
-                <div id="secondrow">
-                    <img src="chatInGame/message/wdt.png" alt="wdt" id="wdt" width="50px" height="50px">
-                    <img src="chatInGame/message/wt.png" alt="wt" id="wt" width="50px" height="50px">
-                    <img src="chatInGame/message/ot.png" alt="ot" id="ot" width="50px" height="50px">
-                    <img src="chatInGame/message/ggt.png" alt="ggt" id="ggt" width="50px" height="50px">
-                </div>
-
+                    <img src="chatInGame/message/cry.png" class="reaction" alt="cry" id="cry" width="50px" height="50px">
+                    <img src="chatInGame/message/happy.png" class="reaction" alt="happy" id="happy" width="50px" height="50px">
+                    <img src="chatInGame/message/upset.png"class="reaction"  alt="upset" id="upset" width="50px" height="50px">
+                    <img src="chatInGame/message/welldone.png" class="reaction" alt="welldone" id="welldone" width="50px" height="50px">
+                    <img src="chatInGame/message/wdt.png" class="reaction" alt="wdt" id="wdt" width="50px" height="50px">
+                    <img src="chatInGame/message/wt.png" class="reaction" alt="wt" id="wt" width="50px" height="50px">
+                    <img src="chatInGame/message/ot.png" class="reaction" alt="ot" id="ot" width="50px" height="50px">
+                    <img src="chatInGame/message/ggt.png" class="reaction" alt="ggt" id="ggt" width="50px" height="50px">
         </div>
     </div>
 </div>

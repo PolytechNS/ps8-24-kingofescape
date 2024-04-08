@@ -86,4 +86,32 @@ function startPage() {
     }
 }
 
+function create() {
+    let create = document.getElementById("create");
+    let signIn = document.getElementById("signin");
+    let login = document.getElementById("popup-login");
+    let inputMail = document.getElementById("inputMail");
+    let logint = document.getElementById("logint");
+
+    create.style.display = "none";
+    signIn.style.display = "block";
+    login.style.display = "none";
+    inputMail.style.display = "block";
+    logint.style.display = "block";
+}
+
+function logint() {
+    let create = document.getElementById("create");
+    let signIn = document.getElementById("signin");
+    let login = document.getElementById("popup-login");
+    let inputMail = document.getElementById("inputMail");
+    let logint = document.getElementById("logint");
+
+    create.style.display = "block";
+    signIn.style.display = "none";
+    login.style.display = "block";
+    inputMail.style.display = "none";
+    logint.style.display = "none";
+}
+
 startPage();
