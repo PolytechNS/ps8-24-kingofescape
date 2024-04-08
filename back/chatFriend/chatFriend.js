@@ -23,6 +23,6 @@ function gestionSocketChatFriend(io) {
         });
 
     });
-}
 
+}
 exports.gestionSocketChatFriend = gestionSocketChatFriend;

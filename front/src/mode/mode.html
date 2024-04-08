@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>King of Escape</title>
+    <link rel="icon" href="../picture/banniere.png">
     <link rel="stylesheet" href="mode.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/utils.js"></script>
 </head>
 <body>
 <header>
-    <div id="friends">
-        <button onclick="changePage('friendrequests/friendRequests.html')" id="buttonFriends"></button>
-    </div>
-    <div id="success">
-        <button onclick="changePage()" id="buttonSuccess"></button>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+        </div>
     </div>
     <div id="banner">
         <div class="flag" id="flag1"></div>
@@ -20,30 +24,63 @@
         <div class="flag" id="flag2"></div>
     </div>
     <div id="login">
-        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+        <button onclick="togglePopup()" id="buttonLogin">LOGIN</button>
+    </div>
+    <div id="profile" onclick="changePage('profil/profil.html')">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
 <div id="texte">
     <p>Choose a game mode</p>
 </div>
 <div id="mode">
-    <div class="modechoice">
-        <div id="continue"></div>
-        <button onclick="changePage()" id="buttonContinue">Continue</button>
+    <div class="modechoice" id="modeContinue">
+        <div class="parchemin">
+            <div id="continue" onclick="changePage()"></div>
+            <p class="texteparchemin">Continue</p>
+        </div>
     </div>
-    <div class="modechoice">
-        <div id="local"></div>
-        <button onclick="changePage('jeu_local/jeu.html')" id="buttonLocal">Local</button>
+    <div class="modechoice" id="modeLocal">
+        <div class="parchemin" onclick="changePage('jeu_local/jeu.html')">
+            <div id="local"></div>
+            <p class="texteparchemin">Local</p>
+        </div>
     </div>
-    <div class="modechoice">
-        <div id="IA"></div>
-        <button onclick="changePage('jeu_ia/jeu_ia.html')" id="buttonIA">IA</button>
+    <div class="modechoice" id="modeIA">
+        <div class="parchemin" onclick="changePage('jeu_ia/jeu_ia.html')">
+            <div id="IA"></div>
+            <p class="texteparchemin">IA</p>
+        </div>
     </div>
-    <div class="modechoice">
-        <div id="multiplayer"></div>
-        <button id="buttonMulti" onclick="changePage('waiting_room/waiting_room.html')">Multiplayer</button>
+    <div class="modechoice" id="modeMultiplayer">
+        <div class="parchemin" onclick="changePage('waiting_room/waiting_room.html')">
+            <div id="multiplayer"></div>
+            <p class="texteparchemin" id="textIA">Multi<br/>player</p>
+        </div>
     </div>
 </div>
+<div id="popup-overlay">
+    <div id="popup-content">
+        <div id="nameMenu">
+            <p id="title-popup">Connexion</p>
+            <p id="close-popup" onclick="togglePopup()">❌</p>
+        </div>
+        <div id="error">
+            <p id="texteError"></p>
+        </div>
+        <div id="credential">
+            <input id="inputMail" type="text" placeholder="Mail">
+            <input id="username" type="text" placeholder="username">
+            <input id="password" type="password" placeholder="password">
+            <button id="signin" onclick="signIn()">sign in </button>
+            <button id="create" onclick="create()">create account</button>
+            <button id="popup-login" onclick="login()">login</button>
+            <button id="logint" onclick="logint()">login</button>
+        </div>
+    </div>
+</div>
+<script src="./mode.js"></script>
 <script src="../js/mode.js"></script>
 <script src="../changePage.js"></script>
 </body>

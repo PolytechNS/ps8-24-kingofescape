@@ -123,6 +123,48 @@ class GameManager {
 
         return [coordinatePlayer1, coordinatePlayer2];
     }
+
+    /**
+     * Generate the game state for the IA
+     * @returns {{ownWalls: [], opponentWalls: [], board: *[]}} - The wall of the IA, the wall of the opponent and the board containing the visibililty and players
+     */
+    generateGameState(numberPlayer) {
+        let board = [];
+
+        // Generate the board without player
+        for (let i = 9; i >= 1; i--) {
+            let row = [];
+            for (let j = 1; j <= 9; j++) {
+                if (this.visibilityMatrix.canSeeSquare(String(j) + String(i), numberPlayer === 1))
+                    row.push(0);
+                else
+                    row.push(-1);
+            }
+            board.push(row);
+        }
+
+        // Add player in the board
+        let positionPlayers = this.getPlayerSee(numberPlayer);
+
+        if (numberPlayer === 1) {
+            board[9 - Number.parseInt(positionPlayers[0][1])][Number.parseInt(positionPlayers[0][0]) - 1] = 1;
+
+            if (positionPlayers[1] !== undefined)
+                board[9 - Number.parseInt(positionPlayers[1][1])][Number.parseInt(positionPlayers[1][0]) - 1] = 2;
+        }
+        else {
+            board[9 - Number.parseInt(positionPlayers[1][1])][Number.parseInt(positionPlayers[1][0]) - 1] = 1;
+
+            if (positionPlayers[0] !== undefined)
+                board[9 - Number.parseInt(positionPlayers[0][1])][Number.parseInt(positionPlayers[0][0]) - 1] = 2;
+        }
+
+        // Get the wall of the IA and the opponent
+        let opponentWalls = (numberPlayer === 1)? this.gameStatePlayer2.walls : this.gameStatePlayer1.walls;
+        let ownWalls = (numberPlayer === 1)? this.gameStatePlayer1.walls : this.gameStatePlayer2.walls;
+
+        return {opponentWalls: opponentWalls, ownWalls: ownWalls, board: board};
+    }
 }
 
 exports.gameManager = GameManager;

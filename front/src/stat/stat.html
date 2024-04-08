@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King of Escape</title>
+    <link rel="icon" href="../picture/banniere.png">
+    <link rel="stylesheet" href="stat.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../changePage.js"></script>
+    <script src="./stat.js"></script>
+</head>
+<body>
+    <header>
+        <div id="buttonConnect">
+            <div id="friends">
+                <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+            </div>
+            <div id="success">
+                <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+            </div>
+        </div>
+        <div id="banner">
+            <div class="flag" id="flag1"></div>
+            <p id="title">KING OF ESCAPE</p>
+            <div class="flag" id="flag2"></div>
+        </div>
+        <div id="profile" onclick="changePage('profil/profil.html')">
+            <p id="name">Test1234</p>
+            <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        </div>
+    </header>
+    <div id="informationBloc">
+        <div id="texte">
+            <h1>📊 Statistique 📊</h1>
+        </div>
+        <div id="statistique">
+            <div id="totalGameBloc">
+                <p>Total amount game</p>
+                <p id="totalGame">0</p>
+            </div>
+            <div id="totalVictoryBloc">
+                <p>Total game win</p>
+                <p id="totalVictory">0</p>
+            </div>
+            <div id="scoreBloc">
+                <p>Score</p>
+                <p id="score">0</p>
+            </div>
+            <div id="rateVictoryBloc">
+                <p>Victory rate</p>
+                <p id="rateVictory">0%</p>
+            </div>
+        </div>
+    </div>
+    <div id="retour" onclick="changePage('profil/profil.html')">
+        <button id="back"></button>
+        <p>Back</p>
+    </div>
+</body>
+</html>

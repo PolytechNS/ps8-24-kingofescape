@@ -1,10 +1,12 @@
-function gestionSocketChatInGame(io){
-    const chatInGameSocket = io.of('/api/chatInGame');
-    chatInGameSocket.on('connection', (socket) => {
-        socket.on('message', (message) => {
-            console.log('message: ' + message);
-            chatInGameSocket.emit('message1', message);
-        });
-    });
-};
-exports.gestionSocketChatInGame = gestionSocketChatInGame;
+class Chat {
+    constructor(gestionSocket) {
+        this.gestionSocket = gestionSocket;
+    }
+
+    getMessage(message, numberPlayer) {
+        console.log('message: ' + message);
+        this.gestionSocket.emitSocket('message', message, 3 - numberPlayer);
+    }
+}
+
+exports.chat = Chat;

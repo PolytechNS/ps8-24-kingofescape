@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King of Escape</title>
+    <link rel="stylesheet" href="profil.css">
+    <link rel="icon" href="../picture/banniere.png">
+    <script src="../js/utils.js"></script>
+    <script src="profil.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../changePage.js"></script>
+</head>
+<body>
+    <header>
+        <div id="buttonConnect">
+            <div id="friends">
+                <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+            </div>
+            <div id="success">
+                <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+            </div>
+        </div>
+        <div id="banner">
+            <div class="flag" id="flag1"></div>
+            <p id="title">KING OF ESCAPE</p>
+            <div class="flag" id="flag2"></div>
+        </div>
+        <div id="profile">
+            <p id="name">Test1234</p>
+            <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        </div>
+        <div id="buttonLogout" onclick="logout()"></div>
+    </header>
+    <div id="pagecontent">
+        <div id="menu">
+            <button onclick="changePage('mode/mode.html')" id="buttonPlay"> Play </button>
+            <button onclick="changePage('leaderboard/leaderboard.html')" id="buttonLeaderboard"> Leaderboard</button>
+            <button onclick="changePage('stat/stat.html')" id="buttonStat"> Information </button>
+            <button onclick="deleteAccount()" id="buttonDelete"> Delete Account </button>
+        </div>
+        <div id="imguser"></div>
+    </div>
+</body>
+</html>
