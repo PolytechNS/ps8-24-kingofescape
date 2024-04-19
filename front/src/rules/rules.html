@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King of Escape</title>
+    <link rel="stylesheet" href="rules.css">
+    <link rel="icon" href="../picture/banniere.png">
+    <script src="../changePage.js"></script>
+</head>
+<body>
+<header>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage()" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage()" id="buttonSuccess"></button>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="profile">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+    </div>
+</header>
+<div id="content">
+    <div id="rules">
+        <h1>Rules : </h1>
+        <p>King of Escape is a game where you have to escape from a maze. The first player to reach the opposite side wins the game.</p>
+        <h1>There are several rules to follow:</h1>
+        <p>Each player in turn, chooses to move his pawn or to put up one of his fences. When he has run out of fences, the player must move his pawn. At the beginning the board is empty. Choose and place your pawn in the center of the first line of your side of the board, your opponent takes another pawn and places it in the center of the first line of his side of the board (the one facing yours). Then take 10 fences each.</p>
+        <h1>How to move your pawn:</h1>
+        <p>Click on the square where you want to move it. You can only move your pawn one square at a time, horizontally or vertically. You can not move diagonally. You can not jump over a fence or another pawn. You can not move your pawn on the square where your opponent's pawn is.</p>
+        <h1>How to put up a fence:</h1>
+        <p>Click on the square where you want to put up the fence (the upper one or the left one). You can only put up a fence between two squares. You can not put up a fence if it blocks the only way to reach the opposite side of the board.</p>
+        <h1>Face to Face</h1>
+        <p>When two pawns face each other on neighboring squares which are not separated by a fence, the player whose turn it is can jump the opponent's pawn (and place himself behind him), thus advancing an extra square</p>
+        <h1>End of the game</h1>
+        <p>The first player to reach the opposite side wins the game.</p>
+        <h1>Specificity: the fog war</h1>
+        <p>When you play a game in the fog of war, you can see the opponent's fences and yours but you cannot see you oppenent. Morevover you can see the oppent if he is in your side of the board or near one of your fences</p>
+</div>
+<div id="retour" onclick="changePage('mode/mode.html')">
+    <button id="back"></button>
+    <p>Back</p>
+</div>
+</body>
+</html>
