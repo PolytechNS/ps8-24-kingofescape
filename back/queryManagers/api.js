@@ -11,6 +11,9 @@ const {removeFriend}=require("../friendShipManager.js").removeFriend;
 const { signin, login, verifyLogin, deleteAccount } = require("../login/login.js").login;
 const { addScore, getScores, getScoresAllUsers, setScore, deleteScore} = require("../1v1/score.js");
 const { addStat, getStat, setStat, deleteStat } = require("../sucess/sucess.js");
+const {removefromfriendslists} = require("../friendShipManager.js").removefromfriendslists;
+const {deleteFriendRequests} = require("../friendShipManager.js").deleteFriendRequests;
+
 
 function manageRequest(request, response) {
     let filePath = request.url.split("/").filter(function(elem) {
@@ -117,6 +120,14 @@ function manageRequest(request, response) {
                 if (filePath[2] === 'deleteStat') {
                     json = {username: filePath[3]};
                     deleteStat(json, response);
+                }
+                if (filePath[2] === 'deleteFriendRequests') {
+                    json = {username: filePath[3]};
+                    deleteFriendRequests(json, response);
+                }
+                if (filePath[2] === 'deleteFriendLists') {
+                    json = {username: filePath[3]};
+                   removefromfriendslists(json, response);
                 }
             }
         });

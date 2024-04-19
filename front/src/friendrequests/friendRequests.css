@@ -33,7 +33,7 @@ button:hover {
 }
 
 
-#friends, #sucess {
+#friends, #sucess,#notificationButton {
     padding: 20px;
     border-radius: 10px;
     font-size: 2vw;
@@ -555,4 +555,46 @@ header {
 
 .invisible {
     display: none;
+}*.notification-container {
+     position: fixed;
+     top: 50px; /* Adjust based on your layout */
+     right: 20px;
+     width: 300px;
+     background: #fff64d;
+     border: 1px solid #70dedb;
+     z-index: 1001;
+     display: none; /* Initially hidden */
+ }
+
+.notification-message {
+    padding: 10px;
+    border-bottom: 1px solid #ff1e00;
+    cursor: pointer;
+}
+
+#notificationButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.notification-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+}
+#buttonNotification{
+    grid-column: 1/2;
+    background-image: url('../picture/notificon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
 }
