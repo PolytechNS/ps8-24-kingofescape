@@ -45,5 +45,6 @@ const io = new Server(server, {
 });
 
 gestionSocketIA(io);
+
 room(io);
 gestionSocketChatFriend(io);

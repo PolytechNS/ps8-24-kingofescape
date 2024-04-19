@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const {addScore} = require("../1v1/score.js");
 const { addStat } = require("../sucess/sucess.js");
 
+const {sendResponse, sendErrorResponse} = require("../friendshipManager/responsehelper");
 
 
 async function signin(json, response) {
@@ -97,6 +98,20 @@ async function deleteAccount(json, response) {
         response.statusCode = 500;
         response.end('Error deleting user');
     }
-}    
+}
+
+
+async function getUsers(response) {
+    try {
+
+        const db = await getDatabase();
+        const usersCollection = db.collection("Users");
+        const users = await usersCollection.find().toArray();
+        sendResponse(response, 200, users);
+    } catch (error) {
+        sendErrorResponse(response, error);
+    }
+}
+exports.users = getUsers;
 
 exports.login = {signin, login, verifyLogin, deleteAccount};
