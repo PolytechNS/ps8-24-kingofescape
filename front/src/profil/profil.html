@@ -9,10 +9,16 @@
     <script src="profil.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="../changePage.js"></script>
+    <script type="module" src="../js/FriendRequestsNotifManager.js"></script>
 </head>
 <body>
     <header>
         <div id="buttonConnect">
+            <div id="notificationButton">
+                <button id="buttonNotification"></button>
+                <div id="notificationIndicator" class="notification-indicator"></div>
+            </div>
+            <div id="notification-area" class="notification-container"></div>
             <div id="friends">
                 <button onclick="changePage('friendrequests/friendRequests.html')" id="buttonFriends"></button>
             </div>

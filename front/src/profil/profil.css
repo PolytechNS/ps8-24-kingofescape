@@ -31,7 +31,7 @@ header {
     justify-content: space-around;
 }
 
-#friends, #success {
+#friends, #success , #buttonNotification {
     display: flex;
     margin: auto;
     height: 100%;
@@ -202,4 +202,45 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     margin-left: 5%;
+}
+
+.invisible {
+    display: none;
+}*.notification-container {
+     position: fixed;
+     top: 50px; /* Adjust based on your layout */
+     right: 20px;
+     width: 300px;
+     background: #fff64d;
+     border: 1px solid #70dedb;
+     z-index: 1001;
+     display: none; /* Initially hidden */
+ }
+
+.notification-message {
+    padding: 10px;
+    border-bottom: 1px solid #ff1e00;
+    cursor: pointer;
+}
+
+
+.notification-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+}
+#buttonNotification{
+    grid-column: 1/2;
+    background-image: url('../picture/notificon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
 }
