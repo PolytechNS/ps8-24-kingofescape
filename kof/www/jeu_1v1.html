@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page jeu</title>
+    <link rel="stylesheet" href="./css/jeu_1v1.css">
+    <link rel="icon" href="../picture/banniere.png">
+    <script src="./js/socket.io.js"></script>
+    <script src="./js/changePage.js"></script>
+    <script src="./js/utils.js"></script>
+</head>
+<header>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="profile" onclick="changePage('profil/profil.html')">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+    </div>
+</header>
+<body>
+<div id="content">
+    <div id="left">
+        <div id="opponentWalls">
+            <div id="opponentWallsTitle">Opponent's walls</div>
+            <div id="opponentWallsContent">Number of remaining walls : 10</div>
+        </div>
+        <div id="ownWalls">
+            <div id="ownWallsTitle">Your walls</div>
+            <div id="ownWallsContent">Number of remaining walls : 10</div>
+        </div>
+    </div>
+    <div id="center">
+        <div id="jeu">
+        </div>
+    </div>
+    <div id="right">
+            <div id="chatContent"></div>
+            <div id="endTurn">
+                <button id="buttonEndTurn">End turn</button>
+            </div>
+            <div id="chooseRecation">
+                    <img src="./picture/cry.png" class="reaction" alt="cry" id="cry" width="50px" height="50px">
+                    <img src="./picture/happy.png" class="reaction" alt="happy" id="happy" width="50px" height="50px">
+                    <img src="./picture/upset.png"class="reaction"  alt="upset" id="upset" width="50px" height="50px">
+                    <img src="./picture/welldone.png" class="reaction" alt="welldone" id="welldone" width="50px" height="50px">
+                    <img src="./picture/wdt.png" class="reaction" alt="wdt" id="wdt" width="50px" height="50px">
+                    <img src="./picture/wt.png" class="reaction" alt="wt" id="wt" width="50px" height="50px">
+                    <img src="./picture/ot.png" class="reaction" alt="ot" id="ot" width="50px" height="50px">
+                    <img src="./picture/ggt.png" class="reaction" alt="ggt" id="ggt" width="50px" height="50px">
+        </div>
+    </div>
+</div>
+<script src="./js/jeu_1v1.js" type="module"></script>
+<script type="module">
+    import {getIdOnClick} from "./jeu_1v1.js"
+    import {endTurn} from "./jeu_1v1.js";
+    document.getElementById("buttonEndTurn").onclick = endTurn;
+
+    document.getElementById('cry').addEventListener('click',getIdOnClick);
+    document.getElementById('happy').addEventListener('click', getIdOnClick);
+    document.getElementById('upset').addEventListener('click', getIdOnClick);
+    document.getElementById('welldone').addEventListener('click', getIdOnClick);
+    document.getElementById('wdt').addEventListener('click', getIdOnClick);
+    document.getElementById('wt').addEventListener('click', getIdOnClick);
+    document.getElementById('ot').addEventListener('click', getIdOnClick);
+    document.getElementById('ggt').addEventListener('click', getIdOnClick);
+</script>
+</body>
+</html>

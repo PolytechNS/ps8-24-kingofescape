@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiting for Player</title>
+    <link rel="stylesheet" href="./css/waiting_room.css">
+    <link rel="icon" href="../picture/banniere.png">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/utils.js"></script>
+</head>
+<body>
+    <header>
+        <div id="buttonConnect">
+            <div id="friends">
+                <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+            </div>
+            <div id="success">
+                <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+            </div>
+        </div>
+        <div id="banner">
+            <div class="flag" id="flag1"></div>
+            <p id="title">KING OF ESCAPE</p>
+            <div class="flag" id="flag2"></div>
+        </div>
+        <div id="profile" onclick="changePage('profil/profil.html')">
+            <p id="name">Test1234</p>
+            <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        </div>
+    </header>
+    <div id="content">
+        <div id="headerContent">
+            <p id="textWaiting">Waiting for another player</p>
+            <div class="dots">•••</div>
+        </div>
+        <img src="../picture/wait.gif" alt="waitingImage" id="gifWait"/>
+    </div>
+    <div id="buttonHome" onclick="changePage('mode/mode.html')">
+        <button id="back"></button>
+        <p>Home</p>
+    </div>
+<script src="./js/waiting_room.js"></script>
+<script src="./js/changePage.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"
+    <title></title>
+    <link rel="stylesheet" href="./css/chat.css">
+    <link rel="icon" href="../picture/banniere.png">
+    <script type ="module" src="./js/chat.js"></script>
+    <script src="./js/socket.io.js"></script>
+</head>
+<header>
+    <div id="friends">
+        <button onclick="changePage('chat/chat.html')" id="buttonFriends"/>
+    </div>
+    <div id="sucess">
+        <button onclick="changePage('sucess/sucess.html')" id="buttonSucess"/>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title"> KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage('login/login.html')" id="buttonLogin">LOGIN</button>
+    </div>
+</header>
+<body>
+    <div id="windowChat">
+        <div id="toppart">
+            <div id="searchpart">
+                <div id="search">
+                    <input type="text" id="searchFriend" placeholder="username">
+                    <div id="magnifyer">🔎</div>
+                </div>
+            </div>
+            <div id="nameFriend"></div>
+        </div>
+        <div id="bottompart">
+            <div id="friendList"></div>
+            <div id="chatpart">           
+                <div id="chatContent"></div>
+                <div id="chat">
+                    <div id="input">
+                        <input type="text" id="message" placeholder="Enter your message">
+                    </div>
+                    <img src="../picture/enveloppe.png" alt="send" id="send" width="30px" height="30px">
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div id="button">
+        <div id="friendButton">
+            <img src="../picture/Ajout_ami.png" alt="friend" id="friend" width="30px" height="30px">
+            <p id="friendText"> Friends</p>
+        </div>
+        <div id="chatButton">
+            <img src="../picture/enveloppe.png" alt="chat" id="chat" width="30px" height="30px">
+            <p id="chatText"> Chat</p>
+        </div>
+    </div>
+    <script type="module">
+        import {sendText} from "./chat.js"
+        document.getElementById('send').addEventListener('click',sendText);
+        document.getElementById('message').addEventListener('keydown', function(event) {
+            if (event.keyCode === 13) {
+            sendText();
+            }
+        });    
+    </script>
+</body>

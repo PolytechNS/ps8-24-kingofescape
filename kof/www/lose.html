@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>header</title>
+    <link rel="icon" href="../picture/banniere.png">
+    <link rel="stylesheet" href="./css/lose.css">
+    <script src="./js/changePage.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/lose.js"></script>
+</head>
+<header>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('chat/chat.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="profile" onclick="changePage('profil/profil.html')">
+        <p id="name"></p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+    </div>
+</header>
+<body>
+    <div id="content">
+        <div id="pictureLose"></div>
+        <p id="texte">Oh no, you lose the game</p>
+        <button onclick="changePage('waiting_room/waiting_room.html')" id="buttonPlayAgain">Play again</button>
+        <button onclick="changePage('mode/mode.html')" id="buttonHome">Home</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../picture/background.jpg'); /* Add your image URL here */
+    background-size: cover; /* Cover the entire body */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image in the body */
+}
+
+#friends {
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2vw;
+}
+
+#sucess {
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2vw;
+}
+
+#banner {
+    grid-column: 3/4;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../picture/mur.jpg');
+    background-size: contain;
+    background-repeat: repeat;
+    border-radius: 10px;
+    box-sizing: border-box; 
+    box-shadow: 0 0 10px #7a7774;
+}
+
+.flag {
+    background-image: url('../picture/banniere.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 10%;
+}
+
+#flag1 {
+    grid-column: 1/2;
+}
+
+#flag2 {
+    grid-column: 3/4;
+}
+
+#buttonNotification {
+    grid-column: 2/3;
+    background-image: url('../picture/bell.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+#buttonParameter {
+    grid-column: 1/2;
+    background-image: url('../picture/parameter.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
+}
+
+#title {
+    font-size: 50px;
+}
+#login {
+    grid-column: 4/5;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    margin: 10%;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 10% 10% 60% 20%;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+#content {
+    display: grid;
+    grid-template-rows: 70% 10% 10% 10%;
+    margin-left: 40%;
+}
+
+#pictureLose {
+    grid-row: 1/2;
+    background-image: url('../picture/Coupe_Perdante.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 400px;
+    border-radius: 8px ;
+}
+
+#texte {
+    grid-row: 2/3;
+    font-size: 20px;
+    color: #CD9B75;
+    margin-left: 5%;
+}
+
+#buttonPlayAgain {
+    grid-row: 3/4;
+    width: 75px;
+    height: 45px;
+    border-radius: 8px ;
+    margin-left: 15%;
+    border-color: #CD9B75;
+    background-color: aliceblue;
+    margin-bottom: 5%;
+}
+#buttonHome {
+    grid-row: 4/5;
+    width: 75px;
+    height: 45px;
+    border-radius: 8px ;
+    margin-left: 15%;
+    border-color: #CD9B75;
+    background-color: aliceblue;
+}

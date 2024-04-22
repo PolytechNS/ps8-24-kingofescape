@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King of Escape</title>
+    <link rel="stylesheet" href="./css/friendRequests.css">
+    <script type ="module" src="./js/friendRequests.js"></script>
+    <script src="./js/socket.io.js"></script>
+</head>
+<header>
+    <div id="friends">
+        <button onclick="changePage()" id="buttonFriends"></button>
+    </div>
+    <div id="sucess">
+        <button onclick="changePage()" id="buttonSucess"></button>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <h1 id="title">King Of Escape</h1>
+        <div class="flag" id="flag2"></div>
+    </div>
+    <div id="login">
+        <button onclick="changePage('login/login.html')" id="buttonLogin">Login</button>
+    </div>
+</header>
+<body>
+<div id="windowChat">
+    <div id="toppart">
+        <div id="searchpart">
+            <div id="search">
+                <input type="text" id="searchFriend" placeholder="username">
+                <div id="magnifyer">🔎</div>
+            </div>
+        </div>
+        <div id="nameFriend"></div>
+    </div>
+    <div id="bottompart">
+        <div id="friendList"></div>
+        <div id="chatpart">
+            <div id="chatContent"></div>
+            <div id="chat">
+                <div id="input">
+                    <input type="text" id="message" placeholder="Enter your message">
+                </div>
+                <img src="../picture/enveloppe.png" alt="send" id="send" width="30px" height="30px">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="windowFriend">
+    <div id="searchFriendpart">
+        <div id="Friendsearch">
+            <input type="text" id="usernamesearch" placeholder="search for a friend">
+            <div id="magnifyersearch">🔎</div>
+        </div>
+        <button id="addFriend" class="image-button">
+            <img src="../picture/cross.png" alt="Ajouter comme ami" width="30px" height="30px">
+        </button>
+    </div>
+    <div id="listfriend">
+        <table>
+            <thead>
+            <tr>
+                <th>Ally</th>
+                <th>Send Pigeon</th>
+                <th>Challenge to Joust</th>
+                <th>Expel from Kingdom</th>
+            </tr>
+            </thead>
+            <tbody id="friendListTable">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="windowRequest">
+<div id="friend-requests-table">
+    <table>
+        <thead>
+        <tr>
+            <th>Request</th>
+            <th>Accept into Court</th>
+            <th>Decline with Regret</th>
+        </tr>
+        </thead>
+        <tbody id="friend-requests-list">
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<div id="button">
+    <div id="friendButton">
+        <img src="../picture/Ajout_ami.png" alt="Ally" id="friend" width="30px" height="30px">
+    </div>
+    <div id="chatButton">
+        <img src="../picture/enveloppe.png" alt="Pigeon" id="chat2" width="30px" height="30px">
+    </div>
+    <div id="requestButton">
+        <img src="../picture/ajoutamiIcon.png" alt="Request" id="ajout" width="30px" height="30px">
+    </div>
+</div>
+
+<script type="module" src="./js/DispalyManager.js"></script>
+
+<script src="./js/changePage.js"></script>
+</body>
