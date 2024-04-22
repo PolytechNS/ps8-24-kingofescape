@@ -1,8 +1,8 @@
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -21,36 +21,36 @@ body, html {
 }
 
 .header {
-    margin: 20px 0;
+    margin: 5vh 0;
     font-size: 1rem;
     color: #333;
     text-shadow: 2px 2px 4px rgb(255, 234, 0);
 }
 .description {
-    margin:100px 5px 190px 5px;
+    margin:8vh 1vw 15vh 1vw;
     display: flex;
     flex-wrap: wrap;
     font-size: large;
     color: #ece98b;
     font-weight: bolder;
-    width: 75%;
+    width: 75vw;
     text-align: justify;
     background-color: rgba(0, 0, 0, 0.5); /* Arrière-plan semi-transparent noir */
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px; /* Bords arrondis pour l'arrière-plan du texte */
     box-shadow: 3px 3px 10px rgba(255, 246, 77, 0.91); /* Ombre portée pour le texte */
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Ombre portée pour le texte pour augmenter le contraste */
 }
 
 #appName > p {
-    margin: 30px 0;
+    margin: 4vh 0;
     font-size: 3rem;
     color: #ffffff;
     text-shadow: 2px 2px 4px rgb(255, 246, 77, 0.91);
 }
 
 #sarterText {
-    width: 100%;
+    width: 100vw;
 }
 .button-container {
     margin: auto;
