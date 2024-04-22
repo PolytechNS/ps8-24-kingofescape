@@ -1,12 +1,12 @@
 html {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 body {
     margin: 0;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     background-image: url('../picture/background.jpg');
     background-size: cover;
     background-repeat: no-repeat; 
@@ -38,7 +38,7 @@ header {
     margin: auto;
     height: 100%;
     border-radius: 10px;
-    font-size: 2vw;
+    font-size: 1rem;
     text-align: center;
     align-items: center;
 }
@@ -67,39 +67,7 @@ header {
     cursor: pointer;
 }
 
-#banner {
-    height: 100%;
-    width: 50%;
-    background-image: url('../picture/mur.jpg');
-    background-size: contain;
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    box-shadow: 0 0 10px #444343;
-    border-radius: 5px;
-}
 
-.flag {
-    background-image: url('../picture/banniere.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-#flag1 {
-    grid-column: 1/2;
-}
-
-#flag2 {
-    grid-column: 3/4;
-}
-
-#title {
-    font-size: 45px;
-    font-weight: bold;
-    color: #2A2928;
-    text-align: center;
-    margin: auto;
-}
 
 #login {
     display: flex;
@@ -346,15 +314,43 @@ header {
     margin: auto;
 }
 
+#banner {
+    height: 100%;
+    width: 50%;
+    background-image: url('../picture/mur.jpg');
+    background-size: contain;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    box-shadow: 0 0 10px #444343;
+    border-radius: 5px;
+}
+
+.flag {
+    background-image: url('../picture/banniere.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#flag1 {
+    grid-column: 1/2;
+}
+
+#flag2 {
+    grid-column: 3/4;
+}
+
+#title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2A2928;
+    text-align: center;
+    margin: auto;
+}
+
 @media screen and (max-width: 1350px) and (min-height: 600px) {
     .parchemin {
         width: 85%;
-    }
-}
-
-@media screen and (max-width: 1275px) {
-    #title {
-        font-size: 35px;
     }
 }
 
@@ -377,16 +373,35 @@ header {
         margin: auto;
         width: 100%;
     }
-
-    #title {
-        font-size: 30px;
-    }
 }
 
 @media screen and (max-width: 900px) {
     .parchemin > p {
         font-size: 30px;
     }
+}
+
+@media screen and (max-width: 1500px) and (max-height: 700px) {
+    #banner {
+        display:none; 
+    }
+    
+    .flag {
+        display:none; 
+    }
+    
+    #flag1 {
+        display:none; 
+    }
+    
+    #flag2 {
+        display:none; 
+    }
+    
+    #title {
+        display:none; 
+    }
+    
 }
 #buttonRules{
     background-image: url("../picture/rules.png");
@@ -399,4 +414,6 @@ header {
     padding: 2%;
     margin: 2%;
     box-shadow: 0 0 10px #444343;
+    width: 10vh;
+    height: 10vh;
 }
