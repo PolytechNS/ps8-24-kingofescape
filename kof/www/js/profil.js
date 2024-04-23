@@ -22,18 +22,18 @@ async function loadProfil() {
                 }
             } else {
                 window.alert("Please connect !");
-                changePage('mode/mode.html')
+                changePage('mode.html')
             }
         });
     } else {
         window.alert("Please connect !");
-        changePage('mode/mode.html')
+        changePage('mode.html')
     }
 }
 
 function logout() {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-    changePage('mode/mode.html');
+    changePage('mode.html');
 
 }
 async function fetchData(adresse, name) {
