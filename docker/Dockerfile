@@ -8,7 +8,7 @@ RUN npm install
 RUN npm install mongodb@6.3
 
 COPY ./back back
-COPY ./front front
+COPY ./kof kof
 
 EXPOSE 8000
 
