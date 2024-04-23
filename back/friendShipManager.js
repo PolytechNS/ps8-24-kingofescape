@@ -218,7 +218,7 @@ async function deleteFriendRequests(json, response) {
 
     try {
         const username = json.username;
-        await friendRequestCollection.deleteMany({
+        await friendRequestCollection.deleteOne({
             $or: [{sender: username}, {recipient: username}]
         });
         response.statusCode = 200;
