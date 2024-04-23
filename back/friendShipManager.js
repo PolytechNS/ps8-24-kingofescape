@@ -1,9 +1,11 @@
 const { MongoClient } = require("mongodb");
 const { urlAdressDb } = require("./env/env.js");
+const client = new MongoClient(urlAdressDb);
 const jwt = require('jsonwebtoken');
 const secretKey = "ps8-koe";
 const { sendResponse, sendErrorResponse } = require('./friendshipManager/responsehelper.js');
-const client = new MongoClient(urlAdressDb);
+const {userSockets}=require('./friendshipManager/FriendNotifManager.js');
+
 let isConnected = false;
 async function getDatabase() {
     await connectToMongoDB();
@@ -56,9 +58,50 @@ async function getFriendrequests(token, response) {
         sendErrorResponse(response, error);
     }
 }
+async function acceptFriendRequest(json, response) {
+    try {
+        if (!json.sender || !json.recipient) {
+            response.writeHead(400, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({ message: 'Sender or recipient not provided' }));
+            return;
+        }
 
+        const db = await getDatabase();
+        const usersCollection = db.collection("Users");
+        const friendsrequests = db.collection("Friendrequest");
 
-// Handles sending a friend request
+        const senderUser = await usersCollection.findOne({ username: json.sender });
+        const recipientUser = await usersCollection.findOne({ username: json.recipient });
+        if (!senderUser || !recipientUser) {
+            response.writeHead(404, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({ message: 'One or both users not found' }));
+            return;
+        }
+
+        await updateFriendsList(json.sender, json.recipient, usersCollection);
+        await updateFriendsList(json.recipient, json.sender, usersCollection);
+
+        await friendsrequests.deleteOne({ recipient: json.recipient, sender: json.sender });
+
+        sendResponse(response, 200, {
+            success: true,
+            message: "Friend request accepted successfully and notification removed"
+        });
+    } catch (error) {
+        console.error('Error in acceptFriendRequest:', error);
+        sendErrorResponse(response, error);
+    }
+}
+
+async function updateFriendsList(username, newFriend, usersCollection) {
+    const user = await usersCollection.findOne({ username: username });
+    if (!user.friends || !Array.isArray(user.friends)) {
+        user.friends = [];
+    }
+    if (!user.friends.includes(newFriend)) {
+        await usersCollection.updateOne({ username: username }, { $push: { friends: newFriend } });
+    }
+}
 async function sendFriendRequest(json, response) {
     try {
         if (!json.token) {
@@ -74,7 +117,7 @@ async function sendFriendRequest(json, response) {
         const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
         if (existingRequest) {
             response.writeHead(400, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({ message: 'Friend request already sent to this user' }));
+            response.end(JSON.stringify({ message: 'Friend request already sent or user is already your friend' }));
             return;
         }
 
@@ -85,8 +128,11 @@ async function sendFriendRequest(json, response) {
             timestamp: new Date(),
             read: false
         };
-
         await Friendrequests.insertOne(notification);
+        const senderSocket = userSockets.get(senderUsername);
+        if (senderSocket) {
+            senderSocket.emit('notification', { message: notification.message });
+        }
 
         sendResponse(response, 200, {
             success: true,
@@ -94,9 +140,12 @@ async function sendFriendRequest(json, response) {
         });
     } catch (error) {
         console.error('Error sending friend request:', error);
-       sendErrorResponse(error, response);
+        sendErrorResponse(response, error);
     }
 }
+
+
+
 
 async function checkExistingRequest(sender, recipient) {
     const db = await getDatabase();
@@ -114,55 +163,6 @@ async function checkExistingRequest(sender, recipient) {
 
     return false;
 }
-async function acceptFriendRequest(json, response) {
-    try {
-        if (!json.sender || !json.recipient) {
-            throw new Error('Sender or recipient not provided');
-        }
-
-        const db = await getDatabase();
-        const usersCollection = db.collection("Users");
-        const friendsrequests = db.collection("Friendrequest");
-
-        // Vérifier si les utilisateurs existent
-        const senderUser = await usersCollection.findOne({ username: json.sender });
-        const recipientUser = await usersCollection.findOne({ username: json.recipient });
-
-        if (!senderUser || !recipientUser) {
-            throw new Error(`One or both users not found`);
-        }
-
-        const updateFriendsList = async (username, newFriend) => {
-            const user = await usersCollection.findOne({ username: username });
-
-            if (!Array.isArray(user.friends)) {
-                // Si friends n'existe pas ou n'est pas un tableau, initialisez-le à un tableau vide
-                user.friends = [];
-            }
-            // Maintenant, il est sûr d'appeler .includes puisque friends est garanti d'être un tableau
-            if (!user.friends.includes(newFriend)) {
-                await usersCollection.updateOne({ username: username }, { $push: { friends: newFriend } });
-            }
-        };
-
-
-        await updateFriendsList(json.sender, json.recipient);
-        await updateFriendsList(json.recipient, json.sender);
-
-        // Suppression de la demande d'ami
-        await friendsrequests.deleteOne({ recipient: json.recipient, sender: json.sender });
-
-        // Envoyer la réponse de succès
-        sendResponse(response, 200, {
-            success: true,
-            message: "Friend request accepted successfully and notification removed"
-        });
-    } catch (error) {
-        console.error('Error in acceptFriendRequest:', error);
-        sendErrorResponse(response, error);
-    }
-}
-
 
 async function removeFriend(json, response, io) {
     try {
@@ -194,11 +194,11 @@ async function removeFriend(json, response, io) {
 
 async function rejectFriendRequest(json, response) {
     try { const db = await getDatabase();
-        const notificationsCollection = db.collection("Friendrequest");
+        const FriendRequestCollection = db.collection("Friendrequest");
         const sender= json.sender
         const recipient = json.recipient;
 
-        await notificationsCollection.deleteOne({
+        await FriendRequestCollection.deleteOne({
             recipient: recipient,
             sender: sender,
         });
@@ -211,6 +211,44 @@ async function rejectFriendRequest(json, response) {
         sendErrorResponse(response, error);
     }
 }
+async function deleteFriendRequests(json, response) {
+    const db = await getDatabase();
+    const friendRequestCollection = db.collection("Friendrequest");
+
+
+    try {
+        const username = json.username;
+        await friendRequestCollection.deleteOne({
+            $or: [{sender: username}, {recipient: username}]
+        });
+        response.statusCode = 200;
+        response.end('requests deleted');
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error deleting from requesstsLIST');
+    }
+
+}
+
+async function removefromfriendslists(json, response) {
+    const db = await getDatabase();
+    const usersCollection = db.collection("Users");
+
+    try {
+        const username = json.username;
+        await usersCollection.updateMany(
+            {},
+            { $pull: { friends: username } }
+        );
+        response.statusCode = 200;
+        response.end('Score deleted');
+    } catch (error) {
+        console.log(error);
+        response.statusCode = 500;
+        response.end('Error deleting from FRiendlsit');
+    }
+}
 
 
 exports.sendFriendRequest = {sendFriendRequest};
@@ -219,3 +257,5 @@ exports.removeFriend={removeFriend};
 exports.Notifications=getFriendrequests;
 exports.friends=getFriendsList;
 exports.acceptFriendRequest={acceptFriendRequest};
+exports.deleteFriendRequests={deleteFriendRequests};
+exports.removefromfriendslists={removefromfriendslists};
