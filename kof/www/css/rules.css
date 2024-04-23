@@ -263,19 +263,19 @@ header {
         display: none;
     }
     #retour {
-        position: fixed; /* Positionne l'élément par rapport à la fenêtre du navigateur */
-        top: 1vh; /* Aucune marge depuis le haut de l'écran */
-        right: 1vw; /* Aucune marge depuis le côté droit de l'écran */
-        width: 35px; /* Largeur de la croix rouge */
-        height: 35px; /* Hauteur de la croix rouge */
-        border: none; /* Aucune bordure */
+        position: fixed; 
+        top: 1vh; 
+        right: 1vw; 
+        width: 35px; 
+        height: 35px; 
+        border: none; 
         background-color: none;
         border: 2px solid none;
     }
     #back {
-        width: 25px; /* Largeur de la croix rouge */
-        height: 25px; /* Hauteur de la croix rouge */
-        background-image: url("../picture/redcross.png");  /* Chemin vers l'image de la croix rouge */
+        width: 25px; 
+        height: 25px; 
+        background-image: url("../picture/redcross.png");  
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;

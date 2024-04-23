@@ -15,7 +15,7 @@ async function loadProfil() {
                     for (let i = 0; i < json.length; i++) {
                         if (json[i].username === document.getElementById("name").innerHTML) {
                             let backgroundImage = getBackgroundImageBasedOnScore(json[i].score);
-                            document.getElementById("imguser").style.backgroundImage = `url('${backgroundImage}')`;
+                            document.getElementById("imguser").style.backgroundImage = `url('../picture/${backgroundImage}')`;
                             break;
                         }
                     }
@@ -50,16 +50,16 @@ async function fetchData(adresse, name) {
 }
 function getBackgroundImageBasedOnScore(score) {
     if (score < 100) {
-        return '../picture/littleprince.png';
+        return 'littleprince.png';
     } else if (score >= 100 && score < 300) {
-        return '../picture/teenprince.png';
+        return 'teenprince.png';
     } else if (score >= 300 && score <= 500) {
-        return '../picture/avatar2.png';
+        return 'avatar2.png';
     } else if (score > 500 && score <= 700) {
-        return '../picture/beforeking.png';
+        return 'beforeking.png';
     }
     else if (score > 700) {
-        return '../picture/king5.png';
+        return 'king5.png';
     }
 }
 
