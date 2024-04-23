@@ -3,7 +3,7 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-image: url('../picture/background.jpg'); /* Add your image URL here */
+    background-image: url('../picture/parchment.jpg'); /* Add your image URL here */
     background-size: cover; /* Cover the entire body */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-position: center; /* Center the image in the body */
@@ -33,7 +33,7 @@ button:hover {
 }
 
 
-#friends, #sucess {
+#friends, #sucess,#notificationButton {
     padding: 20px;
     border-radius: 10px;
     font-size: 2vw;
@@ -218,27 +218,27 @@ header {
     font-weight: bold; /* Texte en gras */
 }
 
-/* Styles pour les images dans les boutons de #listfriend */
+
 #listfriend img {
-    width: 30px; /* Largeur de l'image */
-    height: 30px; /* Hauteur de l'image */
-    margin: auto; /* Centrer l'image dans le bouton */
+    width: 30px;
+    height: 30px;
+    margin: auto;
 }
 
-/* Alternance des couleurs de fond pour les lignes du tableau */
+
 #listfriend tr:nth-child(odd) {
     background-color: #fefefe; /* Couleur pour les lignes impaires */
 }
 
-/* Couleur de fond lors du survol d'une rangée */
+
 #listfriend tr:hover {
     background-color: #f1f1f1;
 }
 /* Pour les images dans les boutons, vous pourriez vouloir assurer leur alignement et leur taille */
 .image-button img {
-    width: 30px; /* Largeur de l'image */
-    height: 30px; /* Hauteur de l'image */
-    margin: auto; /* Centre l'image dans le bouton */
+    width: 30px;
+    height: 30px;
+    margin: auto;
 }
 #friendList{
     display: grid;
@@ -551,8 +551,50 @@ header {
 
 .image-button img {
     display: block; /* Assure que l'image est affichée correctement dans le bouton */
+}.invisible {
+     display: none;
+ }
+
+.notification-container {
+    position: fixed;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    width: 400px; /* Taille plus grande */
+    background: #8B4513; /* Brun */
+    border: 2px solid #8B4513; /* Brun */
+    z-index: 1001;
+    display: none; /* Initially hidden */
+    font-family: 'Goudy Old Style', serif; /* Police médiévale */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre */
 }
 
-.invisible {
-    display: none;
+.notification-message {
+    padding: 15px; /* Augmenter la taille du padding */
+    border-bottom: 2px solid #CD853F; /* Brun clair */
+    cursor: pointer;
+    color: #fff; /* Texte blanc */
+    background-color: #8B4513; /* Brun */
+    font-size: 18px; /* Taille de la police augmentée */
+}
+
+
+
+
+#notificationButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+#buttonNotification{
+    grid-column: 1/2;
+    background-image: url('../picture/notificon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
 }
