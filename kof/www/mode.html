@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>King of Escape</title>
-    <link rel="icon" href="./picture/banniere.png">
+    <link rel="icon" href="../picture/banniere.png">
     <link rel="stylesheet" href="./css/mode.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/utils.js"></script>
@@ -12,10 +13,10 @@
 <header>
     <div id="buttonConnect">
         <div id="friends">
-            <button onclick="changePage('friendrequests/friendRequests.html')" id="buttonFriends"></button>
+            <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage('sucess/sucess.html')" id="buttonSuccess"></button>
+            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
         </div>
     </div>
     <div id="banner">
@@ -26,9 +27,9 @@
     <div id="login">
         <button onclick="togglePopup()" id="buttonLogin">LOGIN</button>
     </div>
-    <div id="profile" onclick="changePage('profil/profil.html')">
+    <div id="profile" onclick="changePage('profil.html')">
         <p id="name">Test1234</p>
-        <img src="./picture/Avatar.png" id="avatar" alt="avatar"/>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
 <div id="texte">
@@ -42,23 +43,26 @@
         </div>
     </div>
     <div class="modechoice" id="modeLocal">
-        <div class="parchemin" onclick="changePage('jeu_local/jeu.html')">
+        <div class="parchemin" onclick="changePage('jeu.html')">
             <div id="local"></div>
             <p class="texteparchemin">Local</p>
         </div>
     </div>
     <div class="modechoice" id="modeIA">
-        <div class="parchemin" onclick="changePage('jeu_ia/jeu_ia.html')">
+        <div class="parchemin" onclick="changePage('jeu_ia.html')">
             <div id="IA"></div>
             <p class="texteparchemin">IA</p>
         </div>
     </div>
     <div class="modechoice" id="modeMultiplayer">
-        <div class="parchemin" onclick="changePage('waiting_room/waiting_room.html')">
+        <div class="parchemin" onclick="changePage('waiting_room.html')">
             <div id="multiplayer"></div>
             <p class="texteparchemin" id="textIA">Multi<br/>player</p>
         </div>
     </div>
+</div>
+<div id="rules">
+    <button id="buttonRules" onclick="changePage('rules.html')"></button>
 </div>
 <div id="popup-overlay">
     <div id="popup-content">
