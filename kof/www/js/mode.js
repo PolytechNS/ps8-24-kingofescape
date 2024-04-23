@@ -65,6 +65,7 @@ function signIn() {
         await setToken(response);
     });
 }
+
 function startPage() {
     displayOff("modeContinue");
     let result = verifyLogin();
