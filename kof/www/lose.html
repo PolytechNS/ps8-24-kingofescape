@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>header</title>
     <link rel="icon" href="../picture/banniere.png">
     <link rel="stylesheet" href="./css/lose.css">
@@ -32,8 +33,10 @@
     <div id="content">
         <div id="pictureLose"></div>
         <p id="texte">Oh no, you lose the game</p>
-        <button onclick="changePage('waiting_room.html')" id="buttonPlayAgain">Play again</button>
-        <button onclick="changePage('mode.html')" id="buttonHome">Home</button>
+        <div id="buttonContainer">
+            <button onclick="changePage('waiting_room.html')" id="buttonPlayAgain">Play again</button>
+            <button onclick="changePage('mode.html')" id="buttonHome">Home</button>
+        </div>        
     </div>
 </body>
 </html>
