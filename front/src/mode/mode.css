@@ -33,7 +33,7 @@ header {
     justify-content: space-around;
 }
 
-#friends, #success {
+#friends, #success, #buttonNotification {
     display: flex;
     margin: auto;
     height: 100%;
@@ -388,6 +388,52 @@ header {
         font-size: 30px;
     }
 }
+
+
+.notification-container {
+    position: fixed;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    width: 400px; /* Taille plus grande */
+    background: #8B4513; /* Brun */
+    border: 2px solid #8B4513; /* Brun */
+    z-index: 1001;
+    display: none; /* Initially hidden */
+    font-family: 'Goudy Old Style', serif; /* Police médiévale */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre */
+}
+
+.notification-message {
+    padding: 15px; /* Augmenter la taille du padding */
+    border-bottom: 2px solid #CD853F; /* Brun clair */
+    cursor: pointer;
+    color: #fff; /* Texte blanc */
+    background-color: #8B4513; /* Brun */
+    font-size: 18px; /* Taille de la police augmentée */
+}
+
+
+
+
+#notificationButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+#buttonNotification{
+    grid-column: 1/2;
+    background-image: url('../picture/notificon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
+}
+
 #buttonRules{
     background-image: url("../picture/rules.png");
     background-size: contain;

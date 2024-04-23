@@ -1,4 +1,4 @@
-async function loadProfil() {
+function loadProfil() {
     const result = verifyLogin();
 
     if (result !== null) {
@@ -71,6 +71,9 @@ async function deleteAccount() {
     const score = await fetchData(`${apiURL}api/deleteScore/`, name);
     const state = await fetchData(`${apiURL}api/deleteStat/`, name);
     const account = await fetchData(`${apiURL}api/deleteAccount/`, name);
+
+const requests= await fetchData(`${apiURL}api/deleteFriendRequests/`, name);
+const friends= await fetchData(`${apiURL}api/deleteFriendLists/`, name);
     logout();
 }
 

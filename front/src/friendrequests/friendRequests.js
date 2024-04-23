@@ -3,17 +3,15 @@ const chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
         username: localStorage.getItem('currentUser')
     }
 });
+
 const user = localStorage.getItem('currentUser');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const addButton = document.getElementById('addFriend');
-    addButton.addEventListener('click', sendFriendRequest);
-});
 document.addEventListener('DOMContentLoaded', () => {
     fetchBasicFriendList();
     fetchFullFriendList();
     fetchFriendsRequests();
-
+    const addButton = document.getElementById('addFriend');
+    addButton.addEventListener('click', sendFriendRequest);
 });
 
 
@@ -96,7 +94,6 @@ function createButtonCell(imageSrc, altText, onClick) {
     td.appendChild(img);
     return td;
 }
-
 export function fetchFullFriendList() {
     let token = document.cookie.split('=')[1];
     const url = 'http://localhost:8000/api/friendlist/';

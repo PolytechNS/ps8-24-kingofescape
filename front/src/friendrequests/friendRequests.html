@@ -5,9 +5,18 @@
     <title>King of Escape</title>
     <link rel="stylesheet" href="friendRequests.css">
     <script type ="module" src="friendRequests.js"></script>
+    <script type="module" src="../js/FriendRequestsNotifManager.js"></script>
     <script src="../js/socket.io.js"></script>
 </head>
 <header>
+    <audio id="notificationSound">
+        <source src="../sounds/notification.mp3" type="audio/mpeg">
+
+    </audio>
+
+    <button id="buttonNotification"></button>
+        <div id="notificationIndicator" class="notification-indicator"></div>
+    <div id="notification-area" class="notification-container"></div>
     <div id="friends">
         <button onclick="changePage()" id="buttonFriends"></button>
     </div>
@@ -102,6 +111,7 @@
 </div>
 
 <script type="module" src="./DispalyManager.js"></script>
+
 
 <script src="../changePage.js"></script>
 </body>
