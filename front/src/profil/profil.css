@@ -203,36 +203,42 @@ header {
     background-position: center;
     margin-left: 5%;
 }
-
-.invisible {
-    display: none;
-}*.notification-container {
-     position: fixed;
-     top: 50px; /* Adjust based on your layout */
-     right: 20px;
-     width: 300px;
-     background: #fff64d;
-     border: 1px solid #70dedb;
-     z-index: 1001;
-     display: none; /* Initially hidden */
+.image-button img {
+    display: block; /* Assure que l'image est affichée correctement dans le bouton */
+}.invisible {
+     display: none;
  }
 
+.notification-container {
+    position: fixed;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    width: 400px; /* Taille plus grande */
+    background: #8B4513; /* Brun */
+    border: 2px solid #8B4513; /* Brun */
+    z-index: 1001;
+    display: none; /* Initially hidden */
+    font-family: 'Goudy Old Style', serif; /* Police médiévale */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre */
+}
+
 .notification-message {
-    padding: 10px;
-    border-bottom: 1px solid #ff1e00;
+    padding: 15px; /* Augmenter la taille du padding */
+    border-bottom: 2px solid #CD853F; /* Brun clair */
     cursor: pointer;
+    color: #fff; /* Texte blanc */
+    background-color: #8B4513; /* Brun */
+    font-size: 18px; /* Taille de la police augmentée */
 }
 
 
-.notification-indicator {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    background-color: red;
-    border-radius: 50%;
-    display: none; /* Hidden by default */
+
+
+#notificationButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
 }
 #buttonNotification{
     grid-column: 1/2;

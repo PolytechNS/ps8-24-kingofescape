@@ -9,10 +9,13 @@
     <script src="../js/socket.io.js"></script>
 </head>
 <header>
-    <div id="notificationButton">
-        <button id="buttonNotification"></button>
+    <audio id="notificationSound">
+        <source src="../sounds/notification.mp3" type="audio/mpeg">
+
+    </audio>
+
+    <button id="buttonNotification"></button>
         <div id="notificationIndicator" class="notification-indicator"></div>
-    </div>
     <div id="notification-area" class="notification-container"></div>
     <div id="friends">
         <button onclick="changePage()" id="buttonFriends"></button>

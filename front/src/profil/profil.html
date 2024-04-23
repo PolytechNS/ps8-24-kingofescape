@@ -14,10 +14,12 @@
 <body>
     <header>
         <div id="buttonConnect">
-            <div id="notificationButton">
-                <button id="buttonNotification"></button>
-                <div id="notificationIndicator" class="notification-indicator"></div>
-            </div>
+            <audio id="notificationSound">
+                <source src="../sounds/notification.mp3" type="audio/mpeg">
+
+            </audio>
+            <button id="buttonNotification"></button>
+            <div id="notificationIndicator" class="notification-indicator"></div>
             <div id="notification-area" class="notification-container"></div>
             <div id="friends">
                 <button onclick="changePage('friendrequests/friendRequests.html')" id="buttonFriends"></button>
