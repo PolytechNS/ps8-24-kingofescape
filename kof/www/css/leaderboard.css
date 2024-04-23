@@ -9,7 +9,7 @@ body {
     width: 100%;
     background-image: url('../picture/background.jpg');
     background-size: cover;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     background-position: center;
     display: grid;
     grid-template-rows: 12% 78% 10%;
@@ -22,6 +22,50 @@ header {
     display: flex;
     justify-content: space-around;
 }
+
+#menuBurgerLine {
+    width: 15vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#menuBurger {
+    display: none;
+}
+
+#menuBurger.active {
+    display: flex;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    box-shadow: 0 0 5px #ECD6BC;
+    height: 15vh;
+    flex-direction: column;
+}
+
+#menuBurger > div {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid #ECD6BC;
+}
+
+#menuBurger > div > p {
+    margin: auto;
+    color: #CD9B75;
+}
+
+.burger-line {
+    width: 3vw;
+    height: 1vh;
+    background-color: black;
+    margin-bottom: 2vh;
+}
+
 
 
 #buttonConnect {
