@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <title>Leaderboard</title>
     <link rel="stylesheet" href="./css/leaderboard.css">
-    <link rel="icon" href="../picture/banniere.png">
+    <link rel="icon" href="./picture/banniere.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./js/utils.js"></script>
     <script src="./js/changePage.js"></script>
+    <script src="./js/menuBurger.js"></script>
 </head>
 <header>
     <div id="buttonConnect">
         <div id="friends">
-            <button onclick="changePage('chat.html')" id="buttonFriends"></button>
+            <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button id="buttonSuccess"></button>
+            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
+        </div>
+    </div>
+    <div id="contentMenuBurger">
+        <div id="menuBurgerLine" onclick="toggleList()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+        <div id="menuBurger">
+            <div onclick="changePage('chat/chat.html')">
+                <p>Friends</p>
+            </div>
+            <div>
+                <p>Success</p>
+            </div>
         </div>
     </div>
     <div id="banner">
@@ -22,23 +39,23 @@
         <p id="title">KING OF ESCAPE</p>
         <div class="flag" id="flag2"></div>
     </div>
-    <div id="profile" onclick="changePage('profil.html')">
+    <div id="profile" onclick="changePage('profil/profil.html')">
         <p id="name">Test1234</p>
         <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
 <body>
-    <div id="informationBloc" >
-        <div id="texte">
-            <h1>🏆 Leaderboard 🏆</h1>
-        </div>
-        <div id="leaderboard">
-        </div>
+<div id="informationBloc" >
+    <div id="texte">
+        <h1>🏆 Leaderboard 🏆</h1>
     </div>
-    <div id="retour" onclick="changePage('profil.html')">
-        <button id="back"></button>
-        <p>Back</p>
+    <div id="leaderboard">
     </div>
+</div>
+<div id="retour" onclick="changePage('profil/profil.html')">
+    <button id="back"></button>
+    <p>Back</p>
+</div>
 </body>
 <script src="./js/leaderboard.js"></script>
 </html>

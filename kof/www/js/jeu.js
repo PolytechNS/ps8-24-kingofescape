@@ -1,6 +1,6 @@
-import {printPlayer, printWall, removePlayer, getCoordinate} from "../js/affichage_jeu.js";
-import {GameLocal} from "../logic_front/gameLocal.js";
-import {createTable, printAllWallPossible} from "../jeu_1v1/design1v1.js";
+import {printPlayer, printWall, removePlayer, getCoordinate} from "./affichage_jeu.js";
+import {GameLocal} from "./gameLocal.js";
+import {createTable, printAllWallPossible} from "./design1v1.js";
 
 let game;
 let positionPlayersY = [undefined, undefined];
