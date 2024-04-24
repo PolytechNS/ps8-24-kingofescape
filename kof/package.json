@@ -17,9 +17,7 @@
     "cordova-plugin-device": "^2.1.0"
   },
   "cordova": {
-    "platforms": [
-      "android"
-    ],
+    "platforms": [],
     "plugins": {
       "cordova-plugin-device": {}
     }
