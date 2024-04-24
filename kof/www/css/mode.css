@@ -362,7 +362,7 @@ header {
 
 #choice > div > p {
     margin: auto;
-    font-size: 1erù;
+    font-size: 1rem;
     color: #7B6F66;
 }
 
@@ -499,7 +499,7 @@ header {
     body {
         grid-template-rows: 20vh 10vh 70vh;
     }
-
+    
 
     #banner {
         display: none;
@@ -533,6 +533,10 @@ header {
     #menuBurger.active {
         margin-top: 16vh;
     }
+    #login {
+        width: 15vh;
+        height: 80%;
+      }
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
@@ -601,5 +605,10 @@ header {
     .modechoice {
         width: 18vh;
         height: 42vw;
+    }
+
+    #login {
+        width: 15vh;
+        height: 80%;
     }
 }
