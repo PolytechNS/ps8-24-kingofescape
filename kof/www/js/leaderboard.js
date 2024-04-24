@@ -28,7 +28,7 @@ let name;
 
 function redirection() {
     window.alert('You need to be connected to access this page');
-    changePage('mode/mode.html');
+    changePage('mode.html');
 }
 
 function verifyConnect() {
