@@ -499,7 +499,7 @@ header {
     body {
         grid-template-rows: 20vh 10vh 70vh;
     }
-
+    
 
     #banner {
         display: none;
@@ -533,6 +533,10 @@ header {
     #menuBurger.active {
         margin-top: 16vh;
     }
+    #login {
+        width: 15vh;
+        height: 80%;
+      }
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
@@ -586,4 +590,8 @@ header {
         transform: rotate(-90deg);
         font-size: 1.3rem;
     }  
+    #login {
+        width: 15vh;
+        height: 80%;
+      }
 }

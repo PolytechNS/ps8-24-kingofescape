@@ -30,11 +30,11 @@ socket.on('connect', () => {
         console.log('Match found!');
         localStorage.setItem("room", room);
         socket.disconnect();
-        changePage("jeu_1v1/jeu_1v1.html");
+        changePage("jeu_1v1.html");
     });
 
     socket.on('errorConnect', (message) => {
         window.alert(message);
-        changePage("mode/mode.html");
+        changePage("mode.html");
     });
 });

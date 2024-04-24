@@ -6,12 +6,12 @@ const productionURL = 'http://kingofescape.ps8.academy/';
 
 // Fonction pour obtenir l'URL appropriée en fonction de l'environnement
 function getAPIURL() {
-    return productionURL;
-    /*if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    /*return productionURL;*/
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return developmentURL;
     } else {
         return productionURL;
-    }*/
+    }
 }
 
 const apiURL = getAPIURL();
