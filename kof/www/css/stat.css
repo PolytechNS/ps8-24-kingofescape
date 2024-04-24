@@ -383,14 +383,6 @@ header {
         font-size: 2rem;
     }
 
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
     #informationBloc {
         width: 85vw;
     }
@@ -451,14 +443,6 @@ header {
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
     }
 
     #informationBloc {

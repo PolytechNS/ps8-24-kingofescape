@@ -285,36 +285,6 @@ header {
         font-size: 2rem;
     }
 
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 12vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
-    }
-
     #buttonConnect {
         display: none;
     }
@@ -357,36 +327,6 @@ header {
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 5vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {

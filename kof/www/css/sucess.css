@@ -360,18 +360,6 @@ header {
         font-size: 2rem;
     }
 
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
     #retour {
         display: flex;
         margin-top: 3vh;
@@ -432,18 +420,6 @@ header {
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
     }
 
     #retour {
