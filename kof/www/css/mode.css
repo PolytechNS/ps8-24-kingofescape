@@ -9,7 +9,7 @@ body {
     width: 100vw;
     background-image: url('../picture/background.jpg');
     background-size: cover;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     background-position: center;
     display: grid;
     grid-template-rows: 12% 10% 58% 20%;
@@ -148,7 +148,7 @@ header {
 #name {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 25px;
+    font-size: 2rem;
     color: #CD9B75;
 }
 
@@ -184,7 +184,7 @@ header {
 
 #texte > p {
     margin: auto;
-    font-size: 35px;
+    font-size: 2rem;
     font-weight: bold;
     color: #CD9B75;
 }
@@ -250,7 +250,7 @@ header {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     margin: auto;
-    font-size: 40px;
+    font-size: 1.5rem;
     color: #5B4E45;
     text-align: center;
 }
@@ -294,20 +294,20 @@ header {
 #title-popup {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 20px;
+    font-size: 1rem;
     color: #CD9B75;
 }
 
 #close-popup {
     grid-column: 2 / 3;
-    font-size: 20px;
+    font-size: 1rem;
     margin: auto;
     cursor: pointer;
 }
 
 #error {
     grid-row: 2 / 3;
-    font-size: 20px;
+    font-size: 1rem;
     color: #CD9B75;
     text-align: center;
 }
@@ -362,7 +362,7 @@ header {
 
 #choice > div > p {
     margin: auto;
-    font-size: 20px;
+    font-size: 1rem;
     color: #7B6F66;
 }
 
@@ -438,28 +438,28 @@ header {
 }
 
 @media screen and (max-width: 1500px) and (max-height: 700px) {
+
     #banner {
-        display:none; 
+        display:none;
     }
-    
+
     .flag {
-        display:none; 
+        display:none;
     }
-    
+
     #flag1 {
-        display:none; 
+        display:none;
     }
-    
+
     #flag2 {
-        display:none; 
+        display:none;
     }
-    
+
     #title {
-        display:none; 
+        display:none;
     }
-    
 }
-#buttonRules{
+#buttonRules {
     background-image: url("../picture/rules.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -472,8 +472,21 @@ header {
     box-shadow: 0 0 10px #444343;
     width: 10vh;
     height: 10vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
 }
+
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
+    #texte {
+        height: 10vh;
+    }
+    #popup-content {
+        height: 50%;
+        width: 40%;
+    }
+
     header {
         width: 75vw;
         justify-content: space-around;
@@ -484,9 +497,9 @@ header {
     }
 
     body {
-        grid-template-rows: 20vh 80vh;
+        grid-template-rows: 20vh 10vh 70vh;
     }
-
+    
 
     #banner {
         display: none;
@@ -498,36 +511,6 @@ header {
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 12vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {
@@ -550,9 +533,32 @@ header {
     #menuBurger.active {
         margin-top: 16vh;
     }
+    #login {
+        width: 15vh;
+        height: 80%;
+      }
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
+    #login {
+        width: 50%;
+    }
+
+    .modechoice {
+        width: 15vh;
+        height: 60vw;
+    }
+
+    #mode {
+        flex-direction: column;
+    }
+    #texte {
+        height: 10vh;
+    }
+    #popup-content {
+        width: 60%;
+    }
+
     header {
         width: 80vw;
         justify-content: space-around;
@@ -567,41 +573,11 @@ header {
     }
 
     body {
-        grid-template-rows: 12vh 85vh;
+        grid-template-rows: 12vh 10vh 78vh;
     }
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 5vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {
@@ -614,5 +590,25 @@ header {
 
     #contentMenuBurger {
         display: flex;
+    }
+    .parchemin {
+        transform: rotate(90deg);
+    }
+
+    .parchemin > div, .parchemin > p {
+        transform: rotate(-90deg);
+        font-size: 1.3rem;
+    }
+}
+
+@media (orientation: portrait) and (min-width: 450px) and (max-width: 850px) and (max-height: 1100px) {
+    .modechoice {
+        width: 18vh;
+        height: 42vw;
+    }
+
+    #login {
+        width: 15vh;
+        height: 80%;
     }
 }

@@ -163,7 +163,7 @@ if (room != null) {
         socket.on('message', (id) => {
             let element = document.getElementById('chatContent');
             console.log("ID de l'élément cliqué dans chatcontent: " + id);
-            element.innerHTML += "<img id='img_" + id + "' src='chatInGame/message/" + id + ".png' alt='" + id + "' width='150' height='150' />";
+            element.innerHTML += "<img id='img_" + id + "' src='picture/" + id + ".png' alt='" + id + "' width='150' height='150' />";
 
             setTimeout(function() {
                 var imgToRemove = document.getElementById('img_' + id);
@@ -175,7 +175,7 @@ if (room != null) {
 
         socket.on('errorConnect', (message) => {
             window.alert(message);
-            changePage("mode/mode.html");
+            changePage("mode.html");
         })
 
         socket.on('error', (message) => {
