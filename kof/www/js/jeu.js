@@ -4,6 +4,8 @@ import {createTable, printAllWallPossible} from "./design1v1.js";
 
 let game;
 let positionPlayersY = [undefined, undefined];
+let cordovaLoaded = false;
+
 setup();
 verifyConnect();
 
@@ -27,6 +29,7 @@ function verifyConnect() {
 
 
 function setup() {
+    document.addEventListener("deviceready", () => { cordovaLoaded = true; }, false);
     createTable();
     getPosition(1);
 }
@@ -115,7 +118,11 @@ function sentWall(event) {
             document.getElementById("opponentWallsContent").innerHTML = "Number of remaining walls : " + (10 - game.gameManager.gameStatePlayer2.walls.length);
 
     } catch (e) {
-        window.alert(e.message);
+        if (cordovaLoaded) {
+            navigator.notification.alert(e.message, null, "Error to place Wall", "OK");
+        }
+        else
+            window.alert(e.message);
     }
 }
 
@@ -145,11 +152,19 @@ function move(event) {
                 break;
         }
         if (s !== undefined) {
-            window.alert(s);
+            if (cordovaLoaded) {
+                navigator.notification.alert("Error end Game", null, "Error end Game", "OK");
+            }
+            else
+                window.alert(s);
             changePage('mode/mode.html');
         }
     } catch (e) {
-        window.alert(e.message);
+        if (cordovaLoaded) {
+            navigator.notification.alert(e.message, null, "Error on move", "OK");
+        }
+        else
+            window.alert(e.message);
     }
 }
 

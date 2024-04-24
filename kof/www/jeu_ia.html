@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page jeu</title>
     <link rel="stylesheet" href="./css/jeu_ia.css">
-    <link rel="icon" href="../picture/banniere.png">
+    <link rel="icon" href="./picture/banniere.png">
     <script src="./js/socket.io.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/changePage.js"></script>
+    <script src="cordova.js"></script>
     <script src="./js/menuBurger.js"></script>
 </head>
 <header>
@@ -33,6 +34,9 @@
             <div onclick="changePage('sucess.html')">
                 <p>Success</p>
             </div>
+            <div onclick="showHelp()">
+                <p>Help</p>
+            </div>
         </div>
     </div>
     <div id="banner">
@@ -42,7 +46,7 @@
     </div>
     <div id="profile" onclick="changePage('profil.html')">
         <p id="name">Test1234</p>
-        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        <img src="./picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
 <body>
@@ -69,7 +73,7 @@
 </div>
 <script src="./js/jeu_ia.js" type="module"></script>
 <script type="module">
-    import {endTurn} from "./jeu_ia.js";
+    import {endTurn} from "./js/jeu_ia.js";
     document.getElementById("buttonEndTurn").onclick = endTurn;
 </script>
 </body>
