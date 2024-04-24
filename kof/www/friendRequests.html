@@ -7,12 +7,31 @@
     <link rel="stylesheet" href="./css/friendRequests.css">
     <script type="module" src="./js/friendRequests.js"></script>
     <script type="module" src="./js/FriendRequestsNotifManager.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/utils.js"></script>
     <script src="./js/menuBurger.js"></script>
     <script src="./js/socket.io.js"></script>
 </head>
 
 <body>
 <header>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
+        </div>
+        <audio id="notificationSound">
+            <source src="../sounds/notification.mp3" type="audio/mpeg">
+
+        </audio>
+
+        <button id="buttonNotification"></button>
+        <div id="notificationIndicator" class="notification-indicator"></div>
+        <div id="notification-area" class="notification-container"></div>
+    </div>
+
     <div id="contentMenuBurger">
         <div id="menuBurgerLine" onclick="toggleList()">
             <div class="burger-line"></div>
@@ -28,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div id="buttonNotification"></div>
+
     <div id="profile">
         <p id="name">Test1234</p>
         <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
@@ -103,20 +122,21 @@
         </table>
     </div>
 </div>
-
-<div id="button">
-    <div id="friendButton">
-        <img src="./picture/Ajout_ami.png" alt="Ally" id="friend" width="30px" height="30px">
-    </div>
-    <div id="chatButton">
-        <img src="./picture/enveloppe.png" alt="Pigeon" id="chat2" width="30px" height="30px">
-    </div>
-    <div id="requestButton">
-        <img src="./picture/ajoutamiIcon.png" alt="Request" id="ajout" width="30px" height="30px">
+    <div id="button">
+        <div id="friendButton">
+            <img src="./picture/Ajout_ami.png" alt="Ally" id="friend" width="30px" height="30px">
+        </div>
+        <div id="chatButton">
+            <img src="./picture/enveloppe.png" alt="Pigeon" id="chat2" width="30px" height="30px">
+        </div>
+        <div id="requestButton">
+            <img src="./picture/ajoutamiIcon.png" alt="Request" id="ajout" width="30px" height="30px">
+        </div>
     </div>
 </div>
 
+
 <script type="module" src="./js/DispalyManager.js"></script>
-<script src="./changePage.js"></script>
+<script src="./js/changePage.js"></script>
 </body>
 </html>

@@ -49,7 +49,7 @@ function displayNotification(message) {
     notification.addEventListener('click', () => {
         notification.remove();
         if (notificationArea.children.length === 0) {
-            changeButtonIcon(false); // Réinitialise l'icône lorsque toutes les notifications sont supprimées
+            changeButtonIcon(false);
         }
     });
 }
