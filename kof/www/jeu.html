@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Page jeu</title>
     <link rel="stylesheet" href="./css/jeu.css">
-    <link rel="icon" href="../picture/banniere.png">
+    <link rel="icon" href="./picture/banniere.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./js/socket.io.js"></script>
     <script src="./js/changePage.js"></script>
     <script src="./js/utils.js"></script>
+    <script src="./js/menuBurger.js"></script>
 </head>
+<body>
 <header>
     <div id="buttonConnect">
         <div id="friends">
@@ -18,6 +21,21 @@
             <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
         </div>
     </div>
+    <div id="contentMenuBurger">
+        <div id="menuBurgerLine" onclick="toggleList()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+        <div id="menuBurger">
+            <div onclick="changePage('chat/chat.html')">
+                <p>Friends</p>
+            </div>
+            <div>
+                <p>Success</p>
+            </div>
+        </div>
+    </div>
     <div id="banner">
         <div class="flag" id="flag1"></div>
         <p id="title">KING OF ESCAPE</p>
@@ -25,42 +43,41 @@
     </div>
     <div id="profile" onclick="changePage('profil.html')">
         <p id="name">Test1234</p>
-        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        <img src="./picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
     <div id="blankHeader">
 
     </div>
 </header>
-<body>
 <div id="content">
     <div id="left">
-        <div id="opponentWalls">
+        <!--<div id="opponentWalls">
             <div id="opponentWallsTitle">Opponent's walls</div>
             <div id="opponentWallsContent">Number of remaining walls : 10</div>
         </div>
         <div id="ownWalls">
             <div id="ownWallsTitle">Your walls</div>
             <div id="ownWallsContent">Number of remaining walls : 10</div>
-        </div>
+        </div>-->
     </div>
     <div id="center">
         <div id="jeu">
         </div>
     </div>
-    <div id="right">
+    <!--<div id="right">
         <div id="endTurn">
             <button id="buttonEndTurn">End turn</button>
         </div>
-    </div>
+    </div>-->
 </div>
 <div id="retour" onclick="changePage('mode.html')">
     <button id="back"></button>
     <p>Back</p>
 </div>
     <script src="./js/jeu.js" type="module"></script>
-    <script type="module">
+    <!--<script type="module">
         import {endTurn} from "./js/jeu.js";
         document.getElementById("buttonEndTurn").onclick = endTurn;
-    </script>
+    </script>-->
 </body>
 </html>
