@@ -1,18 +1,14 @@
-import {sendText} from "../friendRequests.js"
-document.getElementById('send').addEventListener('click',sendText);
+import {sendText} from "./friendRequests.js";
+document.getElementById('send').addEventListener('click', function() { sendText(); });
 document.getElementById('message').addEventListener('keydown', function(event) {
-    if (event.keyCode === 13) {
-        sendText();
-    }
+    if (event.keyCode === 13) { sendText(); }
 });
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', function() {
     show('none', 'none', 'grid');
 });
-
 document.getElementById("addFriend").addEventListener("click", function() {
-    const recipientUsername = document.getElementById("searchFriend").value;
-    let token=document.cookie.split('=')[1];
-
+    const recipientUsername = document.getElementById("usernamesearch").value;
+    let token = document.cookie.split('=')[1];
     fetch('http://localhost:8000/api/sendFriendRequest', {
         method: 'POST',
         headers: {
@@ -31,19 +27,12 @@ document.getElementById("addFriend").addEventListener("click", function() {
 });
 function show(displayChat, displayRequest, displayFriend) {
     var chatElement = document.getElementById('windowChat');
-    var requestElement = document.getElementById('friend-requests-table');
+    var requestElement = document.getElementById('windowRequest');
     var friendElement = document.getElementById('windowFriend');
-
-
     chatElement.style.display = displayChat;
     requestElement.style.display = displayRequest;
     friendElement.style.display = displayFriend;
 }
-
-
-document.getElementById('chatButton').addEventListener('click', () => show('grid', 'none', 'none'));
-document.getElementById('friendButton').addEventListener('click', () => show('none', 'none', 'grid'));
-document.getElementById('requestButton').addEventListener('click', () => show('none', 'grid', 'none'));
-
-
-
+document.getElementById('chatButton').addEventListener('click', function() { show('grid', 'none', 'none'); });
+document.getElementById('friendButton').addEventListener('click', function() { show('none', 'none', 'grid'); });
+document.getElementById('requestButton').addEventListener('click', function() { show('none', 'grid', 'none'); });
