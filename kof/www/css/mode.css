@@ -148,7 +148,7 @@ header {
 #name {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 25px;
+    font-size: 2rem;
     color: #CD9B75;
 }
 
@@ -184,7 +184,7 @@ header {
 
 #texte > p {
     margin: auto;
-    font-size: 35px;
+    font-size: 2rem;
     font-weight: bold;
     color: #CD9B75;
 }
@@ -250,7 +250,7 @@ header {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     margin: auto;
-    font-size: 40px;
+    font-size: 1.5rem;
     color: #5B4E45;
     text-align: center;
 }
@@ -294,20 +294,20 @@ header {
 #title-popup {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 20px;
+    font-size: 1rem;
     color: #CD9B75;
 }
 
 #close-popup {
     grid-column: 2 / 3;
-    font-size: 20px;
+    font-size: 1rem;
     margin: auto;
     cursor: pointer;
 }
 
 #error {
     grid-row: 2 / 3;
-    font-size: 20px;
+    font-size: 1rem;
     color: #CD9B75;
     text-align: center;
 }
@@ -362,7 +362,7 @@ header {
 
 #choice > div > p {
     margin: auto;
-    font-size: 20px;
+    font-size: 1erù;
     color: #7B6F66;
 }
 
@@ -438,6 +438,7 @@ header {
 }
 
 @media screen and (max-width: 1500px) and (max-height: 700px) {
+
     #banner {
         display:none; 
     }
@@ -474,6 +475,11 @@ header {
     height: 10vh;
 }
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
+    #popup-content {
+        height: 50%;
+        width: 40%;
+    }
+    
     header {
         width: 75vw;
         justify-content: space-around;
@@ -500,36 +506,6 @@ header {
         font-size: 2rem;
     }
 
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 12vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
-    }
-
     #buttonConnect {
         display: none;
     }
@@ -553,6 +529,10 @@ header {
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
+    #popup-content {
+        width: 60%;
+    }
+
     header {
         width: 80vw;
         justify-content: space-around;
@@ -572,36 +552,6 @@ header {
 
     #texte > h1 {
         font-size: 2rem;
-    }
-
-    #leaderboard > div > p {
-        font-size: 30px;
-    }
-
-    #leaderboard > * > div{
-        width: 25%;
-    }
-
-    #informationBloc {
-        width: 85vw;
-    }
-
-    #retour {
-        display: flex;
-        margin-top: 3vh;
-        margin-left: 85vw;
-        position: fixed;
-        height: 5vh;
-    }
-
-    #retour > p {
-        display: none;
-    }
-
-    #back {
-        width: 30px;
-        height: 30px;
-        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {
