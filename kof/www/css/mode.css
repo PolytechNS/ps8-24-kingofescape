@@ -458,9 +458,8 @@ header {
     #title {
         display:none; 
     }
-    
 }
-#buttonRules{
+#buttonRules {
     background-image: url("../picture/rules.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -473,8 +472,16 @@ header {
     box-shadow: 0 0 10px #444343;
     width: 10vh;
     height: 10vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
 }
+
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
+    #texte {
+        height: 10vh;
+    }
     #popup-content {
         height: 50%;
         width: 40%;
@@ -490,7 +497,7 @@ header {
     }
 
     body {
-        grid-template-rows: 20vh 80vh;
+        grid-template-rows: 20vh 10vh 70vh;
     }
 
 
@@ -529,6 +536,12 @@ header {
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
+    #mode {
+        flex-direction: column;
+    }
+    #texte {
+        height: 10vh;
+    }
     #popup-content {
         width: 60%;
     }
@@ -547,7 +560,7 @@ header {
     }
 
     body {
-        grid-template-rows: 12vh 85vh;
+        grid-template-rows: 12vh 10vh 78vh;
     }
 
     #texte > h1 {
@@ -565,4 +578,12 @@ header {
     #contentMenuBurger {
         display: flex;
     }
+    .parchemin {
+        transform: rotate(90deg);
+    }
+   
+    .parchemin > div, .parchemin > p {
+        transform: rotate(-90deg);
+        font-size: 1.3rem;
+    }  
 }
