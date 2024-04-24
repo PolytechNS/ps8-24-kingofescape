@@ -153,7 +153,7 @@ header {
     grid-column: 1 / 2;
     height: 100%;
     width: 100%;
-    grid-template-rows:30% 10% 20% 10% 30%;
+    /*! grid-template-rows:30% 10% 20% 10% 30%; */
 }
 
 #blankHeader {
@@ -566,11 +566,24 @@ header {
         display: flex;
     }
     #content{
-        grid-template-columns: 10vw 70vw 20vw; 
+        grid-template-columns: unset; 
+        grid-row: unset;
     }
     #left{
         grid-row: 3/4; 
         grid-column: unset;
+        grid-template-columns: 10% 30% 20% 30% 10%;
+    }
+    #opponentWalls{
+        grid-row: 2/3; 
+        grid-column:2/3;
+        margin: 0%;
+    }
+
+    #ownWalls{
+        grid-row: 2/3; 
+        grid-column: 4/5; 
+        margin: 0%;
     }
     #right{
         grid-column: unset; 
@@ -579,6 +592,9 @@ header {
     #center{
         grid-column: unset; 
         grid-row: 2/3; 
+        grid-template-rows: unset;
+        width: 100vw;
+        height: 100vw;
     }
     #jeu{
         width: 90vw;
