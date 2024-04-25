@@ -3,7 +3,7 @@ function gestionSocketChatFriend(io) {
     const socketChatFriend = io.of('/api/chatFriend');
     mysocket = new Map();
     socketChatFriend.on('connection', (socket) => {
-        let username = socket.handshake.query.username;
+        let username = socket.handshake.query.usernameChat;
         mysocket.set(username, socket);
         socket.on('friend', (friend) => {
             let friendwant = friend;

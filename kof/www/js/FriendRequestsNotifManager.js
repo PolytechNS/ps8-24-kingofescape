@@ -1,15 +1,24 @@
+let notificationSocket;
+setTimeout(() => {
+    notificationSocket = io.connect('http://localhost:8000/api/notifications', {
+        query: {
+            username: document.getElementById("name").innerHTML
+        }
+    });
 
-const notificationSocket = io.connect('http://localhost:8000/api/notifications', {
-    query: {
-        username: localStorage.getItem('currentUser')
-    }
-});
-const user = localStorage.getItem('currentUser');
+    notificationSocket.on('connect', () => {
+        console.log('Connected to the notification server.');
+    });
+
+    notificationSocket.on('notification', function(data) {
+        displayNotification(data.message);
+        changeButtonIcon(true);
+    });
+}, 200);
+const userNotification = localStorage.getItem('currentUser');
 
 
-notificationSocket.on('connect', () => {
-    console.log('Connected to the notification server.');
-});
+
 function changeButtonIcon(notificationReceived) {
     const button = document.getElementById('buttonNotification');
     if (button) {
@@ -26,10 +35,6 @@ function changeButtonIcon(notificationReceived) {
     }
 }
 
-notificationSocket.on('notification', function(data) {
-    displayNotification(data.message);
-    changeButtonIcon(true);
-});
 function displayNotification(message) {
     const notificationArea = document.getElementById('notification-area');
     if (!notificationArea) {
@@ -49,7 +54,7 @@ function displayNotification(message) {
     notification.addEventListener('click', () => {
         notification.remove();
         if (notificationArea.children.length === 0) {
-            changeButtonIcon(false);
+            changeButtonIcon(false); 
         }
     });
 }
