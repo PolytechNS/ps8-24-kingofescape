@@ -159,7 +159,12 @@ header {
     background-color: #8B4513; /* Brun */
     font-size: 18px; /* Taille de la police augmentée */
 }
-
+ .message-sent{
+    color: #2A2928;
+ }
+ .message-received{
+    color:#CD9B75;
+ }
 
 
 
