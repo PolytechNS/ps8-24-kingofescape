@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>King of Escape</title>
     <link rel="stylesheet" href="./css/sucess.css">
-    <link rel="icon" href="../picture/banniere.png">
+    <link rel="icon" href="./picture/banniere.png">
     <script src="./js/utils.js"></script>
     <script src="./js/sucess.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/socket.io.js"></script>
     <script src="./js/menuBurger.js"></script>
     <script src="./js/pluginDialog.js"></script>
 </head>
@@ -18,7 +18,7 @@
             <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
+            <button id="buttonSuccess"></button>
         </div>
     </div>
     <div id="contentMenuBurger">
@@ -28,10 +28,10 @@
             <div class="burger-line"></div>
         </div>
         <div id="menuBurger">
-            <div onclick="changePage('chat.html')">
+            <div onclick="changePage('friendRequests.html')">
                 <p>Friends</p>
             </div>
-            <div onclick="changePage('sucess.html')">
+            <div>
                 <p>Success</p>
             </div>
         </div>
@@ -43,7 +43,7 @@
     </div>
     <div id="profile" onclick="changePage('profil.html')">
         <p id="name">Test1234</p>
-        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+        <img src="./picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
 <body>

@@ -5,7 +5,9 @@
     <title>King of Escape</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/rules.css">
-    <link rel="icon" href="../picture/banniere.png">
+    <link rel="icon" href="./picture/banniere.png">
+    <script src="./js/utils.js"></script>
+    <script src="./js/rules.js"></script>
     <script src="./js/changePage.js"></script>
 </head>
 <body>
@@ -15,7 +17,7 @@
             <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
         </div>
         <div id="success">
-            <button onclick="changePage('success.html')" id="buttonSuccess"></button>
+            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
         </div>
     </div>
     <div id="banner">
@@ -23,7 +25,7 @@
         <p id="title">KING OF ESCAPE</p>
         <div class="flag" id="flag2"></div>
     </div>
-    <div id="profile">
+    <div id="profile" onclick="changePage('profil.html')">
         <p id="name">Test1234</p>
         <img src="./picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
@@ -81,8 +83,8 @@
 
         <h1>Good luck and have fun playing King of Escape!</h1>
 </div>
-<div id="retour">
-    <button id="back" onclick="changePage('mode.html')"></button>
+<div id="retour" onclick="changePage('mode.html')">
+    <button id="back"></button>
     <p>Back</p>
 </div>
 </body>

@@ -138,18 +138,18 @@ function move(event) {
         let s;
         switch (game.isEndGame()) {
             case 1:
-                s = "Le joueur 1 a gagné";
+                s = "The player 1 win";
                 break;
             case 2:
-                s = "Le joueur 2 a gagné";
+                s = "The player 2 win";
                 break;
             case 0:
-                s = "Egalité";
+                s = "Equality";
                 break;
         }
         if (s !== undefined) {
-            alertDialog("Error end Game", "Error end Game", "OK");
-            changePage('mode/mode.html');
+            alertDialog("End Game", s, "OK");
+            changePage('mode.html');
         }
     } catch (e) {
         alertDialog("Error on move", e.message, "OK");
