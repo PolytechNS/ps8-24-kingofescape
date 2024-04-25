@@ -12,7 +12,7 @@ function verifyConnect() {
             name = await response.text();
             document.getElementById("name").innerHTML = name;
             console.log('Username2: ' + name);
-            notificationSocket = io.connect('http://localhost:8000/api/notifications', {
+            notificationSocket = io.connect(`${apiURL}api/notifications`, {
                 query: {
 
                     usernamefriend: name

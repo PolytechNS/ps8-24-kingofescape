@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchFriendsRequests();
 
     const addButton = document.getElementById('addFriend');
-    addButton.addEventListener('click', sendFriendRequest);
+    //addButton.addEventListener('click', sendFriendRequest);
 });
 
 
