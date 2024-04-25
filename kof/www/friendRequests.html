@@ -2,37 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>King of Escape</title>
     <link rel="stylesheet" href="./css/friendRequests.css">
-    <script type ="module" src="./js/friendRequests.js"></script>
+    <script type="module" src="./js/friendRequests.js"></script>
     <script type="module" src="./js/FriendRequestsNotifManager.js"></script>
+    <script src="./js/menuBurger.js"></script>
     <script src="./js/socket.io.js"></script>
 </head>
+
+<body>
 <header>
-    <audio id="notificationSound">
-        <source src="./sounds/notification.mp3" type="audio/mpeg">
-
-    </audio>
-
-    <button id="buttonNotification"></button>
-        <div id="notificationIndicator" class="notification-indicator"></div>
-    <div id="notification-area" class="notification-container"></div>
-    <div id="friends">
-        <button onclick="changePage()" id="buttonFriends"></button>
+    <div id="contentMenuBurger">
+        <div id="menuBurgerLine" onclick="toggleList()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+        <div id="menuBurger">
+            <div onclick="changePage('chat.html')">
+                <p>Friends</p>
+            </div>
+            <div onclick="changePage('success.html')">
+                <p>Success</p>
+            </div>
+        </div>
     </div>
-    <div id="sucess">
-        <button onclick="changePage()" id="buttonSucess"></button>
-    </div>
-    <div id="banner">
-        <div class="flag" id="flag1"></div>
-        <h1 id="title">King Of Escape</h1>
-        <div class="flag" id="flag2"></div>
-    </div>
-    <div id="login">
-        <button onclick="changePage('login/login.html')" id="buttonLogin">Login</button>
+    <div id="buttonNotification"></div>
+    <div id="profile">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
     </div>
 </header>
-<body>
+
+<!-- Fenêtre de chat -->
 <div id="windowChat">
     <div id="toppart">
         <div id="searchpart">
@@ -56,6 +59,8 @@
         </div>
     </div>
 </div>
+
+<!-- Fenêtre des demandes d'amis -->
 <div id="windowFriend">
     <div id="searchFriendpart">
         <div id="Friendsearch">
@@ -63,7 +68,7 @@
             <div id="magnifyersearch">🔎</div>
         </div>
         <button id="addFriend" class="image-button">
-            <img src="./picture/cross.png" alt="Ajouter comme ami" width="30px" height="30px">
+            <img src="./picture/cross.png" alt="Add as friend" width="30px" height="30px">
         </button>
     </div>
     <div id="listfriend">
@@ -82,19 +87,20 @@
     </div>
 </div>
 
+<!-- Fenêtre des demandes d'ami -->
 <div id="windowRequest">
-<div id="friend-requests-table">
-    <table>
-        <thead>
-        <tr>
-            <th>Request</th>
-            <th>Accept into Court</th>
-            <th>Decline with Regret</th>
-        </tr>
-        </thead>
-        <tbody id="friend-requests-list">
-        </tbody>
-    </table>
+    <div id="friend-requests-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Request</th>
+                <th>Accept into Court</th>
+                <th>Decline with Regret</th>
+            </tr>
+            </thead>
+            <tbody id="friend-requests-list">
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -111,7 +117,6 @@
 </div>
 
 <script type="module" src="./js/DispalyManager.js"></script>
-
-
 <script src="./changePage.js"></script>
 </body>
+</html>
