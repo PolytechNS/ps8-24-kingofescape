@@ -131,6 +131,53 @@ header {
     cursor: pointer;
 }
 
+
+
+.notification-container {
+    position: fixed;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    width: 400px; /* Taille plus grande */
+    background: #8B4513; /* Brun */
+    border: 2px solid #8B4513; /* Brun */
+    z-index: 1001;
+    display: none; /* Initially hidden */
+    font-family: 'Goudy Old Style', serif; /* Police médiévale */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre */
+}
+
+.notification-message {
+    padding: 15px; /* Augmenter la taille du padding */
+    border-bottom: 2px solid #CD853F; /* Brun clair */
+    cursor: pointer;
+    color: #fff; /* Texte blanc */
+    background-color: #8B4513; /* Brun */
+    font-size: 18px; /* Taille de la police augmentée */
+}
+
+
+
+
+#notificationButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+#buttonNotification{
+    grid-column: 1/2;
+    background-image: url('../picture/notificon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px ;
+    margin: 10px;
+}
+
+
 #banner {
     height: 100%;
     width: 50%;
@@ -219,7 +266,30 @@ header {
     height: 30px;
     cursor: pointer;
 }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; /* Ensures that table is scrollable horizontally */
+}
 
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: scroll; /* Allows scrolling on small devices */
+    }
+
+    /* Hide less important columns on small screens */
+    .hide-on-mobile {
+        display: none;
+    }
+}
 /* Conteneurs de fenêtre */
 #windowChat, #windowFriend, #windowRequest {
     border: 3px solid #ECD6BC;
@@ -270,6 +340,14 @@ header {
     #menuBurger.active {
         margin-top: 16vh;
     }
+    #friendListTable, #friend-requests-list {
+        font-size: 12px;
+    }
+    #buttonConnect {
+        display: none;
+    }
+
+
    }
 
 
@@ -303,6 +381,12 @@ header {
         display: flex;
     }
 
+    #friendListTable, #friend-requests-list {
+        font-size: 14px;  /* Slightly larger font size for better readability in portrait mode */
+    }
+    #buttonConnect {
+        display: none;
+    }
 
 }
 
@@ -318,4 +402,174 @@ header {
     background: rgba(255, 248, 241, 0.9);
 }
 
+#searchFriendpart,#toppart {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    padding: 0%;
+}
 
+#Friendsearch ,#searchpart{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#usernamesearch,searchFriend {
+    flex-grow: 1;
+    margin-right: 0.5em;
+}
+
+
+#addFriend {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0.5em;
+}
+
+#listfriend {
+margin-top:-10%;
+}
+
+
+table {
+    width: 100%;
+
+}
+/** chat css **/
+#chatContent {
+    min-width: 400px;
+    min-height: 200px;
+    margin: 3%;
+    border-radius:5px;
+    overflow-y: auto;
+    border: 3px solid #ECD6BC;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #ECD6BC;
+    background-color: #fefefe;
+    padding: 1%;
+
+}
+
+#toppart{
+    display: grid;
+    grid-row: 1/2;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid #ECD6BC;
+    grid-template-columns: 30% 70%;
+
+}
+#search{
+    display: grid;
+    grid-column: 1/2;
+    grid-template-columns: 80% 20%;
+}
+
+#searchFriend{
+    display: grid;
+    grid-column: 1/2;
+}
+#magnifier{
+    display: grid;
+    grid-column: 2/3;
+}
+#nameFriend{
+    display: grid;
+    grid-column: 2/3;
+    border-left: 3px solid #ECD6BC;
+}
+
+
+#bottompart{
+    display: grid;
+    grid-row: 2/3;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 30% 70%;
+}
+#bottompart2{
+    display: grid;
+    grid-row: 2/3;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 30% 70%;
+}
+
+/* Styles pour le tableau à l'intérieur de #listfriend */
+#listfriend table {
+    width: 100%; /* Assurer que le tableau prend toute la largeur disponible */
+    border-collapse: collapse; /* Pour les bordures collées entre les cellules */
+    table-layout: fixed; /* Colonne de largeur fixe */
+}
+
+/* Styles pour les en-têtes de tableau et les cellules dans #listfriend */
+#listfriend th,
+#listfriend td {
+    border: 1px solid #ddd; /* Bordure des cellules */
+    text-align: center; /* Alignement du texte au centre */
+    padding: 8px; /* Espacement interne pour le texte */
+}
+
+/* Styles des en-têtes de #listfriend */
+#listfriend th {
+    background-color: #f3f3f3; /* Couleur de fond pour les entêtes */
+    font-weight: bold; /* Texte en gras */
+}
+
+/* Styles pour les images dans les boutons de #listfriend */
+#listfriend img {
+    width: 30px; /* Largeur de l'image */
+    height: 30px; /* Hauteur de l'image */
+    margin: auto; /* Centrer l'image dans le bouton */
+}
+
+/* Alternance des couleurs de fond pour les lignes du tableau */
+#listfriend tr:nth-child(odd) {
+    background-color: #fefefe; /* Couleur pour les lignes impaires */
+}
+
+/* Couleur de fond lors du survol d'une rangée */
+#listfriend tr:hover {
+    background-color: #f1f1f1;
+}
+/* Pour les images dans les boutons, vous pourriez vouloir assurer leur alignement et leur taille */
+.image-button img {
+    width: 30px; /* Largeur de l'image */
+    height: 30px; /* Hauteur de l'image */
+    margin: auto; /* Centre l'image dans le bouton */
+}
+
+#friendList{
+    display: grid;
+    grid-column: 1/2;
+    width: 100%;
+    height: 100%;
+}
+#chatpart{
+    display: grid;
+    grid-column: 2/3;
+    border-left: 3px solid #ecd6bc;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 90% 10%;
+
+}
+#chat{
+    display: grid;
+    grid-column: 1/2;
+    grid-template-columns: 80% 20%;
+}
+
+#message{
+    display: grid;
+    grid-column: 1/2;
+    margin-left: 3%;
+    max-width: 450px;
+    min-width: 155px;
+}
+#send{
+    display: grid;
+    grid-column: 2/3;
+}
