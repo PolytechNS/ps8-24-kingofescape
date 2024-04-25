@@ -10,6 +10,7 @@
     <script src="./js/utils.js"></script>
     <script src="./js/menuBurger.js"></script>
     <script src="./js/socket.io.js"></script>
+    <script src="./js/displayfriend.js"></script>
 </head>
 
 <body>
@@ -56,6 +57,7 @@
 
 <!-- Fenêtre de chat -->
 <div id="windowChat">
+    <div id="selectFriend" onclick="displaylist()">Select a friend to chat with</div>
     <div id="toppart">
         <div id="searchpart">
             <input type="text" id="searchFriend" placeholder="username">

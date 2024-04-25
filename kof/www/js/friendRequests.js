@@ -195,7 +195,7 @@ export function fetchBasicFriendList() {
             friendListTable.innerHTML = '';
             friends.forEach(friend => {
                 const row = document.createElement('tr');
-
+                
                 // Username only
                 const usernameCell = document.createElement('td');
                 usernameCell.textContent = friend.toString(); // Make sure this correctly reflects the friend's username
