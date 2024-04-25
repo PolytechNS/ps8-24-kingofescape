@@ -49,8 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchBasicFriendList();
     fetchFullFriendList();
     fetchFriendsRequests();
+
     const addButton = document.getElementById('addFriend');
-    addButton.addEventListener('click', sendFriendRequest);
+ //  addButton.addEventListener('click', sendFriendRequest);
 });
 
 
@@ -75,6 +76,7 @@ export async function fetchFriendsRequests() {
 
         const data = await response.json();
         populateFriendRequestsTable(data);
+        console.log('data:', data);
     } catch (error) {
         console.error('Erreur:', error);
     }

@@ -114,13 +114,6 @@ async function sendFriendRequest(json, response) {
         const senderUsername = decoded.username;
         const recipientUsername = json.recipient;
         const Friendrequests = db.collection("Friendrequest");
-        const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
-        if (existingRequest) {
-            response.writeHead(400, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({ message: 'Friend request already sent or user is already your friend' }));
-            return;
-        }
-
         const notification = {
             recipient: recipientUsername,
             sender: senderUsername,
@@ -128,11 +121,20 @@ async function sendFriendRequest(json, response) {
             timestamp: new Date(),
             read: false
         };
+        const existingRequest = await checkExistingRequest(senderUsername, recipientUsername);
+        if (existingRequest) {
+            response.writeHead(400, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({ message: 'Friend request already sent or user is already your friend' }));
+            return;
+        }
         await Friendrequests.insertOne(notification);
         const senderSocket = userSockets.get(senderUsername);
         if (senderSocket) {
             senderSocket.emit('notification', { message: notification.message });
         }
+
+
+
 
         sendResponse(response, 200, {
             success: true,

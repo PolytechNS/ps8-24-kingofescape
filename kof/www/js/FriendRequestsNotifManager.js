@@ -67,12 +67,20 @@ function displayNotification(message) {
     notification.addEventListener('click', () => {
         notification.remove();
         if (notificationArea.children.length === 0) {
-            changeButtonIcon(false);  // Reset the icon when no notifications are left
+            changeButtonIcon(false);
         }
     });
 
-    // Increment the notification counter
     count++;
     notificationCounter.textContent = count;
-    menuNotificationCount.style.display = 'block'; // Make sure the notification count is visible
+    menuNotificationCount.style.display = 'block';
 }
+document.getElementById('buttonNotification').addEventListener('click', () => {
+    const notificationArea = document.getElementById('notification-area');
+    if (notificationArea.style.display === 'none' || !notificationArea.style.display) {
+        notificationArea.style.display = 'block';
+
+    } else {
+        notificationArea.style.display = 'none';
+    }
+});
