@@ -164,7 +164,7 @@ if (room != null) {
         socket.on('message', (id) => {
             let element = document.getElementById('chatContent');
             console.log("ID de l'élément cliqué dans chatcontent: " + id);
-            element.innerHTML += "<img id='img_" + id + "' src='picture/" + id + ".png' alt='" + id + "' width='150' height='150' />";
+            element.innerHTML += "<img id='img_" + id + "' src='picture/" + id + ".png' alt='" + id + "' width='70vw' height='70vw' />";
 
             setTimeout(function() {
                 var imgToRemove = document.getElementById('img_' + id);
