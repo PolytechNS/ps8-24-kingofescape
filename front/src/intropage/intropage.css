@@ -57,6 +57,10 @@ button {
   box-shadow: 3px 3px 10px rgba(0,0,0,0.2); / Ombre de boîte pour donner de la profondeur */
 }
 
+#buttonStartAdventure {
+    align-self: center;
+}
+
 button:hover {
     background-color: #fff64d;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
