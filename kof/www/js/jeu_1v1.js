@@ -92,7 +92,7 @@ function endTurn() {
     socket.emit('endTurn');
 }
 
-
+notifyBattery();
 createTable();
 printAllWallPossible(sentWall);
 

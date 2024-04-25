@@ -1,5 +1,6 @@
 import {createTable, printPlayer, printWall, getCoordinate, removePlayer} from "../js/affichage_jeu.js";
 
+notifyBattery();
 let aiPlay = getIAPlay();
 let coordinatePlayer = getCoordinate(3 - aiPlay, (aiPlay === 1)? '9' : '1');
 const socket = io.connect(`${apiURL}api/game`);

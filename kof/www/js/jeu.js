@@ -28,6 +28,7 @@ function verifyConnect() {
 
 
 function setup() {
+    notifyBattery();
     createTable();
     getPosition(1);
 }

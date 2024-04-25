@@ -5,3 +5,8 @@ function alertDialog(titreMessage, message, buttonName) {
     else
         window.alert(message);
 }
+
+function confirmDialog(titreMessage, functionCallBack, message, buttonsNames) {
+    if (cordovaLoaded)
+        navigator.notification.confirm(message, functionCallBack, titreMessage, buttonsNames);
+}
