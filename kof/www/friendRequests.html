@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="./css/friendRequests.css">
     <script type="module" src="./js/friendRequests.js"></script>
     <script type="module" src="./js/FriendRequestsNotifManager.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./js/utils.js"></script>
     <script src="./js/menuBurger.js"></script>
     <script src="./js/socket.io.js"></script>
+    <script src="./js/displayfriend.js"></script>
 </head>
 
 <body>
@@ -62,6 +62,7 @@
 
 <!-- Fenêtre de chat -->
 <div id="windowChat">
+    <div id="selectFriend" onclick="displaylist()">Select a friend to chat with</div>
     <div id="toppart">
         <div id="searchpart">
             <input type="text" id="searchFriend" placeholder="username">

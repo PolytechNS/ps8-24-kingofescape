@@ -1,11 +1,50 @@
-const chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
-    query: {
-        username: localStorage.getItem('currentUser')
+let chatFriend;
+let user;
+let room;
+
+startPage();
+
+function startPage() {
+    let result = verifyLogin();
+
+    if (result !== null) {
+        result.then(async (response) => {
+            if (response.status === 200) {
+                let p = document.getElementById("name");
+                user = await response.text();
+                const name = user;
+                p.innerHTML = user;
+                
+                chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
+                    query: {
+                        usernameChat: name
+                    }
+                });
+
+                chatFriend.on('connect', () => {
+                    console.log('connecté au serveur.');
+                    chatFriend.on('matchFound', (roomName) => {
+                        room = roomName;
+                    });
+                    chatFriend.on('msg1', (message) => {
+                        console.log('message received: ',message );
+                        let text = message.text;
+                        let usersend = message.user;
+                        const isCurrentUser = usersend === user;
+                        const paragraph = document.createElement('p');
+                        paragraph.textContent = text;
+                        paragraph.classList.add(isCurrentUser ? 'message-sent' : 'message-received');
+                        const element = document.getElementById('chatContent');
+                        element.appendChild(paragraph);
+                    });
+                });
+            }
+        });
     }
-});
+}
 
-const user = localStorage.getItem('currentUser');
-
+//const user = localStorage.getItem('currentUser');
+//console.log('user:', user);
 document.addEventListener('DOMContentLoaded', () => {
     fetchBasicFriendList();
     fetchFullFriendList();
@@ -15,24 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-let room ;
-chatFriend.on('connect', () => {
-    console.log('connecté au serveur.');
-    chatFriend.on('matchFound', (roomName) => {
-        room = roomName;
-    });
-    chatFriend.on('msg1', (message) => {
-        console.log('message received: ',message );
-        let text = message.text;
-        let usersend = message.user;
-        const isCurrentUser = usersend === user;
-        const paragraph = document.createElement('p');
-        paragraph.textContent = text;
-        paragraph.classList.add(isCurrentUser ? 'message-sent' : 'message-received');
-        const element = document.getElementById('chatContent');
-        element.appendChild(paragraph);
-    });
-});
+
 
 
 
@@ -173,7 +195,7 @@ export function fetchBasicFriendList() {
             friendListTable.innerHTML = '';
             friends.forEach(friend => {
                 const row = document.createElement('tr');
-
+                
                 // Username only
                 const usernameCell = document.createElement('td');
                 usernameCell.textContent = friend.toString(); // Make sure this correctly reflects the friend's username
