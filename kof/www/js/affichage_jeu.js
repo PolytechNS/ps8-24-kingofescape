@@ -102,9 +102,8 @@ function getCoordinate(numberJoueur, coordinateX) {
 
     while(1) {
         coordinatePlayer = window.prompt(`Entrez la coordonnée du joueur${numberJoueur} entre 1${coordinateX} et 9${coordinateX}`);
-
         if (coordinatePlayer == null || coordinatePlayer.length !== 2 || coordinatePlayer[1] !== coordinateX)
-            window.alert("Coordonnée invalide");
+            alertDialog("Invalid coordinate", "The coordinate must be between 1 and 9", "OK");
         else
             break;
     }

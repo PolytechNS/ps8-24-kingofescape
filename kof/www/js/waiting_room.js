@@ -34,7 +34,7 @@ socket.on('connect', () => {
     });
 
     socket.on('errorConnect', (message) => {
-        window.alert(message);
+        alertDialog('Connection',message, 'OK');
         changePage("mode.html");
     });
 });
