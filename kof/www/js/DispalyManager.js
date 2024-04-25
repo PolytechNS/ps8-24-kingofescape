@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById("addFriend").addEventListener("click", function() {
     const recipientUsername = document.getElementById("usernamesearch").value;
     let token = document.cookie.split('=')[1];
-    fetch('http://localhost:8000/api/sendFriendRequest', {
+    fetch(`${apiURL}api/sendFriendRequest`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
