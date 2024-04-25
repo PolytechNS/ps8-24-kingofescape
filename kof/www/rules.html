@@ -41,36 +41,45 @@
             <li>Each player begins with:</li>
             <ul>
                 <li>1 pawn - representing their character</li>
-                <li>10 fences - used to obstruct their opponent's progress</li>
+                <img src="./picture/pawn.png" alt="Pawn Example" class="img" id="pawn" width="50vw" height="50vw">
+                <li>10 walls - used to obstruct their opponent's progress</li>
+                <img src="./picture/walls.png" alt="Fence Example" class="img" id="fences" width="100vw" height="50vw">
             </ul>
             <li>Players select their starting positions along their respective edges of the board. This initial placement determines their starting point and strategy.</li>
         </ul>
 
+        <h2>Start:</h2>
+        <img src="./picture/rulesstart.png" alt="Board Example" class="img" id="start" width="200vw" height="200vw">
+        <p>At the begging players chose their position on the board</p>
+
         <h2>Movement:</h2>
         <p>During their turn, players can move their pawn one square at a time, either vertically or horizontally. However, diagonal movement is prohibited.</p>
-        <img src="./picture/rulesmove.png" alt="Movement Example">
+        <img src="./picture/rulesmove.png" alt="Movement Example" class="img" id="move" width="100vw" height="100vw">
 
         <p>When two players find themselves adjacent to each other, one player has the option to leap over the opponent's square and continue their movement, thus gaining an advantage in reaching the opposite side more quickly.</p>
-        <img src="./picture/rulesplayers.png" alt="Jumping Example">
+        <img src="./picture/rulespalyers.png" alt="Jumping Example" class="img" id="palyers" width="100vw" height="75vw">
 
-        <h2>Placing Fences:</h2>
-        <p>Strategic placement of fences can significantly impede the opponent's progress. Fences can be placed horizontally or vertically on any unoccupied square of the board.</p>
-        <img src="./picture/rulesfence.png" alt="Fence Placement Example">
+        <h2>Placing Walls:</h2>
+        <p>Strategic placement of walls can significantly impede the opponent's progress. Walls can be placed horizontally or vertically on any unoccupied square of the board.</p>
+        <img src="./picture/ruleswall.png" alt="Fence Placement Example" class="img" id="fences" width="100vw" height="90vw">
 
         <p>It's crucial to note that players cannot completely block off a section of the board, ensuring that the opponent always has a pathway to reach the other side.</p>
-        <img src="./picture/rulesnowall.png" alt="Blocking Example">
+        <img src="./picture/rulesblock.png" alt="Blocking Example" class="img" id="block" width="360vw" height="200vw">
 
-        <p>Once a player exhausts their supply of fences, they are restricted to moving their pawn only, adding a layer of strategic depth as the game progresses.</p>
+        <p>Once a player exhausts their supply of walls, they are restricted to moving their pawn only.</p>
+        <img src="./picture/rulesnowall.png" alt="Wals Exemple" class="img" id="nofences" width="360vw" height="200vw">
 
         <h2>Fog of War:</h2>
         <p>At the start of the game, each player's visibility is limited to their half of the board. The opponent's half remains hidden until it is reached.</p>
-        <img src="./picture/rulesboard.png" alt="Fog of War Example">
+        <img src="./picture/rulesboard.png" alt="Fog of War Example" class="img" id="boardv" width="200vw" height="200vw">
 
-        <p>Upon successfully advancing into the opponent's half, the player gains full visibility of the entire board, allowing for better strategic planning.</p>
-        <img src="./picture/rulesvisibility.png" alt="Visibility Example">
+        <p>Upon successfully advancing into the opponent's half, the player gains visibility around him.</p>
+        <img src="./picture/rulesvisibility.png" alt="Visibility Example" class="img" id="visibility" width="100vw" height="100vw">
 
         <h2>Victory:</h2>
         <p>The ultimate goal is to be the first player to successfully navigate through the maze-like board and reach the opposite side. Achieve this, and victory is yours!</p>
+
+        <h1>Good luck and have fun playing King of Escape!</h1>
 </div>
 <div id="retour">
     <button id="back" onclick="changePage('mode.html')"></button>
