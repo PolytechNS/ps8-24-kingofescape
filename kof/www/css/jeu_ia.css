@@ -246,6 +246,7 @@ header {
     width: 20%;
     height: 100%;
     cursor: pointer;
+    color:#CD9B75;
 }
 header {
     display: flex;
@@ -397,7 +398,7 @@ header {
 
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
     #buttonEndTurn{
-        width: 50%; 
+        width: 100%; 
     }
     header {
         width: 75vw;
@@ -605,9 +606,33 @@ header {
     #endTurn {
         height: 100%;
       }
+    #opponentWallsTitle{
+        font-size: 1.5rem; 
+    }
+    #opponentWallsContent{
+        font-size: 1rem; 
+    }
+    #ownWalls{
+        font-size: 1.5rem; 
+    }
+    #ownWallsContent{
+        font-size: 1rem; 
+    }
 }
 @media (orientation:portrait) and (max-width:400px) and (max-height:850px) {
     #endTurn{
         height: 50%; 
     }   
+    #opponentWallsTitle{
+        font-size: 1rem; 
+    }
+    #opponentWallsContent{
+        font-size: 0.8rem; 
+    }
+    #ownWallsTitle{
+        font-size: 1rem; 
+    }
+    #ownWallsContent{
+        font-size: 0.8rem; 
+    }
 }
