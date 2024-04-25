@@ -128,11 +128,11 @@ async function sendFriendRequest(json, response) {
             return;
         }
         await Friendrequests.insertOne(notification);
-        const senderSocket = userSockets.get(senderUsername);
-        if (senderSocket) {
-            senderSocket.emit('notification', { message: notification.message });
-        }
+        const  recipientSocket = userSockets.get(recipientUsername);
 
+        if (recipientSocket) {
+            recipientSocket.emit('notification', { message: notification.message });
+        }
 
 
 

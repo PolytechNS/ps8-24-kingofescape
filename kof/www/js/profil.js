@@ -21,12 +21,12 @@ async function loadProfil() {
                     }
                 }
             } else {
-                window.alert("Please connect !");
+                alertDialog('Connection', 'You need to be connected to access this page', 'OK')
                 changePage('mode.html')
             }
         });
     } else {
-        window.alert("Please connect !");
+        alertDialog('Connection', 'You need to be connected to access this page', 'OK')
         changePage('mode.html')
     }
 }
