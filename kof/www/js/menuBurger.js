@@ -6,7 +6,7 @@ function toggleList() {
 }
 
 function showHelp() {
-    const url = "http://kingofescape.ps8.academy/src/rules/rules.html";
+    const url = "http://kingofescape.ps8.academy/rules.html";
 
     if (isLoadedCordova) {
         let target = "_blank";
