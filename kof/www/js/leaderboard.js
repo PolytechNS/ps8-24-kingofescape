@@ -27,7 +27,7 @@ function affichePlayer(position, username, score, isThisPlayer= false) {
 let name;
 
 function redirection() {
-    window.alert('You need to be connected to access this page');
+    alertDialog('Connection', 'You need to be connected to access this page', 'OK')
     changePage('mode.html');
 }
 
