@@ -158,7 +158,7 @@ if (room != null) {
 
             localStorage.setItem('newElo', valueEndGame[1].elo);
             localStorage.setItem('score+', valueEndGame[1].earn);
-            changePage(`${valueEndGame[0]}/${valueEndGame[0]}.html`);
+            changePage(`${valueEndGame[0]}.html`);
         });
 
         socket.on('message', (id) => {

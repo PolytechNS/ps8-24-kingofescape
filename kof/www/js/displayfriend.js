@@ -7,7 +7,7 @@ function displaylist() {
         opened = false;
     } else {
         let friend = document.getElementById("friendList");
-        friend.style.display = "grid";
+        friend.style.display = "flex";
         opened = true;
     }
 }
