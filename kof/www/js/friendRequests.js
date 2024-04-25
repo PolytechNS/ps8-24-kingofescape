@@ -15,7 +15,7 @@ function startPage() {
                 const name = user;
                 p.innerHTML = user;
                 
-                chatFriend = io.connect('http://localhost:8000/api/chatFriend', {
+                chatFriend = io.connect(`${apiURL}api/chatFriend`, {
                     query: {
                         usernameChat: name
                     }
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchFriendsRequests();
 
     const addButton = document.getElementById('addFriend');
- //  addButton.addEventListener('click', sendFriendRequest);
+    addButton.addEventListener('click', sendFriendRequest);
 });
 
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export async function fetchFriendsRequests() {
     const token = document.cookie.split('=')[1];
-    const url = 'http://localhost:8000/api/friendRequest';
+    const url = `${apiURL}api/friendRequest`;
 
     try {
         const response = await fetch(url, {
@@ -120,7 +120,7 @@ function createButtonCell(imageSrc, altText, onClick) {
 }
 export function fetchFullFriendList() {
     let token = document.cookie.split('=')[1];
-    const url = 'http://localhost:8000/api/friendlist/';
+    const url = `${apiURL}api/friendlist/`;
 
     fetch(url, {
         headers: {
@@ -184,7 +184,8 @@ function appendIconToCell(cell, src, alt, friendUsername) {
 
 export function fetchBasicFriendList() {
     let token = document.cookie.split('=')[1];
-    const url = 'http://localhost:8000/api/friendlist/';
+    const url = `${apiURL}api/friendlist/`;
+    console.log('url:', url);
 
     fetch(url, {
         headers: {
@@ -216,7 +217,7 @@ export function fetchBasicFriendList() {
 function acceptFriendRequest(sender, recipient) {
     let token = document.cookie.split('=')[1];
     // Envoi d'une requête POST pour accepter la demande d'ami
-    fetch('http://localhost:8000/api/acceptFriendRequest', {
+    fetch(`${apiURL}api/acceptFriendRequest`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -232,7 +233,7 @@ function acceptFriendRequest(sender, recipient) {
         .catch(error => console.error('Erreur:', error));
 }
 function removeFriend(friendUsername) {
-    const url = 'http://localhost:8000/api/deleteFriend';
+    const url = `${apiURL}api/deleteFriend`;
     const token = document.cookie.split('=')[1];
 
     return fetch(url, {
@@ -259,7 +260,7 @@ function rejectFriendRequest(sender,recipient) {
     let token = document.cookie.split('=')[1];
 
     // Envoi d'une requête POST pour refuser la demande d'ami
-    fetch('http://localhost:8000/api/rejectFriendRequest', {
+    fetch(`${apiURL}api/rejectFriendRequest`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -292,7 +293,7 @@ function sendFriendRequest() {
     }
     let token = document.cookie.split('=')[1];
 
-    fetch('http://localhost:8000/api/sendFriendRequest', {
+    fetch(`${apiURL}api/sendFriendRequest`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
