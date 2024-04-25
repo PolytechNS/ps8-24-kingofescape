@@ -1,14 +1,18 @@
 const userSockets = new Map();
+
+
 function gestionSocketNotification(io) {
     const notificationNamespace = io.of('/api/notifications');
 
 
     notificationNamespace.on('connection', (socket) => {
-        const username = socket.handshake.query.username;
+        const username = socket.handshake.query.usernameChat;
         userSockets.set(username, socket);
         console.log(`${username} connected for notifications`);
+        console.log(socket.handshake.query)
+        console.log(username)
 
-        socket.on('send-notification', ({ recipient, message }) => {
+        socket.on('notification', ({ recipient, message }) => {
             const recipientSocket = userSockets.get(recipient);
             if (recipientSocket) {
                 console.log(`Sending notification to ${recipient}: ${message}`);

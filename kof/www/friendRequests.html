@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King of Escape</title>
+    <link rel="stylesheet" href="./css/friendRequests.css">
+    <script src="./js/utils.js"></script>
+    <script type="module" src="./js/friendRequests.js"></script>
+    <script type="module" src="./js/FriendRequestsNotifManager.js"></script>
+    <script src="./js/menuBurger.js"></script>
+    <script src="./js/socket.io.js"></script>
+    <script src="./js/displayfriend.js"></script>
+</head>
+
+<body>
+<header>
+    <div id="buttonConnect">
+        <div id="friends">
+            <button onclick="changePage('friendRequests.html')" id="buttonFriends"></button>
+        </div>
+        <div id="success">
+            <button onclick="changePage('sucess.html')" id="buttonSuccess"></button>
+        </div>
+        <audio id="notificationSound">
+            <source src="../sounds/notification.mp3" type="audio/mpeg">
+
+        </audio>
+
+        <button id="buttonNotification"></button>
+
+    </div>
+    <div id="notificationIndicator" class="notification-indicator"></div>
+    <div id="notification-area" class="notification-container"></div>
+    <div id="contentMenuBurger">
+        <div id="menuBurgerLine" onclick="toggleList()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+        <div id="menuBurger">
+            <div onclick="changePage('chat.html')">
+                <p>Friends</p>
+            </div>
+            <div onclick="changePage('success.html')">
+                <p>Success</p>
+            </div>
+            <div onclick="toggleNotifications()" class="menu-item">
+                <p>Show Notifications</p>
+            </div>
+            <div id="menuNotificationCount" class="notification-count" style="display: none;">
+                <p>Notifications (<span id="notificationCounter">0</span>)</p>
+            </div>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="flag" id="flag1"></div>
+        <p id="title">KING OF ESCAPE</p>
+        <div class="flag" id="flag2"></div>
+    </div>
+
+    <div id="profile">
+        <p id="name">Test1234</p>
+        <img src="../picture/Avatar.png" id="avatar" alt="avatar"/>
+    </div>
+
+</header>
+
+<!-- Fenêtre de chat -->
+<div id="windowChat">
+    <div id="selectFriend" onclick="displaylist()">Select a friend to chat with</div>
+    <div id="toppart">
+        <div id="searchpart">
+            <input type="text" id="searchFriend" placeholder="username">
+            <div id="magnifyer">🔎</div>
+
+        </div>
+        <div id="nameFriend"></div>
+    </div>
+    <div id="bottompart">
+        <div id="friendList"></div>
+        <div id="chatpart">
+            <div id="chatContent"></div>
+            <div id="chat">
+                <div id="input">
+                    <input type="text" id="message" placeholder="Enter your message">
+                </div>
+                <img src="./picture/enveloppe.png" alt="send" id="send" width="30px" height="30px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fenêtre des demandes d'amis -->
+<div id="windowFriend">
+    <div id="searchFriendpart">
+        <div id="Friendsearch">
+            <input type="text" id="usernamesearch" placeholder="search for a friend">
+            <div id="magnifyersearch">🔎</div>
+        </div>
+        <button id="addFriend" class="image-button">
+            <img src="./picture/cross.png" alt="Add as friend" width="30px" height="30px">
+        </button>
+    </div>
+    <div id="listfriend">
+        <table>
+            <thead>
+            <tr>
+                <th>Ally</th>
+                <th>Send Pigeon</th>
+                <th>Challenge to Joust</th>
+                <th>Expel from Kingdom</th>
+            </tr>
+            </thead>
+            <tbody id="friendListTable">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Fenêtre des demandes d'ami -->
+<div id="windowRequest">
+    <div id="friend-requests-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Request</th>
+                <th>Accept into Court</th>
+                <th>Decline with Regret</th>
+            </tr>
+            </thead>
+            <tbody id="friend-requests-list">
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div id="button">
+        <div id="friendButton">
+            <img src="./picture/Ajout_ami.png" alt="Ally" id="friend" width="30px" height="30px">
+        </div>
+        <div id="chatButton">
+            <img src="./picture/enveloppe.png" alt="Pigeon" id="chat2" width="30px" height="30px">
+        </div>
+        <div id="requestButton">
+            <img src="./picture/ajoutamiIcon.png" alt="Request" id="ajout" width="30px" height="30px">
+        </div>
+    </div>
+</div>
+<script>
+    function toggleNotifications() {
+        const notificationArea = document.getElementById('notification-area');
+        if (notificationArea.style.display === 'none' || !notificationArea.style.display) {
+            notificationArea.style.display = 'block';
+        } else {
+            notificationArea.style.display = 'none';
+        }
+    }
+
+</script>
+
+<script type="module" src="./js/DispalyManager.js"></script>
+<script src="./js/changePage.js"></script>
+</body>
+</html>
