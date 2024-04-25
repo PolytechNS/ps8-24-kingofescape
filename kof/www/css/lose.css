@@ -170,7 +170,7 @@ header {
 #name {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 25px;
+    font-size: 2em;
     color: #CD9B75;
 }
 

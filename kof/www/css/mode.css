@@ -148,8 +148,9 @@ header {
 #name {
     grid-column: 1 / 2;
     margin: auto;
-    font-size: 2rem;
+    font-size: 2em;
     color: #CD9B75;
+    width: 100%;
 }
 
 #avatar {
