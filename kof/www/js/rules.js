@@ -4,7 +4,6 @@ function displayOff(mode) {
 }
 
 function startPage() {
-    displayOff("modeContinue");
     let result = verifyLogin();
 
     if (result !== null) {
@@ -22,3 +21,5 @@ function startPage() {
         displayOff("profile");
     }
 }
+
+startPage();
