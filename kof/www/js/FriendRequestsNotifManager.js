@@ -10,19 +10,29 @@ const user = localStorage.getItem('currentUser');
 notificationSocket.on('connect', () => {
     console.log('Connected to the notification server.');
 });
+
+
+    function toggleNotifications() {
+        const notificationArea = document.getElementById('notification-area');
+        if (notificationArea.style.display === 'none' || !notificationArea.style.display) {
+            notificationArea.style.display = 'block';
+        } else {
+            notificationArea.style.display = 'none';
+        }
+    }
 function changeButtonIcon(notificationReceived) {
     const button = document.getElementById('buttonNotification');
-    if (button) {
-        if (notificationReceived) {
-            button.style.backgroundImage = "url('../picture/cloche2.png')";
-
-        } else {
-            // Chemin vers l'icône de notification normale
-            button.style.backgroundImage = "url('../picture/notificon.png')";
-
-        }
+    const notificationCounter = document.getElementById('notificationCounter');
+    const menuNotificationCount = document.getElementById('menuNotificationCount');
+    const burgerLines = document.querySelectorAll('.burger-line'); 
+    if (notificationReceived) {
+        button.style.backgroundImage = "url('../picture/cloche2.png')";
+        burgerLines.forEach(line => line.style.backgroundColor = 'red');
     } else {
-        console.error('Button not found');
+        button.style.backgroundImage = "url('../picture/notificon.png')";
+        burgerLines.forEach(line => line.style.backgroundColor = ''); // Reset burger line color
+        notificationCounter.textContent = '0';
+        menuNotificationCount.style.display = 'none'; // Hide the counter when no notifications
     }
 }
 
@@ -32,6 +42,10 @@ notificationSocket.on('notification', function(data) {
 });
 function displayNotification(message) {
     const notificationArea = document.getElementById('notification-area');
+    const notificationCounter = document.getElementById('notificationCounter');
+    const menuNotificationCount = document.getElementById('menuNotificationCount');
+    let count = parseInt(notificationCounter.textContent);
+
     if (!notificationArea) {
         console.error('Notification area not found');
         return;
@@ -44,23 +58,21 @@ function displayNotification(message) {
 
     // Jouer le son de notification
     const notificationSound = document.getElementById('notificationSound');
-    notificationSound.play();
+    if (notificationSound) {
+        notificationSound.play();
+    } else {
+        console.error('Notification sound element not found');
+    }
 
     notification.addEventListener('click', () => {
         notification.remove();
         if (notificationArea.children.length === 0) {
-            changeButtonIcon(false);
+            changeButtonIcon(false);  // Reset the icon when no notifications are left
         }
     });
+
+    // Increment the notification counter
+    count++;
+    notificationCounter.textContent = count;
+    menuNotificationCount.style.display = 'block'; // Make sure the notification count is visible
 }
-
-
-document.getElementById('buttonNotification').addEventListener('click', () => {
-    const notificationArea = document.getElementById('notification-area');
-    if (notificationArea.style.display === 'none' || !notificationArea.style.display) {
-        notificationArea.style.display = 'block';
-
-    } else {
-        notificationArea.style.display = 'none';
-    }
-});

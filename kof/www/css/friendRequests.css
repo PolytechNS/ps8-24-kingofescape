@@ -72,11 +72,16 @@ header {
     margin: auto;
     color: #CD9B75;
 }
-
 .burger-line {
-    width: 10vw;
-    height: 0.8vh;
-    background-color: #ECD6BC;
+    background-color: #ccc; /* Default color */
+    height: 3px;
+    width: 25px;
+    margin: 4px 0;
+}
+
+.notification-count {
+    color: #ff0000; /* Red text for notification count */
+    font-weight: bold;
 }
 
 #buttonConnect {

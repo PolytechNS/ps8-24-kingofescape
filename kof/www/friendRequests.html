@@ -28,10 +28,10 @@
         </audio>
 
         <button id="buttonNotification"></button>
-        <div id="notificationIndicator" class="notification-indicator"></div>
-        <div id="notification-area" class="notification-container"></div>
-    </div>
 
+    </div>
+    <div id="notificationIndicator" class="notification-indicator"></div>
+    <div id="notification-area" class="notification-container"></div>
     <div id="contentMenuBurger">
         <div id="menuBurgerLine" onclick="toggleList()">
             <div class="burger-line"></div>
@@ -45,7 +45,12 @@
             <div onclick="changePage('success.html')">
                 <p>Success</p>
             </div>
-
+            <div onclick="toggleNotifications()" class="menu-item">
+                <p>Show Notifications</p>
+            </div>
+            <div id="menuNotificationCount" class="notification-count" style="display: none;">
+                <p>Notifications (<span id="notificationCounter">0</span>)</p>
+            </div>
         </div>
     </div>
 
@@ -134,7 +139,17 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleNotifications() {
+        const notificationArea = document.getElementById('notification-area');
+        if (notificationArea.style.display === 'none' || !notificationArea.style.display) {
+            notificationArea.style.display = 'block';
+        } else {
+            notificationArea.style.display = 'none';
+        }
+    }
 
+</script>
 
 <script type="module" src="./js/DispalyManager.js"></script>
 <script src="./js/changePage.js"></script>
