@@ -4,7 +4,6 @@ import {createTable, printAllWallPossible} from "./design1v1.js";
 
 let game;
 let positionPlayersY = [undefined, undefined];
-let cordovaLoaded = false;
 
 setup();
 verifyConnect();
@@ -29,7 +28,6 @@ function verifyConnect() {
 
 
 function setup() {
-    document.addEventListener("deviceready", () => { cordovaLoaded = true; }, false);
     createTable();
     getPosition(1);
 }
@@ -110,6 +108,7 @@ function sentWall(event) {
     try {
         game.doAction({action: "wall", value: wall});
         printWall(wall, isPlayerOne);
+        vibrate();
         removeChoosePosition();
         if (isPlayerOne) {
             document.getElementById("ownWallsContent").innerHTML = "Number of remaining walls : " + (10 - game.gameManager.gameStatePlayer1.walls.length);
@@ -118,11 +117,7 @@ function sentWall(event) {
             document.getElementById("opponentWallsContent").innerHTML = "Number of remaining walls : " + (10 - game.gameManager.gameStatePlayer2.walls.length);
 
     } catch (e) {
-        if (cordovaLoaded) {
-            navigator.notification.alert(e.message, null, "Error to place Wall", "OK");
-        }
-        else
-            window.alert(e.message);
+        alertDialog("Error to place Wall", e.message, "OK");
     }
 }
 
@@ -152,19 +147,11 @@ function move(event) {
                 break;
         }
         if (s !== undefined) {
-            if (cordovaLoaded) {
-                navigator.notification.alert("Error end Game", null, "Error end Game", "OK");
-            }
-            else
-                window.alert(s);
+            alertDialog("Error end Game", "Error end Game", "OK");
             changePage('mode/mode.html');
         }
     } catch (e) {
-        if (cordovaLoaded) {
-            navigator.notification.alert(e.message, null, "Error on move", "OK");
-        }
-        else
-            window.alert(e.message);
+        alertDialog("Error on move", e.message, "OK");
     }
 }
 

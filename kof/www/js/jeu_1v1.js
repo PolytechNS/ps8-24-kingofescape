@@ -1,4 +1,4 @@
-import {printPlayer, printWall, removePlayer} from "../js/affichage_jeu.js";
+import {printPlayer, printWall, removePlayer} from "./affichage_jeu.js";
 import {createTable, printAllWallPossible} from "./design1v1.js";
 
 let numberPlayer;
@@ -127,11 +127,11 @@ if (room != null) {
             printTableTurn(gameState.possibleMoves, gameState.gameState)
 
             if (gameState.currentPlayer === numberPlayer)
-                window.alert("C'est à vous de jouer");
+                alertDialog("Your turn", "It's your turn", "OK");
         });
 
         socket.on('Info', (message) => {
-           window.alert(message);
+            alertDialog("Information", message, "OK");
         });
 
         socket.on('StartTurn', (gameState) => {
@@ -146,9 +146,10 @@ if (room != null) {
                removePlayer(numberPlayer === 1);
                printPlayer(result.value, numberPlayer === 1);
            }
-           else
+           else {
+               vibrate();
                printWall(result.value, numberPlayer === 1);
-
+           }
             removeChoosePosition();
         });
 
@@ -174,12 +175,12 @@ if (room != null) {
         });
 
         socket.on('errorConnect', (message) => {
-            window.alert(message);
+            alertDialog("Error Connect", message, "OK");
             changePage("mode.html");
         })
 
         socket.on('error', (message) => {
-            window.alert(message);
+            alertDialog("Error action", message, "OK");
         });
     });
 }

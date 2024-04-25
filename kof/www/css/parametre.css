@@ -1,6 +1,6 @@
 html {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
 }
 
 body {
@@ -9,10 +9,10 @@ body {
     width: 100%;
     background-image: url('../picture/background.jpg');
     background-size: cover;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     background-position: center;
     display: grid;
-    grid-template-rows: 12% 10% 58% 20%;
+    grid-template-rows: 12vh 78vh 10vh;
 }
 
 header {
@@ -64,7 +64,7 @@ header {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 33%;
+    height: 50%;
     border-bottom: 1px solid #ECD6BC;
 }
 
@@ -164,8 +164,8 @@ header {
     grid-template-columns: 70% 30%;
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: 5%;
     box-shadow: 0 0 5px #ECD6BC;
+    cursor: pointer;
 }
 
 #name {
@@ -198,109 +198,107 @@ header {
     cursor: pointer;
 }
 
-#buttonLogout{
-    grid-column: 3/4;
-    background-image: url('../picture/deconexion.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 0 0 10px #444343;
-    background-color: #F5F5F5;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    border: 2px solid #ECD6BC;
-    cursor: pointer;
-    margin: auto; 
-}
-
-#pagecontent {
-    grid-row: 2/3;
-    height: 90%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-}
-
-#menu {
-    grid-column: 1/2;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+#blankHeader {
     height: 100%;
-    width: 100%;
+    width: 12%;
 }
 
-#menu > * {
-    margin: 3vh;
-    padding: 2vh;
-    grid-row: 1/2;
-    width: 90%;
-    border-radius: 10px;
-    background-color: #f3b66b5f;
-    box-shadow: 0 0 10px #7a7774;
-    border-color: #f3b66b5f;
-    font-size: 1.5rem; 
-    font-weight: bold;
-    color: #969696;
+#informationBloc {
+    display: grid;
+    grid-template-rows: 12% 88%;
+    width: 50%;
+    height: 90%;
+    margin: auto;
+    border: 2px solid #ECD6BC;
+    background-color: #F5F5F5;
+    border-radius: 40px;
+    box-shadow: 0 0 15px #444343;
+}
+
+#texte {
+    grid-row: 1 / 2;
+    display: flex;
+}
+
+#texte > h1 {
+    margin: auto;
+    color: #CD9B75;
+    font-size: 45px;
+}
+
+#parameter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+}
+
+#parameter > div {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    height: 20%;
+    margin: auto;
+    border: solid 2px #ECD6BC;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #444343;
     cursor: pointer;
 }
 
-#buttonDelete{
-    color: #cd0606;
-}
-
-#imguser{
-    grid-column: 2/3;
-    background-image: url('../picture/king.png');
+.parameterImage > img {
+    margin: auto;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    width: 15%;
 }
 
+.parameterImage > p{
+    text-align: center;
+    color: #ECD6BC;
+    font-size: 2rem;
+    margin: auto;
+}
 
-@media (orientation: portrait) and (max-width: 1080px) and (max-height: 1080px) {
-    #imguser {
-        grid-row: 1/2;
-        background-image: url('../picture/king.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 100vw;
-        height: 80vw;
-        grid-column: unset; 
-    }
-    #buttonDelete{
-        color: #cd0606;
-    }
-    #menu {
-        grid-row: 2/3; /
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap; 
-        justify-content: space-between; 
-        height: 100%;
-        width: 100vw;
-    }
-    
-    #menu > * {
-        margin: 20px;
-        padding: 20px;
-        width: calc(45% - 40px); 
-        border-radius: 10px;
-        background-color: #f3b66b5f;
-        box-shadow: 0 0 10px #7a7774;
-        border-color: #f3b66b5f;
-        font-size: 1rem; 
-        font-weight: bold;
-        color: #969696;
-        cursor: pointer;
-    }
+#retour {
+    grid-row: 3 / 4;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: #F5F5F5;
+    border: 2px solid #ECD6BC;
+    width: 10%;
+    height: 80%;
+    margin: auto;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #444343;
+    cursor: pointer;
+}
+
+#retour > p {
+    color: #CD9B75;
+    margin: auto;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#back {
+    background-image: url("../picture/retour_rouge.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
 }
 
 @media (orientation: landscape) and (max-width: 1200px) and (max-height: 900px) {
     header {
-        width: 100%;
+        width: 75vw;
         justify-content: space-around;
     }
 
@@ -312,8 +310,39 @@ header {
         grid-template-rows: 20vh 80vh;
     }
 
+
     #banner {
         display: none;
+    }
+
+    #informationBloc {
+        grid-template-rows: 15% 85%;
+    }
+
+    #texte > h1 {
+        font-size: 2rem;
+    }
+
+    #informationBloc {
+        width: 85vw;
+    }
+
+    #retour {
+        display: flex;
+        margin-top: 3vh;
+        margin-left: 85vw;
+        position: fixed;
+        height: 12vh;
+    }
+
+    #retour > p {
+        display: none;
+    }
+
+    #back {
+        width: 30px;
+        height: 30px;
+        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {
@@ -336,20 +365,18 @@ header {
     #menuBurger.active {
         margin-top: 16vh;
     }
-    #buttonLogout {
-        width: 15vw;
-        height: 75%; 
+}
+
+@media (orientation: landscape) and (max-width: 850px) {
+    .parameterImage > img {
+        width: 5vw;
     }
 }
 
 @media (orientation: portrait) and (max-width: 850px) and (max-height: 1100px) {
     header {
-        width: 100%;
+        width: 80vw;
         justify-content: space-around;
-    }
-
-    #buttonDelete{
-        color: #cd0606;
     }
 
     #profile {
@@ -364,6 +391,19 @@ header {
         grid-template-rows: 12vh 85vh;
     }
 
+    #texte > h1 {
+        font-size: 2rem;
+    }
+
+    #informationBloc {
+        width: 85vw;
+    }
+
+    #parameter > div {
+        width: 80%;
+        height: 15%;
+    }
+
     #retour {
         display: flex;
         margin-top: 3vh;
@@ -374,6 +414,12 @@ header {
 
     #retour > p {
         display: none;
+    }
+
+    #back {
+        width: 30px;
+        height: 30px;
+        background-image: url("../picture/redcross.png");
     }
 
     #buttonConnect {
@@ -387,9 +433,35 @@ header {
     #contentMenuBurger {
         display: flex;
     }
+}
 
-    #buttonLogout {
+@media (orientation: portrait) and (max-width: 450px) {
+    .parameterImage > img {
         width: 15vw;
-        height: 75%; 
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 450px) and (max-height: 1100px) and (min-height: 450px) {
+    #name {
+        font-size: 50px;
+    }
+
+    #texte > h1 {
+        font-size: 3rem;
+    }
+
+    #avatar {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 1200px)  and (min-width: 450px) and (max-height: 900px) and (min-height: 450px) {
+    body {
+        grid-template-rows: 12vh 88vh;
+    }
+
+    #retour {
+        height: 8vh;
     }
 }

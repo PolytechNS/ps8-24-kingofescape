@@ -17,7 +17,7 @@ function getIAPlay() {
         if (aiPlay === '1' || aiPlay === '2')
             break;
         else
-            window.alert('Veuillez entrer 1 ou 2');
+            alertDialog('Error Number Player', 'Please enter 1 or 2', 'OK');
     }
 
     return Number.parseInt(aiPlay);
@@ -56,7 +56,7 @@ socket.on('connect', () => {
     createTable(coordinatePlayer, aiPlay === 2, move, wall);
 
     socket.on('updateBoard', (gameState) => {
-        window.alert('C\'est à vous de jouer');
+        alertDialog("Your turn", "It's your turn", "OK");
 
         removePlayer(true);
         removePlayer(false);
@@ -70,21 +70,23 @@ socket.on('connect', () => {
 
     socket.on('resultAction', (result) => {
         if (result.action === "error")
-            window.alert(result.value);
+            alertDialog("Error action", result.value, "OK");
         else if (result.action === "move") {
             removePlayer(aiPlay === 2);
             printPlayer(result.value, aiPlay === 2);
         }
-        else
+        else {
+            vibrate();
             printWall(result.value, aiPlay === 2);
+        }
     });
 
     socket.on('endGame', (result) => {
-        window.alert(result);
+        alertDialog("End Game", result, "OK");
     });
 
     socket.on('errorSetup', (result) => {
-        window.alert(result);
+        alertDialog("Error launch", result, "OK");
         window.location.href = window.location.origin + '/src/mode/mode.html';
     });
 });

@@ -4,6 +4,10 @@ const developmentURL = 'http://localhost:8000/'
 // URL du vrai site (production)
 const productionURL = 'http://kingofescape.ps8.academy/';
 
+let cordovaLoaded = false;
+
+document.addEventListener("deviceready", () => { cordovaLoaded = true; }, false);
+
 // Fonction pour obtenir l'URL appropriée en fonction de l'environnement
 function getAPIURL() {
     // return productionURL;
